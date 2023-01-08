@@ -189,7 +189,7 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="spnMes" min="-2" pref="52" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="spnAno" min="-2" max="-2" attributes="0"/>
+                          <Component id="spnAno" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
@@ -231,7 +231,7 @@
         <Component class="javax.swing.JSpinner" name="spnAno">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
-              <SpinnerModel initial="2022" maximum="2022" numberType="java.lang.Integer" stepSize="1" type="number"/>
+              <SpinnerModel initial="2023" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>

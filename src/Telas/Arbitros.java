@@ -106,7 +106,7 @@ public class Arbitros extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados do árbitro"));
 
-        spnAno.setModel(new javax.swing.SpinnerNumberModel(2022, null, 2022, 1));
+        spnAno.setModel(new javax.swing.SpinnerNumberModel(2023, null, null, 1));
         spnAno.setEnabled(false);
 
         btnOkPesquisar.setText("Pesquisar");
@@ -165,7 +165,7 @@ public class Arbitros extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(spnAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(spnAno)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
