@@ -24,7 +24,6 @@ public class Tecnicos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        lblFotoTecnico = new javax.swing.JLabel();
         pnlTecnicos = new javax.swing.JPanel();
         lblNomeTecnico = new javax.swing.JLabel();
         txtNomeTecnicos = new javax.swing.JTextField();
@@ -49,8 +48,6 @@ public class Tecnicos extends javax.swing.JFrame {
         tblTecnicos = new javax.swing.JTable();
         btnSairTecnico = new javax.swing.JButton();
 
-        lblFotoTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/pep.png"))); // NOI18N
-
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Técnicos");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/manager.png")).getImage());
@@ -59,12 +56,6 @@ public class Tecnicos extends javax.swing.JFrame {
         pnlTecnicos.setToolTipText("Dados dos Técnicos");
 
         lblNomeTecnico.setText("Nome:");
-
-        txtNomeTecnicos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeTecnicosActionPerformed(evt);
-            }
-        });
 
         lblSobrenomeTecnicos.setText("Sobrenome:");
 
@@ -76,6 +67,12 @@ public class Tecnicos extends javax.swing.JFrame {
 
         btnPesquisarTecnicos.setText("Pesquisar");
 
+        spnMes.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+
+        spnAno.setModel(new javax.swing.SpinnerNumberModel(2023, null, 2023, 1));
+
+        spnDia.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+
         javax.swing.GroupLayout pnlTecnicosLayout = new javax.swing.GroupLayout(pnlTecnicos);
         pnlTecnicos.setLayout(pnlTecnicosLayout);
         pnlTecnicosLayout.setHorizontalGroup(
@@ -84,35 +81,33 @@ public class Tecnicos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(pnlTecnicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlTecnicosLayout.createSequentialGroup()
-                        .addGroup(pnlTecnicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlTecnicosLayout.createSequentialGroup()
-                                .addComponent(lblNomeTecnico)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtNomeTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlTecnicosLayout.createSequentialGroup()
-                                .addComponent(lblSexoTecnicos)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(txtSexoTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlTecnicosLayout.createSequentialGroup()
-                                .addGroup(pnlTecnicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblSobrenomeTecnicos)
-                                    .addComponent(lblCPFTecnicos))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                                .addGroup(pnlTecnicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(txtCPFTecnicos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtSobrenomeTecnicos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                        .addGap(18, 18, 18)
-                        .addComponent(btnPesquisarTecnicos)
-                        .addGap(528, 528, 528))
-                    .addGroup(pnlTecnicosLayout.createSequentialGroup()
                         .addComponent(lblIdadeTecnicos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spnDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(spnDia, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spnAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(18, 18, 18)
+                        .addComponent(spnAno, javax.swing.GroupLayout.DEFAULT_SIZE, 96, Short.MAX_VALUE))
+                    .addGroup(pnlTecnicosLayout.createSequentialGroup()
+                        .addGroup(pnlTecnicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSobrenomeTecnicos)
+                            .addComponent(lblCPFTecnicos))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlTecnicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlTecnicosLayout.createSequentialGroup()
+                                .addComponent(txtCPFTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnPesquisarTecnicos))
+                            .addComponent(txtSobrenomeTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlTecnicosLayout.createSequentialGroup()
+                        .addComponent(lblSexoTecnicos)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtSexoTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlTecnicosLayout.createSequentialGroup()
+                        .addComponent(lblNomeTecnico)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtNomeTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(528, 528, 528))
         );
         pnlTecnicosLayout.setVerticalGroup(
             pnlTecnicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -211,14 +206,16 @@ public class Tecnicos extends javax.swing.JFrame {
                         .addComponent(btnPesquisarTecnico)
                         .addGap(40, 40, 40))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlTecnicos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 908, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnlTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(400, 400, 400)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnSairTecnico)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,17 +234,13 @@ public class Tecnicos extends javax.swing.JFrame {
                         .addComponent(btnEditarTecnico)))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSairTecnico)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtNomeTecnicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeTecnicosActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeTecnicosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -295,7 +288,6 @@ public class Tecnicos extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvarTecnico;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCPFTecnicos;
-    private javax.swing.JLabel lblFotoTecnico;
     private javax.swing.JLabel lblIdadeTecnicos;
     private javax.swing.JLabel lblNomeTecnico;
     private javax.swing.JLabel lblSexoTecnicos;
