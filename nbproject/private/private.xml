@@ -3,10 +3,16 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Pedro/Downloads/Projeto%20TP1/EscolinhaFutebol/src/Telas/DadosCampeonato.java</file>
             <file>file:/C:/Users/Pedro/Downloads/Projeto%20TP1/EscolinhaFutebol/src/Telas/Campeonatos.java</file>
             <file>file:/C:/Users/Pedro/Downloads/Projeto%20TP1/EscolinhaFutebol/src/Telas/Arbitros.java</file>
             <file>file:/C:/Users/Pedro/Downloads/Projeto%20TP1/EscolinhaFutebol/src/Telas/Tecnicos.java</file>
+=======
+            <file>file:/C:/Users/Sousa/OneDrive/Documentos/Raquel/UNB/TrabalhoPratico/Escolinha-de-futebol/src/Classes/PartidaTableModel.java</file>
+            <file>file:/C:/Users/Sousa/OneDrive/Documentos/Raquel/UNB/TrabalhoPratico/Escolinha-de-futebol/src/Classes/JogadorTableModel.java</file>
+            <file>file:/C:/Users/Sousa/OneDrive/Documentos/Raquel/UNB/TrabalhoPratico/Escolinha-de-futebol/src/Classes/Jogador.java</file>
+>>>>>>> 7dcb766425df8987d0977206e83e631b6690c253
         </group>
     </open-files>
 </project-private>
