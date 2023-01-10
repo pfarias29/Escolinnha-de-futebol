@@ -89,16 +89,16 @@ public class Partida {
         return equipe;
     }
 
-    public void setEquipe(ArrayList<Equipe> equipe) {
-        this.equipe = equipe;
+    public void addEquipe(Equipe equipe) {
+        this.equipe.add(equipe);
     }
 
     public ArrayList<Arbitro> getArbitro() {
         return arbitro;
     }
 
-    public void setArbitro(ArrayList<Arbitro> arbitro) {
-        this.arbitro = arbitro;
+    public void addArbitro(Arbitro arbitro) {
+        this.arbitro.add(arbitro);
     }
     
     
