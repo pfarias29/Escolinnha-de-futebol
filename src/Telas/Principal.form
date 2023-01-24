@@ -103,6 +103,7 @@
         <Property name="toolTipText" type="java.lang.String" value="Dados de todos os jogadores da escolinha"/>
       </Properties>
       <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnJogadoresPrincipalMouseEntered"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnJogadoresPrincipalActionPerformed"/>
       </Events>
     </Component>
@@ -114,6 +115,10 @@
         <Property name="text" type="java.lang.String" value="T&#xe9;cnicos"/>
         <Property name="toolTipText" type="java.lang.String" value="Dados de todos os t&#xe9;cnicos da escolinha"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnT&#xe9;cnicosPrincipalMouseEntered"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnT&#xe9;cnicosPrincipalActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnArbitrosPrincipal">
       <Properties>
@@ -123,6 +128,10 @@
         <Property name="text" type="java.lang.String" value="&#xc1;rbitros"/>
         <Property name="toolTipText" type="java.lang.String" value="Dados de todos os &#xe1;rbitros da escolinha"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnArbitrosPrincipalMouseEntered"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnArbitrosPrincipalActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnEquipesPrincipal">
       <Properties>
@@ -132,6 +141,10 @@
         <Property name="text" type="java.lang.String" value="Equipes"/>
         <Property name="toolTipText" type="java.lang.String" value="Dados de todas as equipes da escolinha"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEquipesPrincipalMouseEntered"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEquipesPrincipalActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCampeonatosPrincipal">
       <Properties>
@@ -141,6 +154,10 @@
         <Property name="text" type="java.lang.String" value="Campeonatos"/>
         <Property name="toolTipText" type="java.lang.String" value="Dados de todos os campeonatos da escolinha"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCampeonatosPrincipalMouseEntered"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCampeonatosPrincipalActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnPartidasPrincipal">
       <Properties>
@@ -150,15 +167,23 @@
         <Property name="text" type="java.lang.String" value="Partidas"/>
         <Property name="toolTipText" type="java.lang.String" value="Dados de todas as partidas da escolinha"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnPartidasPrincipalMouseEntered"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPartidasPrincipalActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnFecharPrincipal">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Images/exit.png"/>
+          <Image iconType="3" name="/Images/SairMaior1.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Fechar"/>
         <Property name="toolTipText" type="java.lang.String" value="Sair do programa"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnFecharPrincipalMouseEntered"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnFecharPrincipalActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

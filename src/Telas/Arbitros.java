@@ -67,6 +67,7 @@ public class Arbitros extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Árbitros");
+        setBackground(new java.awt.Color(0, 153, 102));
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Images/Árbitro.png")).getImage());
         setName(""); // NOI18N
 
@@ -104,6 +105,7 @@ public class Arbitros extends javax.swing.JFrame {
             }
         });
 
+        jPanel1.setBackground(new java.awt.Color(0, 153, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados do árbitro"));
 
         spnAno.setModel(new javax.swing.SpinnerNumberModel(2023, null, null, 1));
@@ -243,6 +245,11 @@ public class Arbitros extends javax.swing.JFrame {
                 btnSairMouseEntered(evt);
             }
         });
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -326,6 +333,10 @@ public class Arbitros extends javax.swing.JFrame {
     private void btnSairMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairMouseEntered
         btnSair.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_btnSairMouseEntered
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnSairActionPerformed
 
     /**
      * @param args the command line arguments

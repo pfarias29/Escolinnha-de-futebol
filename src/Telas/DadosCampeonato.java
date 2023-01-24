@@ -46,8 +46,12 @@ public class DadosCampeonato extends javax.swing.JFrame {
         btnSair = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Equipe");
+        setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Images/jogadores.png")).getImage());
 
+        jPanel1.setBackground(new java.awt.Color(0, 153, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados da equipe"));
+        jPanel1.setToolTipText("");
 
         lblNome.setText("Nome:");
 
@@ -157,6 +161,11 @@ public class DadosCampeonato extends javax.swing.JFrame {
                 btnSairMouseEntered(evt);
             }
         });
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -213,6 +222,10 @@ public class DadosCampeonato extends javax.swing.JFrame {
     private void btnSairMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairMouseEntered
         btnSair.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_btnSairMouseEntered
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnSairActionPerformed
 
     /**
      * @param args the command line arguments

@@ -46,7 +46,8 @@ public class Equipes extends javax.swing.JFrame {
         setTitle("Equipes");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/team.png")).getImage());
 
-        pnlEquipes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados das Equipes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
+        pnlEquipes.setBackground(new java.awt.Color(0, 153, 102));
+        pnlEquipes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados das Equipes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 12), new java.awt.Color(0, 0, 0))); // NOI18N
 
         lblNomeEquipes.setText("Nome:");
 
@@ -111,7 +112,7 @@ public class Equipes extends javax.swing.JFrame {
         btnNovoEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/adicionar.png"))); // NOI18N
         btnNovoEquipe.setText("Novo");
 
-        btnSalvarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Salvar.png"))); // NOI18N
+        btnSalvarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/salvar1.png"))); // NOI18N
         btnSalvarEquipe.setText("Salvar");
 
         btnCancelarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cancelar.png"))); // NOI18N
@@ -153,6 +154,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnSairEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sair.png"))); // NOI18N
         btnSairEquipe.setText("Sair");
+        btnSairEquipe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairEquipeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -210,6 +216,10 @@ public class Equipes extends javax.swing.JFrame {
     private void cbSexoEquipesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbSexoEquipesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbSexoEquipesActionPerformed
+
+    private void btnSairEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairEquipeActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnSairEquipeActionPerformed
 
     /**
      * @param args the command line arguments

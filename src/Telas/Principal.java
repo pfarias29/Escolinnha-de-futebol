@@ -4,6 +4,8 @@
  */
 package Telas;
 
+import java.awt.Cursor;
+
 /**
  *
  * @author felip
@@ -44,6 +46,11 @@ public class Principal extends javax.swing.JFrame {
         btnJogadoresPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/player.png"))); // NOI18N
         btnJogadoresPrincipal.setText("Jogadores");
         btnJogadoresPrincipal.setToolTipText("Dados de todos os jogadores da escolinha");
+        btnJogadoresPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnJogadoresPrincipalMouseEntered(evt);
+            }
+        });
         btnJogadoresPrincipal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnJogadoresPrincipalActionPerformed(evt);
@@ -53,26 +60,86 @@ public class Principal extends javax.swing.JFrame {
         btnTécnicosPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/manager.png"))); // NOI18N
         btnTécnicosPrincipal.setText("Técnicos");
         btnTécnicosPrincipal.setToolTipText("Dados de todos os técnicos da escolinha");
+        btnTécnicosPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnTécnicosPrincipalMouseEntered(evt);
+            }
+        });
+        btnTécnicosPrincipal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTécnicosPrincipalActionPerformed(evt);
+            }
+        });
 
         btnArbitrosPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/referee.png"))); // NOI18N
         btnArbitrosPrincipal.setText("Árbitros");
         btnArbitrosPrincipal.setToolTipText("Dados de todos os árbitros da escolinha");
+        btnArbitrosPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnArbitrosPrincipalMouseEntered(evt);
+            }
+        });
+        btnArbitrosPrincipal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnArbitrosPrincipalActionPerformed(evt);
+            }
+        });
 
         btnEquipesPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/team.png"))); // NOI18N
         btnEquipesPrincipal.setText("Equipes");
         btnEquipesPrincipal.setToolTipText("Dados de todas as equipes da escolinha");
+        btnEquipesPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEquipesPrincipalMouseEntered(evt);
+            }
+        });
+        btnEquipesPrincipal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEquipesPrincipalActionPerformed(evt);
+            }
+        });
 
         btnCampeonatosPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/league.png"))); // NOI18N
         btnCampeonatosPrincipal.setText("Campeonatos");
         btnCampeonatosPrincipal.setToolTipText("Dados de todos os campeonatos da escolinha");
+        btnCampeonatosPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCampeonatosPrincipalMouseEntered(evt);
+            }
+        });
+        btnCampeonatosPrincipal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCampeonatosPrincipalActionPerformed(evt);
+            }
+        });
 
         btnPartidasPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/match.png"))); // NOI18N
         btnPartidasPrincipal.setText("Partidas");
         btnPartidasPrincipal.setToolTipText("Dados de todas as partidas da escolinha");
+        btnPartidasPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnPartidasPrincipalMouseEntered(evt);
+            }
+        });
+        btnPartidasPrincipal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPartidasPrincipalActionPerformed(evt);
+            }
+        });
 
-        btnFecharPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/exit.png"))); // NOI18N
+        btnFecharPrincipal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/SairMaior1.png"))); // NOI18N
         btnFecharPrincipal.setText("Fechar");
         btnFecharPrincipal.setToolTipText("Sair do programa");
+        btnFecharPrincipal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnFecharPrincipalMouseEntered(evt);
+            }
+        });
+        btnFecharPrincipal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFecharPrincipalActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -127,8 +194,60 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnJogadoresPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJogadoresPrincipalActionPerformed
-        // TODO add your handling code here:
+        new CriandoJogador().setVisible(true);
     }//GEN-LAST:event_btnJogadoresPrincipalActionPerformed
+
+    private void btnJogadoresPrincipalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJogadoresPrincipalMouseEntered
+        btnJogadoresPrincipal.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnJogadoresPrincipalMouseEntered
+
+    private void btnTécnicosPrincipalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTécnicosPrincipalMouseEntered
+        btnTécnicosPrincipal.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnTécnicosPrincipalMouseEntered
+
+    private void btnArbitrosPrincipalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnArbitrosPrincipalMouseEntered
+        btnArbitrosPrincipal.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnArbitrosPrincipalMouseEntered
+
+    private void btnEquipesPrincipalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEquipesPrincipalMouseEntered
+        btnEquipesPrincipal.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnEquipesPrincipalMouseEntered
+
+    private void btnCampeonatosPrincipalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCampeonatosPrincipalMouseEntered
+        btnCampeonatosPrincipal.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnCampeonatosPrincipalMouseEntered
+
+    private void btnPartidasPrincipalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPartidasPrincipalMouseEntered
+        btnPartidasPrincipal.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnPartidasPrincipalMouseEntered
+
+    private void btnFecharPrincipalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFecharPrincipalMouseEntered
+        btnFecharPrincipal.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnFecharPrincipalMouseEntered
+
+    private void btnTécnicosPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTécnicosPrincipalActionPerformed
+        new Tecnicos().setVisible(true);
+    }//GEN-LAST:event_btnTécnicosPrincipalActionPerformed
+
+    private void btnArbitrosPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbitrosPrincipalActionPerformed
+        new Arbitros().setVisible(true);
+    }//GEN-LAST:event_btnArbitrosPrincipalActionPerformed
+
+    private void btnEquipesPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEquipesPrincipalActionPerformed
+        new Equipes().setVisible(true);
+    }//GEN-LAST:event_btnEquipesPrincipalActionPerformed
+
+    private void btnCampeonatosPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCampeonatosPrincipalActionPerformed
+        new Campeonatos().setVisible(true);
+    }//GEN-LAST:event_btnCampeonatosPrincipalActionPerformed
+
+    private void btnPartidasPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPartidasPrincipalActionPerformed
+        new CriandoPartida().setVisible(true);
+    }//GEN-LAST:event_btnPartidasPrincipalActionPerformed
+
+    private void btnFecharPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharPrincipalActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnFecharPrincipalActionPerformed
 
     /**
      * @param args the command line arguments

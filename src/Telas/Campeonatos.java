@@ -60,6 +60,7 @@ public class Campeonatos extends javax.swing.JFrame {
         setTitle("Campeonatos");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Images/Campeonato.png")).getImage());
 
+        jPanel1.setBackground(new java.awt.Color(0, 153, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados do campeonato"));
 
         lblSexo.setText("Sexo:");
@@ -224,6 +225,11 @@ public class Campeonatos extends javax.swing.JFrame {
                 btnVisualizarMouseEntered(evt);
             }
         });
+        btnVisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisualizarActionPerformed(evt);
+            }
+        });
 
         tblCampeonatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -255,6 +261,11 @@ public class Campeonatos extends javax.swing.JFrame {
         btnSair.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSairMouseEntered(evt);
+            }
+        });
+        btnSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairActionPerformed(evt);
             }
         });
 
@@ -329,6 +340,14 @@ public class Campeonatos extends javax.swing.JFrame {
     private void btnSairMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairMouseEntered
         btnSair.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_btnSairMouseEntered
+
+    private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
+        new DadosCampeonato().setVisible(true);
+    }//GEN-LAST:event_btnVisualizarActionPerformed
 
     /**
      * @param args the command line arguments
