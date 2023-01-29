@@ -76,6 +76,4 @@ public class Campeonato {
     public void setCategoria(String categoria) {
         this.categoria = categoria;
     }
-    
-    
 }
