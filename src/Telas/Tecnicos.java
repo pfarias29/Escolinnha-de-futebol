@@ -6,6 +6,7 @@ package Telas;
 
 import Classes.Pessoa;
 import Classes.Tecnico;
+import java.awt.Cursor;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -52,7 +53,12 @@ public class Tecnicos extends javax.swing.JFrame {
 
     //Carregar a tabela com tecnicos da lista
     public void carregarTabelaTecnicos(){
-        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Nome", "Sobrenome", "CPF", "Idade", "Sexo","Data Nascimento"},0);
+        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Nome", "Sobrenome", "CPF", "Idade", "Sexo","Data Nascimento"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         
         for(int i=0;i<listaTecnicos.size();i++){
             Object linha[] = new Object[] {listaTecnicos.get(i).getNome(),
@@ -204,6 +210,11 @@ public class Tecnicos extends javax.swing.JFrame {
 
         btnNovoTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/adicionar.png"))); // NOI18N
         btnNovoTecnico.setText("Novo");
+        btnNovoTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnNovoTecnicoMouseEntered(evt);
+            }
+        });
         btnNovoTecnico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoTecnicoActionPerformed(evt);
@@ -212,6 +223,11 @@ public class Tecnicos extends javax.swing.JFrame {
 
         btnSalvarTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Salvar.png"))); // NOI18N
         btnSalvarTecnico.setText("Salvar");
+        btnSalvarTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalvarTecnicoMouseEntered(evt);
+            }
+        });
         btnSalvarTecnico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarTecnicoActionPerformed(evt);
@@ -220,6 +236,11 @@ public class Tecnicos extends javax.swing.JFrame {
 
         btnCancelarTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cancelar.png"))); // NOI18N
         btnCancelarTecnico.setText("Cancelar");
+        btnCancelarTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCancelarTecnicoMouseEntered(evt);
+            }
+        });
         btnCancelarTecnico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarTecnicoActionPerformed(evt);
@@ -228,6 +249,11 @@ public class Tecnicos extends javax.swing.JFrame {
 
         btnEditarTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/editarCliente.png"))); // NOI18N
         btnEditarTecnico.setText("Editar");
+        btnEditarTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditarTecnicoMouseEntered(evt);
+            }
+        });
         btnEditarTecnico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarTecnicoActionPerformed(evt);
@@ -236,6 +262,11 @@ public class Tecnicos extends javax.swing.JFrame {
 
         btnExcluirTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/excluirCliente.png"))); // NOI18N
         btnExcluirTecnico.setText("Excluir");
+        btnExcluirTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnExcluirTecnicoMouseEntered(evt);
+            }
+        });
         btnExcluirTecnico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirTecnicoActionPerformed(evt);
@@ -244,6 +275,11 @@ public class Tecnicos extends javax.swing.JFrame {
 
         btnPesquisarTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Pesquisar.png"))); // NOI18N
         btnPesquisarTecnico.setText("Pesquisar");
+        btnPesquisarTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnPesquisarTecnicoMouseEntered(evt);
+            }
+        });
         btnPesquisarTecnico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPesquisarTecnicoActionPerformed(evt);
@@ -283,6 +319,11 @@ public class Tecnicos extends javax.swing.JFrame {
         btnSairTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sair.png"))); // NOI18N
         btnSairTecnico.setText("Sair");
         btnSairTecnico.setToolTipText("Sair da tela de Técnicos");
+        btnSairTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSairTecnicoMouseEntered(evt);
+            }
+        });
         btnSairTecnico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairTecnicoActionPerformed(evt);
@@ -370,7 +411,7 @@ public class Tecnicos extends javax.swing.JFrame {
              if(botão.equals("novo")){
                  Tecnico tecnico = new Tecnico(nome,sobrenome,cpf,sexo,idade,dataNascimento);
                  listaTecnicos.add(tecnico);
-                 JOptionPane.showMessageDialog(null, "Tecnico cadastrado com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                 JOptionPane.showMessageDialog(null, "Técnico cadastrado com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
              }
              else if(botão.equals("editar")){
                  int index = tblTecnicos.getSelectedRow();
@@ -665,6 +706,34 @@ public class Tecnicos extends javax.swing.JFrame {
             txtCPFTecnicos.requestFocus();
         }
     }//GEN-LAST:event_btnOKTecnicoActionPerformed
+
+    private void btnNovoTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoTecnicoMouseEntered
+        btnNovoTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnNovoTecnicoMouseEntered
+
+    private void btnSalvarTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarTecnicoMouseEntered
+        btnSalvarTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnSalvarTecnicoMouseEntered
+
+    private void btnCancelarTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarTecnicoMouseEntered
+        btnCancelarTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnCancelarTecnicoMouseEntered
+
+    private void btnEditarTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarTecnicoMouseEntered
+        btnEditarTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnEditarTecnicoMouseEntered
+
+    private void btnExcluirTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExcluirTecnicoMouseEntered
+        btnExcluirTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnExcluirTecnicoMouseEntered
+
+    private void btnPesquisarTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPesquisarTecnicoMouseEntered
+        btnPesquisarTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnPesquisarTecnicoMouseEntered
+
+    private void btnSairTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairTecnicoMouseEntered
+        btnSairTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnSairTecnicoMouseEntered
 
     /**
      * @param args the command line arguments
