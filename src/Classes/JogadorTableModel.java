@@ -46,7 +46,7 @@ public class JogadorTableModel extends AbstractTableModel{
             case 3:
                 return cadastroJogador.getSexo();
             case 4:
-                return cadastroJogador.getDataNascimento();
+                //return cadastroJogador.getDataNascimento();
             case 5:
                 return cadastroJogador.getPosicao();
 
@@ -90,7 +90,7 @@ public class JogadorTableModel extends AbstractTableModel{
                 cadastroJogador.setSexo(valor.toString());
                 break;
             case 4:
-                cadastroJogador.setDataNascimento(valor.toString());
+                //cadastroJogador.setDataNascimento(valor.toString());
                 break;
             case 5:
                 cadastroJogador.setPosicao(valor.toString());
@@ -107,7 +107,7 @@ public class JogadorTableModel extends AbstractTableModel{
         cadastroJogador.setNacionalidade(valor.getNacionalidade());
         cadastroJogador.setCpf(valor.getCpf());
         cadastroJogador.setSexo(valor.getSexo());
-        cadastroJogador.setDataNascimento(valor.getDataNascimento());
+        //cadastroJogador.setDataNascimento(valor.getDataNascimento());
         cadastroJogador.setPosicao(valor.getPosicao());
        
         
