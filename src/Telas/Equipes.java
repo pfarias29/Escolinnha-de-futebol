@@ -6,6 +6,7 @@ package Telas;
 
 import Classes.Equipe;
 import static Telas.Tecnicos.listaTecnicos;
+import java.awt.Cursor;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -163,6 +164,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnNovoEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/adicionar.png"))); // NOI18N
         btnNovoEquipe.setText("Novo");
+        btnNovoEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnNovoEquipeMouseEntered(evt);
+            }
+        });
         btnNovoEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoEquipeActionPerformed(evt);
@@ -171,6 +177,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnSalvarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/salvar1.png"))); // NOI18N
         btnSalvarEquipe.setText("Salvar");
+        btnSalvarEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalvarEquipeMouseEntered(evt);
+            }
+        });
         btnSalvarEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarEquipeActionPerformed(evt);
@@ -179,6 +190,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnCancelarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cancelar.png"))); // NOI18N
         btnCancelarEquipe.setText("Cancelar");
+        btnCancelarEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCancelarEquipeMouseEntered(evt);
+            }
+        });
         btnCancelarEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarEquipeActionPerformed(evt);
@@ -187,6 +203,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnEditarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Editar.png"))); // NOI18N
         btnEditarEquipe.setText("Editar");
+        btnEditarEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditarEquipeMouseEntered(evt);
+            }
+        });
         btnEditarEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarEquipeActionPerformed(evt);
@@ -195,6 +216,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnExcluirEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/deletar.png"))); // NOI18N
         btnExcluirEquipe.setText("Excluir");
+        btnExcluirEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnExcluirEquipeMouseEntered(evt);
+            }
+        });
         btnExcluirEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirEquipeActionPerformed(evt);
@@ -203,6 +229,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnPesquisarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Pesquisar.png"))); // NOI18N
         btnPesquisarEquipe.setText("Pesquisar");
+        btnPesquisarEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnPesquisarEquipeMouseEntered(evt);
+            }
+        });
         btnPesquisarEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPesquisarEquipeActionPerformed(evt);
@@ -241,6 +272,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnSairEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sair.png"))); // NOI18N
         btnSairEquipe.setText("Sair");
+        btnSairEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSairEquipeMouseEntered(evt);
+            }
+        });
         btnSairEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairEquipeActionPerformed(evt);
@@ -249,6 +285,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnVisualizarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/squad.png"))); // NOI18N
         btnVisualizarEquipe.setText("Visualizar Equipe");
+        btnVisualizarEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnVisualizarEquipeMouseEntered(evt);
+            }
+        });
         btnVisualizarEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVisualizarEquipeActionPerformed(evt);
@@ -563,6 +604,38 @@ public class Equipes extends javax.swing.JFrame {
     private void btnVisualizarEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarEquipeActionPerformed
         new DadosEquipe().setVisible(true);
     }//GEN-LAST:event_btnVisualizarEquipeActionPerformed
+
+    private void btnNovoEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoEquipeMouseEntered
+        btnNovoEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnNovoEquipeMouseEntered
+
+    private void btnSalvarEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarEquipeMouseEntered
+        btnSalvarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnSalvarEquipeMouseEntered
+
+    private void btnCancelarEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarEquipeMouseEntered
+        btnCancelarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnCancelarEquipeMouseEntered
+
+    private void btnEditarEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarEquipeMouseEntered
+        btnEditarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnEditarEquipeMouseEntered
+
+    private void btnExcluirEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExcluirEquipeMouseEntered
+        btnExcluirEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnExcluirEquipeMouseEntered
+
+    private void btnPesquisarEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPesquisarEquipeMouseEntered
+        btnPesquisarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnPesquisarEquipeMouseEntered
+
+    private void btnSairEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairEquipeMouseEntered
+        btnSairEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnSairEquipeMouseEntered
+
+    private void btnVisualizarEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVisualizarEquipeMouseEntered
+        btnVisualizarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnVisualizarEquipeMouseEntered
 
     /**
      * @param args the command line arguments

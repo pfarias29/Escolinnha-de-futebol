@@ -6,6 +6,12 @@ package Telas;
 
 import Classes.Arbitro;
 import java.awt.Cursor;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
@@ -26,6 +32,25 @@ public class Arbitros extends javax.swing.JFrame {
      */
     public Arbitros() {
         initComponents();
+        
+        File arquivo = new File("src/Dados/dadosArbitros.txt");
+        
+        try {
+            FileReader fr = new FileReader(arquivo);
+            BufferedReader br = new BufferedReader(fr);
+            
+            while(br.ready()) {
+                String[] linha = br.readLine().split(";");
+                Arbitro arbitro = new Arbitro(linha[0], linha[1], linha[2], linha[3], Integer.parseInt(linha[4]), linha[5]); 
+                arbitros.add(arbitro);
+            }            
+            
+        } catch(IOException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        carregarTabelaArbitros();
     }
     
     public void carregarTabelaArbitros(){
@@ -456,74 +481,120 @@ public class Arbitros extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Todos os campos devem ser inseridos", "Mensagem", JOptionPane.PLAIN_MESSAGE);
         }
         else{
-             String nome = txtNome.getText();
-             String sobrenome = txtSobrenome.getText();
-             String cpf = txtCpf.getText();
-             String sexo = txtSexo.getText();
-             String diaTecnico = String.valueOf(spnDia.getValue());
-             String mesTecnico = String.valueOf(spnMes.getValue());
-             String anoTecnico = String.valueOf(spnAno.getValue());
-             if(Integer.parseInt(diaTecnico)<10){
-                 diaTecnico="0"+diaTecnico;
-             }
-             if(Integer.parseInt(mesTecnico)<10){
-                 mesTecnico="0"+mesTecnico;
-             }
-             String dataNascimento = diaTecnico+"/"+mesTecnico+"/"+anoTecnico;
+            String nome = txtNome.getText();
+            String sobrenome = txtSobrenome.getText();
+            String cpf = txtCpf.getText();
+            String sexo = txtSexo.getText();
+            String diaTecnico = String.valueOf(spnDia.getValue());
+            String mesTecnico = String.valueOf(spnMes.getValue());
+            String anoTecnico = String.valueOf(spnAno.getValue());
+            if(Integer.parseInt(diaTecnico)<10){
+                diaTecnico="0"+diaTecnico;
+            }
+            if(Integer.parseInt(mesTecnico)<10){
+                mesTecnico="0"+mesTecnico;
+            }
+            String dataNascimento = diaTecnico+"/"+mesTecnico+"/"+anoTecnico;
              
-             DateTimeFormatter date =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
-             LocalDate dataNascimentoTecnico = LocalDate.parse(dataNascimento,date);
-             LocalDate dataAtual = LocalDate.now();
-             Period periodo = Period.between(dataNascimentoTecnico,dataAtual);
-             int idade = periodo.getYears();
-             
+            DateTimeFormatter date =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dataNascimentoTecnico = LocalDate.parse(dataNascimento,date);
+            LocalDate dataAtual = LocalDate.now();
+            Period periodo = Period.between(dataNascimentoTecnico,dataAtual);
+            int idade = periodo.getYears();
+            
+            File arquivo = new File("src/Dados/dadosArbitros.txt");             
 
-             if(botao.equals("novo")){
-                 Arbitro arbitro = new Arbitro(nome, sobrenome, cpf, sexo, idade, dataNascimento);
-                 arbitros.add(arbitro);
-                 JOptionPane.showMessageDialog(null, "Árbitro cadastrado com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
-             }
-             else if(botao.equals("editar")){
-                 int index = tblArbitros.getSelectedRow();
+            if(botao.equals("novo")){
+               Arbitro arbitro = new Arbitro(nome, sobrenome, cpf, sexo, idade, dataNascimento);
+               arbitros.add(arbitro);
+                              
+               try {
+                   FileWriter fw = new FileWriter(arquivo);
+                   BufferedWriter bw = new BufferedWriter(fw);
+                   
+                   bw.write(nome + ";" + sobrenome + ";" + cpf + ";" + 
+                           sexo + ";" + idade + ";" + dataNascimento);
+                   bw.newLine();
+                   
+                   bw.close();               
+               } catch(IOException e) {
+                   JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+                   return;
+               }
+            }
+            else if(botao.equals("editar")){
+                int index = tblArbitros.getSelectedRow();
+                
+                try {
+                    FileReader fr = new FileReader(arquivo);
+                    BufferedReader br = new BufferedReader(fr);
+                    
+                    ArrayList<String> temp = new ArrayList<>();
+                    
+                    for(int j = 0; br.ready(); j++) {
+                        if (j != index) {
+                            String linha = br.readLine();
+                            temp.add(linha);
+                        } else {
+                            temp.add(nome + ";" + sobrenome + ";" + cpf + ";" + 
+                                    sexo + ";" + idade + ";" + dataNascimento);
+                        }
+                    }
+                    br.close();
+                    
+                    FileWriter fw = new FileWriter(arquivo);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                                        
+                    for(int j = 0; j < temp.size(); j++) {
+                        bw.write(temp.get(j));
+                    }
+                    
+                    bw.close();
+                
+                } catch(IOException e) {
+                    JOptionPane.showMessageDialog(null, "Não foi pssível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                  
-                 arbitros.get(index).setNome(nome);
-                 arbitros.get(index).setSobrenome(sobrenome);
-                 arbitros.get(index).setCpf(cpf);
-                 arbitros.get(index).setSexo(sexo);
-                 arbitros.get(index).setIdade(idade);
-                 arbitros.get(index).setDataNascimento(dataNascimento);
+                arbitros.get(index).setNome(nome);
+                arbitros.get(index).setSobrenome(sobrenome);
+                arbitros.get(index).setCpf(cpf);
+                arbitros.get(index).setSexo(sexo);
+                arbitros.get(index).setIdade(idade);
+                arbitros.get(index).setDataNascimento(dataNascimento);
              }
 
-             //Carregar os dados do gerente na tabela
-             carregarTabelaArbitros();
+            //Carregar os dados do gerente na tabela
+            carregarTabelaArbitros();
+            JOptionPane.showMessageDialog(null, "Árbitro cadastrado com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
              
-             //Limpar os campos
-             txtNome.setText("");
-             txtSobrenome.setText("");
-             txtCpf.setText("");
-             txtSexo.setText("");
-             spnDia.setValue(1);
-             spnMes.setValue(1);
-             spnAno.setValue(2023);
+            //Limpar os campos
+            txtNome.setText("");
+            txtSobrenome.setText("");
+            txtCpf.setText("");
+            txtSexo.setText("");
+            spnDia.setValue(1);
+            spnMes.setValue(1);
+            spnAno.setValue(2023);
 
 
-             //Habilitar ou desabiltiar botões
-             btnNovo.setEnabled(true);
-             btnSalvar.setEnabled(false);
-             btnCancelar.setEnabled(false);
-             btnEditar.setEnabled(false);
-             btnExcluir.setEnabled(false);
-             btnPesquisar.setEnabled(true);
-             btnOkPesquisar.setEnabled(false);
+            //Habilitar ou desabiltiar botões
+            btnNovo.setEnabled(true);
+            btnSalvar.setEnabled(false);
+            btnCancelar.setEnabled(false);
+            btnEditar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+            btnPesquisar.setEnabled(true);
+            btnOkPesquisar.setEnabled(false);
 
-             //Habilitar ou desabilitar campos de texto
-             txtNome.setEnabled(false);
-             txtSobrenome.setEnabled(false);
-             txtCpf.setEnabled(false);
-             txtSexo.setEnabled(false);
-             spnDia.setEnabled(false);
-             spnMes.setEnabled(false);
-             spnAno.setEnabled(false);
+            //Habilitar ou desabilitar campos de texto
+            txtNome.setEnabled(false);
+            txtSobrenome.setEnabled(false);
+            txtCpf.setEnabled(false);
+            txtSexo.setEnabled(false);
+            spnDia.setEnabled(false);
+            spnMes.setEnabled(false);
+            spnAno.setEnabled(false);
         }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
@@ -601,9 +672,40 @@ public class Arbitros extends javax.swing.JFrame {
         int i = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esse árbitro?", "Atenção!", JOptionPane.WARNING_MESSAGE);
         
         if (i == 0) {
-            arbitros.remove(tblArbitros.getSelectedRow());
-            carregarTabelaArbitros();
+            i = tblArbitros.getSelectedRow();
             
+            File arquivo = new File("src/Dados/dadosArbitros.txt");
+            ArrayList<String> temp = new ArrayList<>();
+            
+            try {
+               FileReader fr = new FileReader(arquivo);
+               BufferedReader br = new BufferedReader(fr);
+               
+               for (int j = 0; br.ready(); j++) {
+                   if (j != i) {
+                       String linha = br.readLine();
+                       temp.add(linha);
+                   } else {
+                       br.readLine();
+                   }
+               }
+               
+               br.close();
+               
+               FileWriter fw = new FileWriter(arquivo);
+               BufferedWriter bw = new BufferedWriter(fw);
+               
+               for (int j = 0; j < temp.size(); j++) {
+                   bw.write(temp.get(j));
+                   bw.newLine();
+               }
+               
+               bw.close();   
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
             txtNome.setText("");
             txtSobrenome.setText("");
             txtCpf.setText("");
@@ -611,6 +713,9 @@ public class Arbitros extends javax.swing.JFrame {
             spnDia.setValue(1);
             spnMes.setValue(1);
             spnAno.setValue(2023);
+            
+            arbitros.remove(i);
+            carregarTabelaArbitros();
         }
         
         tblArbitros.clearSelection();
