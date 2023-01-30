@@ -26,6 +26,7 @@ public class Campeonatos extends javax.swing.JFrame {
 
     private ArrayList<Campeonato> campeonatos = new ArrayList<>();
     private String botao;
+    
     /**
      * Creates new form Campeonatos
      */
@@ -432,6 +433,19 @@ public class Campeonatos extends javax.swing.JFrame {
     private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
         String nome = campeonatos.get(tblCampeonatos.getSelectedRow()).getNomeCampeonato();
         DadosCampeonato dadosCampeonato = new DadosCampeonato();
+        
+        File arquivo = new File("src/Dados/nomeEquipe.txt");
+         try {
+             FileWriter fw = new FileWriter(arquivo);
+             BufferedWriter bw = new BufferedWriter(fw);
+             
+             bw.write(nome);
+             
+             bw.close();
+         } catch(IOException e) {
+             JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+         }
+        
         dadosCampeonato.nomeCampeonato = nome;
         dadosCampeonato.setVisible(true);
     }//GEN-LAST:event_btnVisualizarActionPerformed
@@ -643,7 +657,7 @@ public class Campeonatos extends javax.swing.JFrame {
         btnEditar.setEnabled(false);
         btnVisualizar.setEnabled(false);
         
-        txtNome.setEnabled(true);
+        txtNome.setEnabled(false);
         txtEndereco.setEnabled(true);
         spnDiaInicio.setEnabled(true);
         spnMesInicio.setEnabled(true);
