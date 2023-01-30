@@ -4,17 +4,81 @@
  */
 package Telas;
 
+import Classes.Pessoa;
+import Classes.Tecnico;
+import java.awt.Cursor;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author felip
  */
 public class Tecnicos extends javax.swing.JFrame {
-
+    
+    static ArrayList<Tecnico> listaTecnicos;
+    String botão;
+    
     /**
      * Creates new form Tecnicos
      */
     public Tecnicos() {
         initComponents();
+        listaTecnicos = new ArrayList();
+        
+        setLocationRelativeTo(null);
+        
+        //Habilitar ou desabilitar funções
+        btnNovoTecnico.setEnabled(true);
+        btnSalvarTecnico.setEnabled(false);
+        btnCancelarTecnico.setEnabled(false);
+        btnEditarTecnico.setEnabled(false);
+        btnExcluirTecnico.setEnabled(false);
+        btnPesquisarTecnico.setEnabled(true);
+        btnOKTecnico.setEnabled(false);
+        
+        //Habilitar ou desabilitar campos de textos
+        txtNomeTecnicos.setEnabled(false);
+        txtSobrenomeTecnicos.setEnabled(false);
+        txtCPFTecnicos.setEnabled(false);
+        txtSexoTecnicos.setEnabled(false);
+        spnDiaTecnicos.setEnabled(false);
+        spnMesTecnicos.setEnabled(false);
+        spnAnoTecnicos.setEnabled(false);
+    }
+
+    //Carregar a tabela com tecnicos da lista
+    public void carregarTabelaTecnicos(){
+        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Nome", "Sobrenome", "CPF", "Idade", "Sexo","Data Nascimento"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        for(int i=0;i<listaTecnicos.size();i++){
+            Object linha[] = new Object[] {listaTecnicos.get(i).getNome(),
+                                           listaTecnicos.get(i).getSobrenome(),
+                                           listaTecnicos.get(i).getCpf(),
+                                           listaTecnicos.get(i).getIdade(),
+                                           listaTecnicos.get(i).getSexo(),
+                                           listaTecnicos.get(i).getDataNascimento()};
+            modelo.addRow(linha);
+        }
+        
+        //Tabela recebe modelo
+        tblTecnicos.setModel(modelo);
+        
+        tblTecnicos.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tblTecnicos.getColumnModel().getColumn(1).setPreferredWidth(20);
+        tblTecnicos.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tblTecnicos.getColumnModel().getColumn(3).setPreferredWidth(50);
+        tblTecnicos.getColumnModel().getColumn(4).setPreferredWidth(50);
+        tblTecnicos.getColumnModel().getColumn(5).setPreferredWidth(50);
     }
 
     /**
@@ -34,10 +98,10 @@ public class Tecnicos extends javax.swing.JFrame {
         lblIdadeTecnicos = new javax.swing.JLabel();
         lblSexoTecnicos = new javax.swing.JLabel();
         txtSexoTecnicos = new javax.swing.JTextField();
-        btnPesquisarTecnicos = new javax.swing.JButton();
-        spnMes = new javax.swing.JSpinner();
-        spnAno = new javax.swing.JSpinner();
-        spnDia = new javax.swing.JSpinner();
+        btnOKTecnico = new javax.swing.JButton();
+        spnMesTecnicos = new javax.swing.JSpinner();
+        spnAnoTecnicos = new javax.swing.JSpinner();
+        spnDiaTecnicos = new javax.swing.JSpinner();
         btnNovoTecnico = new javax.swing.JButton();
         btnSalvarTecnico = new javax.swing.JButton();
         btnCancelarTecnico = new javax.swing.JButton();
@@ -66,13 +130,18 @@ public class Tecnicos extends javax.swing.JFrame {
 
         lblSexoTecnicos.setText("Sexo:");
 
-        btnPesquisarTecnicos.setText("Pesquisar");
+        btnOKTecnico.setText("OK");
+        btnOKTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOKTecnicoActionPerformed(evt);
+            }
+        });
 
-        spnMes.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+        spnMesTecnicos.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
 
-        spnAno.setModel(new javax.swing.SpinnerNumberModel(2023, null, 2023, 1));
+        spnAnoTecnicos.setModel(new javax.swing.SpinnerNumberModel(2023, null, 2023, 1));
 
-        spnDia.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+        spnDiaTecnicos.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
 
         javax.swing.GroupLayout pnlTecnicosLayout = new javax.swing.GroupLayout(pnlTecnicos);
         pnlTecnicos.setLayout(pnlTecnicosLayout);
@@ -84,11 +153,11 @@ public class Tecnicos extends javax.swing.JFrame {
                     .addGroup(pnlTecnicosLayout.createSequentialGroup()
                         .addComponent(lblIdadeTecnicos)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(spnDia, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spnDiaTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spnMesTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(spnAno))
+                        .addComponent(spnAnoTecnicos))
                     .addGroup(pnlTecnicosLayout.createSequentialGroup()
                         .addGroup(pnlTecnicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSobrenomeTecnicos)
@@ -98,7 +167,7 @@ public class Tecnicos extends javax.swing.JFrame {
                             .addGroup(pnlTecnicosLayout.createSequentialGroup()
                                 .addComponent(txtCPFTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(btnPesquisarTecnicos))
+                                .addComponent(btnOKTecnico))
                             .addComponent(txtSobrenomeTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(pnlTecnicosLayout.createSequentialGroup()
                         .addComponent(lblSexoTecnicos)
@@ -125,13 +194,13 @@ public class Tecnicos extends javax.swing.JFrame {
                 .addGroup(pnlTecnicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCPFTecnicos)
                     .addComponent(txtCPFTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPesquisarTecnicos))
+                    .addComponent(btnOKTecnico))
                 .addGap(18, 18, 18)
                 .addGroup(pnlTecnicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblIdadeTecnicos)
-                    .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spnAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(spnDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(spnMesTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spnAnoTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(spnDiaTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlTecnicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSexoTecnicos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -141,35 +210,95 @@ public class Tecnicos extends javax.swing.JFrame {
 
         btnNovoTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/adicionar.png"))); // NOI18N
         btnNovoTecnico.setText("Novo");
+        btnNovoTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnNovoTecnicoMouseEntered(evt);
+            }
+        });
+        btnNovoTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoTecnicoActionPerformed(evt);
+            }
+        });
 
         btnSalvarTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Salvar.png"))); // NOI18N
         btnSalvarTecnico.setText("Salvar");
+        btnSalvarTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalvarTecnicoMouseEntered(evt);
+            }
+        });
+        btnSalvarTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarTecnicoActionPerformed(evt);
+            }
+        });
 
         btnCancelarTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cancelar.png"))); // NOI18N
         btnCancelarTecnico.setText("Cancelar");
+        btnCancelarTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCancelarTecnicoMouseEntered(evt);
+            }
+        });
+        btnCancelarTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarTecnicoActionPerformed(evt);
+            }
+        });
 
         btnEditarTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/editarCliente.png"))); // NOI18N
         btnEditarTecnico.setText("Editar");
+        btnEditarTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditarTecnicoMouseEntered(evt);
+            }
+        });
+        btnEditarTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarTecnicoActionPerformed(evt);
+            }
+        });
 
         btnExcluirTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/excluirCliente.png"))); // NOI18N
         btnExcluirTecnico.setText("Excluir");
+        btnExcluirTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnExcluirTecnicoMouseEntered(evt);
+            }
+        });
+        btnExcluirTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirTecnicoActionPerformed(evt);
+            }
+        });
 
         btnPesquisarTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Pesquisar.png"))); // NOI18N
         btnPesquisarTecnico.setText("Pesquisar");
+        btnPesquisarTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnPesquisarTecnicoMouseEntered(evt);
+            }
+        });
+        btnPesquisarTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarTecnicoActionPerformed(evt);
+            }
+        });
 
         tblTecnicos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome", "Sobrenome", "CPF", "Idade", "Sexo"
+                "Nome", "Sobrenome", "CPF", "Idade", "Sexo", "Data de Nascimento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -180,10 +309,26 @@ public class Tecnicos extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblTecnicos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblTecnicosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblTecnicos);
 
         btnSairTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sair.png"))); // NOI18N
         btnSairTecnico.setText("Sair");
+        btnSairTecnico.setToolTipText("Sair da tela de Técnicos");
+        btnSairTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSairTecnicoMouseEntered(evt);
+            }
+        });
+        btnSairTecnico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairTecnicoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -236,6 +381,360 @@ public class Tecnicos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalvarTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarTecnicoActionPerformed
+        if(txtNomeTecnicos.getText().equals("") || txtSobrenomeTecnicos.getText().equals("") || txtCPFTecnicos.getText().equals("") || txtSexoTecnicos.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Todos os campos devem ser inseridos", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+        }
+        else{
+             String nome = txtNomeTecnicos.getText();
+             String sobrenome = txtSobrenomeTecnicos.getText();
+             String cpf = txtCPFTecnicos.getText();
+             String sexo = txtSexoTecnicos.getText();
+             String diaTecnico = String.valueOf(spnDiaTecnicos.getValue());
+             String mesTecnico = String.valueOf(spnMesTecnicos.getValue());
+             String anoTecnico = String.valueOf(spnAnoTecnicos.getValue());
+             if(Integer.parseInt(diaTecnico)<10){
+                 diaTecnico="0"+diaTecnico;
+             }
+             if(Integer.parseInt(mesTecnico)<10){
+                 mesTecnico="0"+mesTecnico;
+             }
+             String dataNascimento = diaTecnico+"/"+mesTecnico+"/"+anoTecnico;
+             
+             DateTimeFormatter date =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+             LocalDate dataNascimentoTecnico = LocalDate.parse(dataNascimento,date);
+             LocalDate dataAtual = LocalDate.now();
+             Period periodo = Period.between(dataNascimentoTecnico,dataAtual);
+             int idade = periodo.getYears();
+             
+
+             if(botão.equals("novo")){
+                 Tecnico tecnico = new Tecnico(nome,sobrenome,cpf,sexo,idade,dataNascimento);
+                 listaTecnicos.add(tecnico);
+                 JOptionPane.showMessageDialog(null, "Técnico cadastrado com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+             }
+             else if(botão.equals("editar")){
+                 int index = tblTecnicos.getSelectedRow();
+                 
+                 listaTecnicos.get(index).setNome(nome);
+                 listaTecnicos.get(index).setSobrenome(sobrenome);
+                 listaTecnicos.get(index).setCpf(cpf);
+                 listaTecnicos.get(index).setSexo(sexo);
+                 listaTecnicos.get(index).setIdade(idade);
+                 listaTecnicos.get(index).setDataNascimento(dataNascimento);
+             }
+
+             //Carregar os dados do gerente na tabela
+             carregarTabelaTecnicos();
+             
+             //Limpar os campos
+             txtNomeTecnicos.setText("");
+             txtSobrenomeTecnicos.setText("");
+             txtCPFTecnicos.setText("");
+             txtSexoTecnicos.setText("");
+             spnDiaTecnicos.setValue(1);
+             spnMesTecnicos.setValue(1);
+             spnAnoTecnicos.setValue(2023);
+
+
+             //Habilitar ou desabiltiar botões
+             btnNovoTecnico.setEnabled(true);
+             btnSalvarTecnico.setEnabled(false);
+             btnCancelarTecnico.setEnabled(false);
+             btnEditarTecnico.setEnabled(false);
+             btnExcluirTecnico.setEnabled(false);
+             btnPesquisarTecnico.setEnabled(true);
+             btnOKTecnico.setEnabled(false);
+
+             //Habilitar ou desabilitar campos de texto
+             txtNomeTecnicos.setEnabled(false);
+             txtSobrenomeTecnicos.setEnabled(false);
+             txtCPFTecnicos.setEnabled(false);
+             txtSexoTecnicos.setEnabled(false);
+             spnDiaTecnicos.setEnabled(false);
+             spnMesTecnicos.setEnabled(false);
+             spnAnoTecnicos.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnSalvarTecnicoActionPerformed
+    private void btnSairTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairTecnicoActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnSairTecnicoActionPerformed
+       
+    private void btnNovoTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoTecnicoActionPerformed
+        botão = "novo";
+        //Limpar os campos
+        txtNomeTecnicos.setText("");
+        txtSobrenomeTecnicos.setText("");
+        txtCPFTecnicos.setText("");
+        txtSexoTecnicos.setText("");
+        spnDiaTecnicos.setValue(1);
+        spnMesTecnicos.setValue(1);
+        spnAnoTecnicos.setValue(2023);
+
+        //Habilitar ou desabilitar botões
+        btnNovoTecnico.setEnabled(false);
+        btnSalvarTecnico.setEnabled(true);
+        btnCancelarTecnico.setEnabled(true);
+        btnEditarTecnico.setEnabled(false);
+        btnExcluirTecnico.setEnabled(false);
+        btnPesquisarTecnico.setEnabled(false);
+        btnOKTecnico.setEnabled(false);
+        
+        //Habilitar ou desabilitar campos de texto
+        txtNomeTecnicos.setEnabled(true);
+        txtSobrenomeTecnicos.setEnabled(true);
+        txtCPFTecnicos.setEnabled(true);
+        txtSexoTecnicos.setEnabled(true);
+        spnDiaTecnicos.setEnabled(true);
+        spnMesTecnicos.setEnabled(true);
+        spnAnoTecnicos.setEnabled(true);
+        
+        //Deixar cursor no txtcódigo
+        txtNomeTecnicos.requestFocus();
+    }//GEN-LAST:event_btnNovoTecnicoActionPerformed
+
+    private void btnCancelarTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarTecnicoActionPerformed
+        //Limpar os campos
+        txtNomeTecnicos.setText("");
+        txtSobrenomeTecnicos.setText("");
+        txtCPFTecnicos.setText("");
+        txtSexoTecnicos.setText("");
+        spnDiaTecnicos.setValue(1);
+        spnMesTecnicos.setValue(1);
+        spnAnoTecnicos.setValue(2023);
+        
+
+        //Habilitar ou desabiltiar botões
+        btnNovoTecnico.setEnabled(true);
+        btnSalvarTecnico.setEnabled(false);
+        btnCancelarTecnico.setEnabled(false);
+        btnEditarTecnico.setEnabled(false);
+        btnExcluirTecnico.setEnabled(false);
+        btnPesquisarTecnico.setEnabled(true);
+        btnOKTecnico.setEnabled(false);
+        
+        //Habilitar ou desabilitar campos de texto
+        txtNomeTecnicos.setEnabled(false);
+        txtSobrenomeTecnicos.setEnabled(false);
+        txtCPFTecnicos.setEnabled(false);
+        txtSexoTecnicos.setEnabled(false);
+        spnDiaTecnicos.setEnabled(false);
+        spnMesTecnicos.setEnabled(false);
+        spnAnoTecnicos.setEnabled(false);
+    }//GEN-LAST:event_btnCancelarTecnicoActionPerformed
+
+    private void tblTecnicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblTecnicosMouseClicked
+        int i = tblTecnicos.getSelectedRow();
+        
+        if(i>=0 && i<listaTecnicos.size()){
+            Tecnico tecnico = listaTecnicos.get(i);
+            String data = tecnico.getDataNascimento();
+            String dia = data.split("/")[0];
+            String mes = data.split("/")[1];
+            String ano = data.split("/")[2];
+            txtNomeTecnicos.setText(String.valueOf(tecnico.getNome()));
+            txtSobrenomeTecnicos.setText(String.valueOf(tecnico.getSobrenome()));
+            txtCPFTecnicos.setText(String.valueOf(tecnico.getCpf()));
+            txtSexoTecnicos.setText(String.valueOf(tecnico.getSexo()));
+            spnDiaTecnicos.setValue(Integer.parseInt(dia));
+            spnMesTecnicos.setValue(Integer.parseInt(mes));
+            spnAnoTecnicos.setValue(Integer.parseInt(ano));
+        }
+        
+        //Habilitar ou desabiltiar botões
+        btnNovoTecnico.setEnabled(true);
+        btnSalvarTecnico.setEnabled(false);
+        btnCancelarTecnico.setEnabled(false);
+        btnEditarTecnico.setEnabled(true);
+        btnExcluirTecnico.setEnabled(true);
+        btnPesquisarTecnico.setEnabled(true);
+        btnOKTecnico.setEnabled(false);
+        
+        //Habilitar ou desabilitar campos de texto
+        txtNomeTecnicos.setEnabled(false);
+        txtSobrenomeTecnicos.setEnabled(false);
+        txtCPFTecnicos.setEnabled(false);
+        txtSexoTecnicos.setEnabled(false);
+        spnDiaTecnicos.setEnabled(false);
+        spnMesTecnicos.setEnabled(false);
+        spnAnoTecnicos.setEnabled(false);
+    }//GEN-LAST:event_tblTecnicosMouseClicked
+
+    private void btnEditarTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarTecnicoActionPerformed
+        botão = "editar";
+        
+        //Habilitar ou desabiltiar botões
+        btnNovoTecnico.setEnabled(false);
+        btnSalvarTecnico.setEnabled(true);
+        btnCancelarTecnico.setEnabled(true);
+        btnEditarTecnico.setEnabled(false);
+        btnExcluirTecnico.setEnabled(false);
+        btnPesquisarTecnico.setEnabled(false);
+        btnOKTecnico.setEnabled(false);
+        
+        //Habilitar ou desabilitar campos de texto
+        txtNomeTecnicos.setEnabled(true);
+        txtSobrenomeTecnicos.setEnabled(true);
+        txtCPFTecnicos.setEnabled(true);
+        txtSexoTecnicos.setEnabled(true);
+        spnDiaTecnicos.setEnabled(true);
+        spnMesTecnicos.setEnabled(true);
+        spnAnoTecnicos.setEnabled(true);
+        
+        txtNomeTecnicos.requestFocus();
+    }//GEN-LAST:event_btnEditarTecnicoActionPerformed
+
+    private void btnExcluirTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirTecnicoActionPerformed
+        int index = tblTecnicos.getSelectedRow();
+        
+        if(index>=0 && index<listaTecnicos.size()){
+            listaTecnicos.remove(index);
+        }
+        
+        carregarTabelaTecnicos();
+        
+        //Limpar os campos
+        txtNomeTecnicos.setText("");
+        txtSobrenomeTecnicos.setText("");
+        txtCPFTecnicos.setText("");
+        txtSexoTecnicos.setText("");
+        spnDiaTecnicos.setValue(1);
+        spnMesTecnicos.setValue(1);
+        spnAnoTecnicos.setValue(2023);
+        
+
+        //Habilitar ou desabiltiar botões
+        btnNovoTecnico.setEnabled(true);
+        btnSalvarTecnico.setEnabled(false);
+        btnCancelarTecnico.setEnabled(false);
+        btnEditarTecnico.setEnabled(false);
+        btnExcluirTecnico.setEnabled(false);
+        btnPesquisarTecnico.setEnabled(true);
+        btnOKTecnico.setEnabled(false);
+        
+        //Habilitar ou desabilitar campos de texto
+        txtNomeTecnicos.setEnabled(false);
+        txtSobrenomeTecnicos.setEnabled(false);
+        txtCPFTecnicos.setEnabled(false);
+        txtSexoTecnicos.setEnabled(false);
+        spnDiaTecnicos.setEnabled(false);
+        spnMesTecnicos.setEnabled(false);
+        spnAnoTecnicos.setEnabled(false);
+    }//GEN-LAST:event_btnExcluirTecnicoActionPerformed
+
+    private void btnPesquisarTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarTecnicoActionPerformed
+        if(listaTecnicos.isEmpty()){
+            JOptionPane.showMessageDialog(null,"Nenhum tecnico está cadastrado", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+        }
+        else{
+            //Limpar os campos
+            txtNomeTecnicos.setText("");
+            txtSobrenomeTecnicos.setText("");
+            txtCPFTecnicos.setText("");
+            txtSexoTecnicos.setText("");
+            spnDiaTecnicos.setValue(1);
+            spnMesTecnicos.setValue(1);
+            spnAnoTecnicos.setValue(2023);
+
+
+           //Habilitar ou desabiltiar botões
+           btnNovoTecnico.setEnabled(false);
+           btnSalvarTecnico.setEnabled(false);
+           btnCancelarTecnico.setEnabled(true);
+           btnEditarTecnico.setEnabled(false);
+           btnExcluirTecnico.setEnabled(false);
+           btnPesquisarTecnico.setEnabled(false);
+           btnOKTecnico.setEnabled(true);
+
+           //Habilitar ou desabilitar campos de texto
+            txtNomeTecnicos.setEnabled(false);
+            txtSobrenomeTecnicos.setEnabled(false);
+            txtCPFTecnicos.setEnabled(true);
+            txtSexoTecnicos.setEnabled(false);
+            spnDiaTecnicos.setEnabled(false);
+            spnMesTecnicos.setEnabled(false);
+            spnAnoTecnicos.setEnabled(false);
+
+           txtCPFTecnicos.requestFocus();   
+        }
+    }//GEN-LAST:event_btnPesquisarTecnicoActionPerformed
+
+    private void btnOKTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKTecnicoActionPerformed
+        if(txtCPFTecnicos.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "O cpf deve ser informado", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+        }
+        else{
+            Tecnico tecnico;
+            String nome = "",sobrenome = "",cpf = "",sexo = "",dia="",mes="",ano="";
+            String cpfTecnico = txtCPFTecnicos.getText();
+            for(int i=0;i<listaTecnicos.size();i++){
+                tecnico = listaTecnicos.get(i);
+                if(cpfTecnico.equals(tecnico.getCpf())){
+                    String data = tecnico.getDataNascimento();
+                    dia = data.split("/")[0];
+                    mes = data.split("/")[1];
+                    ano = data.split("/")[2];
+                    nome = tecnico.getNome();
+                    sobrenome = tecnico.getSobrenome();
+                    sexo = tecnico.getSexo();
+                    cpf = tecnico.getCpf();
+                }
+            }
+            
+            if(cpf.equals("")){
+                JOptionPane.showMessageDialog(null, "Este tecnico não existe", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+                //Limpar os campos
+                txtNomeTecnicos.setText("");
+                txtSobrenomeTecnicos.setText("");
+                txtCPFTecnicos.setText("");
+                txtSexoTecnicos.setText("");
+                spnDiaTecnicos.setValue(1);
+                spnMesTecnicos.setValue(1);
+                spnAnoTecnicos.setValue(2023);
+            }
+            else{
+                txtNomeTecnicos.setText(nome);
+                txtSobrenomeTecnicos.setText(sobrenome);
+                txtSexoTecnicos.setText(sexo);
+                txtCPFTecnicos.setText(cpf);
+                spnDiaTecnicos.setValue(Integer.parseInt(dia));
+                spnMesTecnicos.setValue(Integer.parseInt(mes));
+                spnAnoTecnicos.setValue(Integer.parseInt(ano));
+            }
+            
+            txtCPFTecnicos.selectAll();
+            txtCPFTecnicos.requestFocus();
+        }
+    }//GEN-LAST:event_btnOKTecnicoActionPerformed
+
+    private void btnNovoTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoTecnicoMouseEntered
+        btnNovoTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnNovoTecnicoMouseEntered
+
+    private void btnSalvarTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarTecnicoMouseEntered
+        btnSalvarTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnSalvarTecnicoMouseEntered
+
+    private void btnCancelarTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarTecnicoMouseEntered
+        btnCancelarTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnCancelarTecnicoMouseEntered
+
+    private void btnEditarTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarTecnicoMouseEntered
+        btnEditarTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnEditarTecnicoMouseEntered
+
+    private void btnExcluirTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExcluirTecnicoMouseEntered
+        btnExcluirTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnExcluirTecnicoMouseEntered
+
+    private void btnPesquisarTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPesquisarTecnicoMouseEntered
+        btnPesquisarTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnPesquisarTecnicoMouseEntered
+
+    private void btnSairTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairTecnicoMouseEntered
+        btnSairTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnSairTecnicoMouseEntered
+
     /**
      * @param args the command line arguments
      */
@@ -276,8 +775,8 @@ public class Tecnicos extends javax.swing.JFrame {
     private javax.swing.JButton btnEditarTecnico;
     private javax.swing.JButton btnExcluirTecnico;
     private javax.swing.JButton btnNovoTecnico;
+    private javax.swing.JButton btnOKTecnico;
     private javax.swing.JButton btnPesquisarTecnico;
-    private javax.swing.JButton btnPesquisarTecnicos;
     private javax.swing.JButton btnSairTecnico;
     private javax.swing.JButton btnSalvarTecnico;
     private javax.swing.JScrollPane jScrollPane1;
@@ -287,9 +786,9 @@ public class Tecnicos extends javax.swing.JFrame {
     private javax.swing.JLabel lblSexoTecnicos;
     private javax.swing.JLabel lblSobrenomeTecnicos;
     private javax.swing.JPanel pnlTecnicos;
-    private javax.swing.JSpinner spnAno;
-    private javax.swing.JSpinner spnDia;
-    private javax.swing.JSpinner spnMes;
+    private javax.swing.JSpinner spnAnoTecnicos;
+    private javax.swing.JSpinner spnDiaTecnicos;
+    private javax.swing.JSpinner spnMesTecnicos;
     private javax.swing.JTable tblTecnicos;
     private javax.swing.JTextField txtCPFTecnicos;
     private javax.swing.JTextField txtNomeTecnicos;

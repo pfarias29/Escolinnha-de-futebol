@@ -105,11 +105,11 @@
                       <Group type="102" attributes="0">
                           <Component id="lblIdadeTecnicos" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="spnDia" min="-2" pref="52" max="-2" attributes="0"/>
+                          <Component id="spnDiaTecnicos" min="-2" pref="52" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="spnMes" min="-2" max="-2" attributes="0"/>
+                          <Component id="spnMesTecnicos" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="spnAno" max="32767" attributes="0"/>
+                          <Component id="spnAnoTecnicos" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -121,7 +121,7 @@
                               <Group type="102" attributes="0">
                                   <Component id="txtCPFTecnicos" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="btnPesquisarTecnicos" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnOKTecnico" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="txtSobrenomeTecnicos" alignment="1" min="-2" pref="248" max="-2" attributes="0"/>
                           </Group>
@@ -158,14 +158,14 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblCPFTecnicos" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtCPFTecnicos" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="btnPesquisarTecnicos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnOKTecnico" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="lblIdadeTecnicos" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="spnMes" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="spnAno" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="spnDia" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="spnMesTecnicos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="spnAnoTecnicos" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="spnDiaTecnicos" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -211,26 +211,29 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtSexoTecnicos">
         </Component>
-        <Component class="javax.swing.JButton" name="btnPesquisarTecnicos">
+        <Component class="javax.swing.JButton" name="btnOKTecnico">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Pesquisar"/>
+            <Property name="text" type="java.lang.String" value="OK"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOKTecnicoActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JSpinner" name="spnMes">
+        <Component class="javax.swing.JSpinner" name="spnMesTecnicos">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" maximum="12" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="spnAno">
+        <Component class="javax.swing.JSpinner" name="spnAnoTecnicos">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="2023" maximum="2023" numberType="java.lang.Integer" stepSize="1" type="number"/>
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JSpinner" name="spnDia">
+        <Component class="javax.swing.JSpinner" name="spnDiaTecnicos">
           <Properties>
             <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
               <SpinnerModel initial="1" maximum="31" minimum="1" numberType="java.lang.Integer" stepSize="1" type="number"/>
@@ -246,6 +249,10 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Novo"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnNovoTecnicoMouseEntered"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnNovoTecnicoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSalvarTecnico">
       <Properties>
@@ -254,6 +261,10 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Salvar"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSalvarTecnicoMouseEntered"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarTecnicoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnCancelarTecnico">
       <Properties>
@@ -262,6 +273,10 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCancelarTecnicoMouseEntered"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarTecnicoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnEditarTecnico">
       <Properties>
@@ -270,6 +285,10 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Editar"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEditarTecnicoMouseEntered"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEditarTecnicoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnExcluirTecnico">
       <Properties>
@@ -278,6 +297,10 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Excluir"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnExcluirTecnicoMouseEntered"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirTecnicoActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnPesquisarTecnico">
       <Properties>
@@ -286,6 +309,10 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Pesquisar"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnPesquisarTecnicoMouseEntered"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPesquisarTecnicoActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
 
@@ -294,16 +321,22 @@
         <Component class="javax.swing.JTable" name="tblTecnicos">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="5" rowCount="0">
+              <Table columnCount="6" rowCount="0">
                 <Column editable="false" title="Nome" type="java.lang.String"/>
                 <Column editable="false" title="Sobrenome" type="java.lang.String"/>
                 <Column editable="false" title="CPF" type="java.lang.String"/>
                 <Column editable="false" title="Idade" type="java.lang.Integer"/>
                 <Column editable="false" title="Sexo" type="java.lang.String"/>
+                <Column editable="false" title="Data de Nascimento" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -335,6 +368,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblTecnicosMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -344,7 +380,12 @@
           <Image iconType="3" name="/Images/sair.png"/>
         </Property>
         <Property name="text" type="java.lang.String" value="Sair"/>
+        <Property name="toolTipText" type="java.lang.String" value="Sair da tela de T&#xe9;cnicos"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSairTecnicoMouseEntered"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSairTecnicoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

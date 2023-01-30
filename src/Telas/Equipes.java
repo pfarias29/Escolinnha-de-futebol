@@ -543,7 +543,7 @@ public class Equipes extends javax.swing.JFrame {
             }
             
             if(nome.equals("")){
-                JOptionPane.showMessageDialog(null, "Este tecnico não existe", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Esta equipe não existe", "Mensagem", JOptionPane.PLAIN_MESSAGE);
                 //Limpar os campos
                 txtNomeEquipe.setText("");
                 cbCategoriaEquipe.setSelectedIndex(0);

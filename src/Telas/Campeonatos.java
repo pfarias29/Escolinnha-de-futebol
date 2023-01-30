@@ -4,7 +4,19 @@
  */
 package Telas;
 
+import Classes.Campeonato;
 import java.awt.Cursor;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,11 +24,60 @@ import java.awt.Cursor;
  */
 public class Campeonatos extends javax.swing.JFrame {
 
+    private ArrayList<Campeonato> campeonatos = new ArrayList<>();
+    private String botao;
     /**
      * Creates new form Campeonatos
      */
     public Campeonatos() {
         initComponents();
+        
+        File arquivo = new File("src/Dados/dadosCampeonatos.txt");
+                
+        try {
+            FileReader fr = new FileReader(arquivo);
+            BufferedReader br = new BufferedReader(fr);
+            
+            while(br.ready()) {
+                String[] linha = br.readLine().split(";");
+                Campeonato campeonato = new Campeonato(linha[0], linha[1], linha[2], linha[3], linha[4], linha[5], linha[6]);
+                campeonatos.add(campeonato);
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }       
+        
+        carregarTabelaCampeonatos();
+    }
+    
+    public void carregarTabelaCampeonatos(){
+        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Nome", "Início", "Término", "Sexo", "Caegoria", "Vencedor"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        for(int i=0; i < campeonatos.size(); i++){
+            Object linha[] = new Object[] {campeonatos.get(i).getNomeCampeonato(),
+                                           campeonatos.get(i).getDataInicio(),
+                                           campeonatos.get(i).getDataFinal(),
+                                           campeonatos.get(i).getSexo(),
+                                           campeonatos.get(i).getCategoria(),
+                                           campeonatos.get(i).getVencedor()};
+            modelo.addRow(linha);
+        }
+        
+        //Tabela recebe modelo
+        tblCampeonatos.setModel(modelo);
+        
+        tblCampeonatos.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tblCampeonatos.getColumnModel().getColumn(1).setPreferredWidth(20);
+        tblCampeonatos.getColumnModel().getColumn(2).setPreferredWidth(20);
+        tblCampeonatos.getColumnModel().getColumn(3).setPreferredWidth(20);
+        tblCampeonatos.getColumnModel().getColumn(4).setPreferredWidth(50);
+        tblCampeonatos.getColumnModel().getColumn(5).setPreferredWidth(20);
     }
 
     /**
@@ -33,7 +94,7 @@ public class Campeonatos extends javax.swing.JFrame {
         cbSexo = new javax.swing.JComboBox<>();
         lblCategoria = new javax.swing.JLabel();
         lblNome = new javax.swing.JLabel();
-        cbCatgoria = new javax.swing.JComboBox<>();
+        cbCategoria = new javax.swing.JComboBox<>();
         txtNome = new javax.swing.JTextField();
         lblEndereco = new javax.swing.JLabel();
         txtEndereco = new javax.swing.JTextField();
@@ -56,7 +117,6 @@ public class Campeonatos extends javax.swing.JFrame {
         tblCampeonatos = new javax.swing.JTable();
         btnSair = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Campeonatos");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Images/Campeonato.png")).getImage());
 
@@ -72,8 +132,8 @@ public class Campeonatos extends javax.swing.JFrame {
 
         lblNome.setText("Nome:");
 
-        cbCatgoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha a categoria", "Mirim", "Infantil", "Infanto Juvenil", "Juvenil", "Júnior" }));
-        cbCatgoria.setEnabled(false);
+        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha a categoria", "Mirim", "Infantil", "Infanto Juvenil", "Juvenil", "Júnior" }));
+        cbCategoria.setEnabled(false);
 
         txtNome.setEnabled(false);
 
@@ -91,16 +151,22 @@ public class Campeonatos extends javax.swing.JFrame {
         cbVencedor.setEnabled(false);
 
         spnDiaInicio.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+        spnDiaInicio.setEnabled(false);
 
         spnMesInicio.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+        spnMesInicio.setEnabled(false);
 
         spnAnoInicio.setModel(new javax.swing.SpinnerNumberModel(2023, null, null, 1));
+        spnAnoInicio.setEnabled(false);
 
         spnDiaFinal.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+        spnDiaFinal.setEnabled(false);
 
         spnMesFinal.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+        spnMesFinal.setEnabled(false);
 
         spnAnoFinal.setModel(new javax.swing.SpinnerNumberModel(2023, null, null, 1));
+        spnAnoFinal.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -116,32 +182,25 @@ public class Campeonatos extends javax.swing.JFrame {
                     .addComponent(lblDataInicio)
                     .addComponent(lblDataTermino)
                     .addComponent(lblSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(27, 27, 27)
-                        .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(spnDiaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(spnMesInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(spnAnoInicio))
-                                        .addGroup(jPanel1Layout.createSequentialGroup()
-                                            .addComponent(spnDiaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(spnMesFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                            .addComponent(spnAnoFinal))
-                                        .addComponent(txtEndereco, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(cbSexo, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(cbCatgoria, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cbVencedor, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(spnDiaInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(spnMesInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(spnAnoInicio))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(spnDiaFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(spnMesFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(spnAnoFinal))
+                    .addComponent(txtEndereco, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                    .addComponent(cbSexo, 0, 241, Short.MAX_VALUE)
+                    .addComponent(cbCategoria, 0, 241, Short.MAX_VALUE)
+                    .addComponent(cbVencedor, 0, 241, Short.MAX_VALUE)
+                    .addComponent(txtNome))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -174,7 +233,7 @@ public class Campeonatos extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCategoria)
-                    .addComponent(cbCatgoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblVencedor)
@@ -189,6 +248,11 @@ public class Campeonatos extends javax.swing.JFrame {
                 btnNovoMouseEntered(evt);
             }
         });
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cancelar.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
@@ -196,6 +260,11 @@ public class Campeonatos extends javax.swing.JFrame {
         btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnCancelarMouseEntered(evt);
+            }
+        });
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -207,6 +276,11 @@ public class Campeonatos extends javax.swing.JFrame {
                 btnSalvarMouseEntered(evt);
             }
         });
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Editar.png"))); // NOI18N
         btnEditar.setText("Editar");
@@ -214,6 +288,11 @@ public class Campeonatos extends javax.swing.JFrame {
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEditarMouseEntered(evt);
+            }
+        });
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
             }
         });
 
@@ -252,6 +331,11 @@ public class Campeonatos extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblCampeonatos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblCampeonatosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblCampeonatos);
@@ -346,8 +430,256 @@ public class Campeonatos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
-        new DadosCampeonato().setVisible(true);
+        String nome = campeonatos.get(tblCampeonatos.getSelectedRow()).getNomeCampeonato();
+        DadosCampeonato dadosCampeonato = new DadosCampeonato();
+        dadosCampeonato.nomeCampeonato = nome;
+        dadosCampeonato.setVisible(true);
     }//GEN-LAST:event_btnVisualizarActionPerformed
+
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnEditar.setEnabled(false);
+        btnVisualizar.setEnabled(false);
+        
+        txtNome.setEnabled(true);
+        txtEndereco.setEnabled(true);
+        spnDiaInicio.setEnabled(true);
+        spnMesInicio.setEnabled(true);
+        spnAnoInicio.setEnabled(true);
+        spnDiaFinal.setEnabled(true);
+        spnMesFinal.setEnabled(true);
+        spnAnoFinal.setEnabled(true);
+        cbSexo.setEnabled(true);
+        cbCategoria.setEnabled(true);
+        cbVencedor.setEnabled(true);
+        
+        txtNome.requestFocus();
+        
+        this.botao = "novo";
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        if(txtNome.getText().equals("") || txtEndereco.getText().equals("") || cbSexo.getSelectedIndex() == 0 || cbCategoria.getSelectedIndex() == 0 || cbVencedor.getSelectedIndex() == 0){
+            JOptionPane.showMessageDialog(null, "Todos os campos devem ser inseridos", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+        }
+        else{
+            String nome = txtNome.getText();
+            String endereco = txtEndereco.getText();
+            String diaInicio = String.valueOf(spnDiaInicio.getValue());
+            String mesInicio = String.valueOf(spnMesInicio.getValue());
+            String anoInicio = String.valueOf(spnAnoInicio.getValue());
+            String diaFinal = String.valueOf(spnDiaFinal.getValue());
+            String mesFinal = String.valueOf(spnMesFinal.getValue());
+            String anoFinal = String.valueOf(spnAnoFinal.getValue());
+            String sexo = String.valueOf(cbSexo.getSelectedItem());
+            String categoria = String.valueOf(cbCategoria.getSelectedItem());
+            String vencedor = String.valueOf(cbVencedor.getSelectedItem());
+             
+            if(Integer.parseInt(diaInicio) < 10){
+                diaInicio = "0" + diaInicio;
+            }
+            if(Integer.parseInt(mesInicio) < 10){
+                mesInicio = "0" + mesInicio;
+            }
+            if(Integer.parseInt(diaFinal) < 10){
+                diaFinal = "0" + diaFinal;
+            }
+            if(Integer.parseInt(mesFinal) < 10){
+                mesFinal = "0" + mesFinal;
+            } 
+             
+            String dataInicio = diaInicio + "/" + mesInicio + "/" + anoInicio;
+            String dataFinal = diaFinal + "/" + mesFinal + "/" + anoFinal;
+            
+            if(botao.equals("novo")){
+                Campeonato campeonato = new Campeonato(nome, endereco, vencedor, sexo, dataInicio, dataFinal, categoria);
+                campeonatos.add(campeonato);
+                
+                File arquivo = new File("src/Dados/dadosCampeonatos.txt");
+                
+                try {
+                    FileWriter fw = new FileWriter(arquivo, true);
+                    BufferedWriter bw = new BufferedWriter(fw);
+
+                    bw.write(nome + ";" + endereco + ";" + vencedor + ";" + sexo +
+                            ";" + dataInicio + ";" + dataFinal + ";" + categoria);
+                    bw.newLine();
+                    
+                    bw.close();
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                JOptionPane.showMessageDialog(null, "Campeonato cadastrado com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+            }
+            else if(botao.equals("editar")){
+                int index = tblCampeonatos.getSelectedRow();
+                 
+                File arquivo = new File("src/Dados/dadosCampeonatos.txt");
+            
+            try { 
+                ArrayList<String> temp = new ArrayList<>();
+                
+                FileReader fr = new FileReader(arquivo);
+                BufferedReader br = new BufferedReader(fr);
+                
+                for(int j = 0; br.ready(); j++) {
+                    if(j != index) {
+                        String linha = br.readLine();
+                        temp.add(linha);
+                    } else {
+                        br.readLine();
+                        temp.add(nome + ";" + endereco + ";" + vencedor + ";" + sexo +
+                            ";" + dataInicio + ";" + dataFinal + ";" + categoria);
+                    }
+                }
+                br.close();
+                
+                FileWriter fw = new FileWriter(arquivo);
+                BufferedWriter bw = new BufferedWriter(fw);
+                
+                for(String linha : temp) {
+                    bw.write(linha);
+                    bw.newLine();
+                }
+                
+                bw.close();
+                
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi posssível abrir o arquivo.", "Erro", 0);
+                return;
+            }
+                campeonatos.get(index).setNomeCampeonato(nome);
+                campeonatos.get(index).setEndereco(endereco);
+                campeonatos.get(index).setCategoria(categoria);
+                campeonatos.get(index).setSexo(sexo);
+                campeonatos.get(index).setDataInicio(dataInicio);
+                campeonatos.get(index).setDataFinal(dataFinal);
+                campeonatos.get(index).setVencedor(vencedor);
+            }
+
+            //Carregar os dados do gerente na tabela
+            carregarTabelaCampeonatos();
+             
+            //Limpar os campos
+            txtNome.setText("");
+            txtEndereco.setText("");
+            spnDiaInicio.setValue(1);
+            spnMesInicio.setValue(1);
+            spnAnoInicio.setValue(2023);
+            spnDiaFinal.setValue(1);
+            spnAnoFinal.setValue(1);
+            spnAnoFinal.setValue(2023);
+            cbSexo.setSelectedIndex(0);
+            cbCategoria.setSelectedIndex(0);
+            cbVencedor.setSelectedIndex(0);
+
+
+            //Habilitar ou desabiltiar botões
+            btnNovo.setEnabled(true);
+            btnSalvar.setEnabled(false);
+            btnCancelar.setEnabled(false);
+            btnEditar.setEnabled(false);
+            btnVisualizar.setEnabled(false);
+
+            //Habilitar ou desabilitar campos de texto
+            txtNome.setEnabled(false);
+            txtEndereco.setEnabled(false);
+            spnDiaInicio.setEnabled(false);
+            spnMesInicio.setEnabled(false);
+            spnAnoInicio.setEnabled(false);
+            spnDiaFinal.setEnabled(false);
+            spnMesFinal.setEnabled(false);
+            spnAnoFinal.setEnabled(false);
+            cbSexo.setEnabled(false);
+            cbCategoria.setEnabled(false);
+            cbVencedor.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        tblCampeonatos.clearSelection();
+        
+        txtNome.setText("");
+        txtEndereco.setText("");
+        spnDiaInicio.setValue(1);
+        spnMesInicio.setValue(1);
+        spnAnoInicio.setValue(2023);
+        spnDiaFinal.setValue(1);
+        spnAnoFinal.setValue(1);
+        spnAnoFinal.setValue(2023);
+        cbSexo.setSelectedIndex(0);
+        cbCategoria.setSelectedIndex(0);
+        cbVencedor.setSelectedIndex(0);
+        
+        txtNome.setEnabled(false);
+        txtEndereco.setEnabled(false);
+        spnDiaInicio.setEnabled(false);
+        spnMesInicio.setEnabled(false);
+        spnAnoInicio.setEnabled(false);
+        spnDiaFinal.setEnabled(false);
+        spnMesFinal.setEnabled(false);
+        spnAnoFinal.setEnabled(false);
+        cbSexo.setEnabled(false);
+        cbCategoria.setEnabled(false);
+        cbVencedor.setEnabled(false);
+        
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnVisualizar.setEnabled(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        botao = "editar";
+        
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnEditar.setEnabled(false);
+        btnVisualizar.setEnabled(false);
+        
+        txtNome.setEnabled(true);
+        txtEndereco.setEnabled(true);
+        spnDiaInicio.setEnabled(true);
+        spnMesInicio.setEnabled(true);
+        spnAnoInicio.setEnabled(true);
+        spnDiaFinal.setEnabled(true);
+        spnMesFinal.setEnabled(true);
+        spnAnoFinal.setEnabled(true);
+        cbSexo.setEnabled(true);
+        cbCategoria.setEnabled(true);
+        cbVencedor.setEnabled(true);
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void tblCampeonatosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCampeonatosMouseClicked
+        int i = tblCampeonatos.getSelectedRow();
+        Campeonato campeonato = campeonatos.get(i);
+        String[] dataInicio = campeonato.getDataInicio().split("/");
+        String[] dataFinal = campeonato.getDataFinal().split("/");
+        
+        txtNome.setText(campeonato.getNomeCampeonato());
+        txtEndereco.setText(campeonato.getEndereco());
+        spnDiaInicio.setValue(Integer.parseInt(dataInicio[0]));
+        spnMesInicio.setValue(Integer.parseInt(dataInicio[1]));
+        spnAnoInicio.setValue(Integer.parseInt(dataInicio[2]));
+        spnDiaFinal.setValue(Integer.parseInt(dataFinal[0]));
+        spnMesFinal.setValue(Integer.parseInt(dataFinal[1]));
+        spnAnoFinal.setValue(Integer.parseInt(dataFinal[2]));
+        cbSexo.setSelectedItem(campeonato.getSexo());
+        cbCategoria.setSelectedItem(campeonato.getCategoria());
+        cbVencedor.setSelectedItem(campeonato.getVencedor());
+        
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnEditar.setEnabled(true);
+        btnVisualizar.setEnabled(true);
+    }//GEN-LAST:event_tblCampeonatosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -391,7 +723,7 @@ public class Campeonatos extends javax.swing.JFrame {
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnVisualizar;
-    private javax.swing.JComboBox<String> cbCatgoria;
+    private javax.swing.JComboBox<String> cbCategoria;
     private javax.swing.JComboBox<String> cbSexo;
     private javax.swing.JComboBox<String> cbVencedor;
     private javax.swing.JPanel jPanel1;

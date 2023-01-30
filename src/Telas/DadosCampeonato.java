@@ -5,6 +5,15 @@
 package Telas;
 
 import java.awt.Cursor;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -12,11 +21,37 @@ import java.awt.Cursor;
  */
 public class DadosCampeonato extends javax.swing.JFrame {
 
+    public String nomeCampeonato;
+    private ArrayList<ArrayList<String>> equipesCampeonato = new ArrayList<>();
     /**
      * Creates new form Dados
      */
     public DadosCampeonato() {
         initComponents();
+    }
+    public void carregarTabelaEquipesCampeonato(){
+        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Nome", "Sexo", "Categoria", "Técnico"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        for(int i=0; i < equipesCampeonato.size(); i++){
+            Object linha[] = new Object[] {equipesCampeonato.get(i).get(0),
+                                           equipesCampeonato.get(i).get(1),
+                                           equipesCampeonato.get(i).get(2),
+                                           equipesCampeonato.get(i).get(3)};
+            modelo.addRow(linha);
+        }
+        
+        //Tabela recebe modelo
+        tblEquipesCampeonato.setModel(modelo);
+        
+        tblEquipesCampeonato.getColumnModel().getColumn(0).setPreferredWidth(20);
+        tblEquipesCampeonato.getColumnModel().getColumn(1).setPreferredWidth(20);
+        tblEquipesCampeonato.getColumnModel().getColumn(2).setPreferredWidth(20);
+        tblEquipesCampeonato.getColumnModel().getColumn(3).setPreferredWidth(20);
     }
 
     /**
@@ -40,10 +75,12 @@ public class DadosCampeonato extends javax.swing.JFrame {
         txtTecnico = new javax.swing.JTextField();
         btnPesquisar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblEquipesCampeonato = new javax.swing.JTable();
         btnAdicionarEquipe = new javax.swing.JButton();
         btnRemoverEquipe = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Equipe");
@@ -118,7 +155,7 @@ public class DadosCampeonato extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblEquipesCampeonato.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -134,14 +171,23 @@ public class DadosCampeonato extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        tblEquipesCampeonato.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblEquipesCampeonatoMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblEquipesCampeonato);
 
         btnAdicionarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Novo.png"))); // NOI18N
         btnAdicionarEquipe.setText("Adicionar equipe");
-        btnAdicionarEquipe.setEnabled(false);
         btnAdicionarEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAdicionarEquipeMouseEntered(evt);
+            }
+        });
+        btnAdicionarEquipe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarEquipeActionPerformed(evt);
             }
         });
 
@@ -151,6 +197,11 @@ public class DadosCampeonato extends javax.swing.JFrame {
         btnRemoverEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnRemoverEquipeMouseEntered(evt);
+            }
+        });
+        btnRemoverEquipe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverEquipeActionPerformed(evt);
             }
         });
 
@@ -167,26 +218,56 @@ public class DadosCampeonato extends javax.swing.JFrame {
             }
         });
 
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Salvar.png"))); // NOI18N
+        btnSalvar.setText("Salvar");
+        btnSalvar.setEnabled(false);
+        btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseEntered(evt);
+            }
+        });
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cancelar.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setEnabled(false);
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseEntered(evt);
+            }
+        });
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSair)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAdicionarEquipe)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalvar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCancelar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRemoverEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(btnAdicionarEquipe)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
-                .addComponent(btnRemoverEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(115, 115, 115))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSair)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,8 +276,10 @@ public class DadosCampeonato extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvar)
                     .addComponent(btnRemoverEquipe)
-                    .addComponent(btnAdicionarEquipe))
+                    .addComponent(btnAdicionarEquipe)
+                    .addComponent(btnCancelar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -226,6 +309,175 @@ public class DadosCampeonato extends javax.swing.JFrame {
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnAdicionarEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarEquipeActionPerformed
+        btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnPesquisar.setEnabled(false);
+        btnAdicionarEquipe.setEnabled(false);
+        
+        txtSexo.setEnabled(true);
+        txtCategoria.setEnabled(true);
+        txtTecnico.setEnabled(true);
+        
+        txtNome.requestFocus();
+    }//GEN-LAST:event_btnAdicionarEquipeActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        if(txtNome.getText().equals("") || txtSexo.getText().equals("") || txtCategoria.getText().equals("") || txtTecnico.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Todos os campos devem ser inseridos", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+        }
+        else{
+            String nome = txtNome.getText();
+            String sexo = txtSexo.getText();
+            String categoria = txtCategoria.getText();
+            String tecnico = txtTecnico.getText();
+            
+            ArrayList<String> dados = new ArrayList<>();
+            dados.add(nome);
+            dados.add(sexo);
+            dados.add(categoria);
+            dados.add(tecnico);
+            equipesCampeonato.add(dados);
+             
+            String nomeArquivo = this.nomeCampeonato + ".txt";
+            File arquivo = new File("src/Dados/Campeonatos/" + nomeArquivo);
+            
+            try {
+                if(!arquivo.exists()) {
+                    arquivo.createNewFile();
+                }
+                
+                FileWriter fw = new FileWriter(arquivo, true);
+                BufferedWriter bw = new BufferedWriter(fw);
+
+                bw.write(nome + ";" + sexo + ";" + categoria + ";" + tecnico);
+                bw.newLine();
+                
+                bw.close();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi posssível abrir o arquivo.", "Erro", 0);
+                return;
+            }
+            JOptionPane.showMessageDialog(null, "Equipe cadastrada com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+            
+
+            //Carregar os dados do gerente na tabela
+            carregarTabelaEquipesCampeonato();
+             
+            //Limpar os campos
+            txtNome.setText("");
+            txtSexo.setText("");
+            txtCategoria.setText("");
+            txtTecnico.setText("");
+
+            //Habilitar ou desabiltiar botões
+            btnAdicionarEquipe.setEnabled(true);
+            btnSalvar.setEnabled(false);
+            btnRemoverEquipe.setEnabled(false);
+
+            //Habilitar ou desabilitar campos de texto
+            txtSexo.setEnabled(false);
+            txtCategoria.setEnabled(false);
+            txtTecnico.setEnabled(false);            
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnRemoverEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverEquipeActionPerformed
+        int i = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir essa equipe?", "Atenção!", JOptionPane.WARNING_MESSAGE);
+        
+        if (i == 0) {
+            i = tblEquipesCampeonato.getSelectedRow();
+            
+            File arquivo = new File("src/Dados/Campeonatos/" + this.nomeCampeonato + ".txt");
+            
+            try { 
+                ArrayList<String> temp = new ArrayList<>();
+                
+                FileReader fr = new FileReader(arquivo);
+                BufferedReader br = new BufferedReader(fr);
+                
+                for(int j = 0; br.ready(); j++) {
+                    if(j != i) {
+                        String linha = br.readLine();
+                        temp.add(linha);
+                    } else {
+                        br.readLine();
+                    }
+                }
+                br.close();
+                
+                FileWriter fw = new FileWriter(arquivo);
+                BufferedWriter bw = new BufferedWriter(fw);
+                
+                for(String linha : temp) {
+                    bw.write(linha);
+                    bw.newLine();
+                }
+                
+                bw.close();
+                
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi posssível abrir o arquivo.", "Erro", 0);
+                return;
+            }
+            
+            equipesCampeonato.remove(i);
+            carregarTabelaEquipesCampeonato();
+            
+            txtNome.setText("");
+            txtSexo.setText("");
+            txtCategoria.setText("");
+            txtTecnico.setText("");
+            
+            tblEquipesCampeonato.clearSelection();
+            
+            btnAdicionarEquipe.setEnabled(true);
+            btnSalvar.setEnabled(false);
+            btnRemoverEquipe.setEnabled(false);
+            btnCancelar.setEnabled(false);
+            
+        }
+    }//GEN-LAST:event_btnRemoverEquipeActionPerformed
+
+    private void tblEquipesCampeonatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblEquipesCampeonatoMouseClicked
+        btnAdicionarEquipe.setEnabled(false);
+        btnSalvar.setEnabled(false);
+        btnRemoverEquipe.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        
+        txtNome.setText(equipesCampeonato.get(tblEquipesCampeonato.getSelectedRow()).get(0));
+        txtSexo.setText(equipesCampeonato.get(tblEquipesCampeonato.getSelectedRow()).get(1));
+        txtCategoria.setText(equipesCampeonato.get(tblEquipesCampeonato.getSelectedRow()).get(2));
+        txtTecnico.setText(equipesCampeonato.get(tblEquipesCampeonato.getSelectedRow()).get(3));
+    }//GEN-LAST:event_tblEquipesCampeonatoMouseClicked
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        tblEquipesCampeonato.clearSelection();
+        
+        txtNome.setText("");
+        txtSexo.setText("");
+        txtCategoria.setText("");
+        txtTecnico.setText(""); 
+        
+        txtSexo.setEnabled(false);
+        txtCategoria.setEnabled(false);
+        txtTecnico.setEnabled(false);
+        
+        btnAdicionarEquipe.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnRemoverEquipe.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnPesquisar.setEnabled(true);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseEntered
+        btnSalvar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnSalvarMouseEntered
+
+    private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
+        btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnCancelarMouseEntered
 
     /**
      * @param args the command line arguments
@@ -265,17 +517,19 @@ public class DadosCampeonato extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionarEquipe;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnRemoverEquipe;
     private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSlider jSlider1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCategoria;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblSexo;
     private javax.swing.JLabel lblTecnico;
+    private javax.swing.JTable tblEquipesCampeonato;
     private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextField txtNome;
     private javax.swing.JTextField txtSexo;

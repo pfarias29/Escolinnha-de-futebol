@@ -26,7 +26,7 @@ public class Jogador extends Pessoa{
     //}
     
     public Jogador(String nome, String sobrenome, String cpf, String sexo, String dataNascimento, String nacionalidade, String posicao) {
-        super(nome, sobrenome, cpf, sexo, dataNascimento);
+        //super(nome, sobrenome, cpf, sexo, dataNascimento);
         //this.nomeCompleto = nome;
         this.nacionalidade = nacionalidade;
         //this.cpf = cpf;
