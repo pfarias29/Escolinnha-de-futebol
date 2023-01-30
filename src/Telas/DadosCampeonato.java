@@ -5,6 +5,9 @@
 package Telas;
 
 import java.awt.Cursor;
+import java.io.File;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -44,6 +47,7 @@ public class DadosCampeonato extends javax.swing.JFrame {
         btnAdicionarEquipe = new javax.swing.JButton();
         btnRemoverEquipe = new javax.swing.JButton();
         btnSair = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Equipe");
@@ -138,10 +142,14 @@ public class DadosCampeonato extends javax.swing.JFrame {
 
         btnAdicionarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Novo.png"))); // NOI18N
         btnAdicionarEquipe.setText("Adicionar equipe");
-        btnAdicionarEquipe.setEnabled(false);
         btnAdicionarEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnAdicionarEquipeMouseEntered(evt);
+            }
+        });
+        btnAdicionarEquipe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarEquipeActionPerformed(evt);
             }
         });
 
@@ -167,26 +175,35 @@ public class DadosCampeonato extends javax.swing.JFrame {
             }
         });
 
+        btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Salvar.png"))); // NOI18N
+        btnSalvar.setText("Salvar");
+        btnSalvar.setEnabled(false);
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSair)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 671, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnAdicionarEquipe)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnSalvar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnRemoverEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addGap(115, 115, 115)
-                .addComponent(btnAdicionarEquipe)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
-                .addComponent(btnRemoverEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(115, 115, 115))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSair)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,6 +212,7 @@ public class DadosCampeonato extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalvar)
                     .addComponent(btnRemoverEquipe)
                     .addComponent(btnAdicionarEquipe))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -226,6 +244,63 @@ public class DadosCampeonato extends javax.swing.JFrame {
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnAdicionarEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarEquipeActionPerformed
+        btnSalvar.setEnabled(true);
+        
+        txtSexo.setEnabled(true);
+        txtCategoria.setEnabled(true);
+        txtTecnico.setEnabled(true);
+    }//GEN-LAST:event_btnAdicionarEquipeActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        if(txtNome.getText().equals("") || txtSexo.getText().equals("") || txtCategoria.getText().equals("") || txtTecnico.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Todos os campos devem ser inseridos", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+        }
+        else{
+            String nome = txtNome.getText();
+            String sexo = txtSexo.getText();
+            String categoria = txtCategoria.getText();
+            String tecnico = txtTecnico.getText();
+             
+            String nomeArquivo = nome + ".txt";
+            File arquivo = new File("src/Dados/Campeonatos/" + nome);
+            
+            try {
+                if(!arquivo.exists()) {
+                    arquivo.createNewFile();
+                }
+                
+                //FileWriter fw = 
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi posssível abrir o arquivo.", "Erro", 0);
+            }
+            //Campeonato campeonato = new Campeonato(nome, endereco, vencedor, sexo, dataInicio, dataFinal, categoria);
+            //Campeonatos.add(campeonato);
+            JOptionPane.showMessageDialog(null, "Equipe cadastrada com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+            
+
+            //Carregar os dados do gerente na tabela
+            //carregarTabelaCampeonatos();
+             
+            //Limpar os campos
+            txtNome.setText("");
+            txtSexo.setText("");
+            txtCategoria.setText("");
+            txtTecnico.setText("");
+
+
+            //Habilitar ou desabiltiar botões
+            btnAdicionarEquipe.setEnabled(true);
+            btnSalvar.setEnabled(false);
+            btnRemoverEquipe.setEnabled(false);
+
+            //Habilitar ou desabilitar campos de texto
+            txtSexo.setEnabled(false);
+            txtCategoria.setEnabled(false);
+            txtTecnico.setEnabled(false);            
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -268,6 +343,7 @@ public class DadosCampeonato extends javax.swing.JFrame {
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnRemoverEquipe;
     private javax.swing.JButton btnSair;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSlider jSlider1;
