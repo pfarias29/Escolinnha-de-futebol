@@ -1,15 +1,15 @@
 package Classes;
 public class Equipe {
     private String nomeEquipe;
-    private int idade;
+    private String categoria;
     private String sexo;
 
     public Equipe() {
     }
 
-    public Equipe(String nomeEquipe, int idade, String sexo) {
+    public Equipe(String nomeEquipe, String categoria, String sexo) {
         this.nomeEquipe = nomeEquipe;
-        this.idade = idade;
+        this.categoria = categoria;
         this.sexo = sexo;
     }
 
@@ -21,12 +21,12 @@ public class Equipe {
         this.nomeEquipe = nomeEquipe;
     }
 
-    public int getIdade() {
-        return idade;
+    public String getCategoria() {
+        return categoria;
     }
 
-    public void setIdade(int idade) {
-        this.idade = idade;
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public String getSexo() {
