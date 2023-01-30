@@ -26,7 +26,6 @@ public class Campeonatos extends javax.swing.JFrame {
 
     private ArrayList<Campeonato> campeonatos = new ArrayList<>();
     private String botao;
-    public int indiceCampeonato;
     /**
      * Creates new form Campeonatos
      */
@@ -53,7 +52,7 @@ public class Campeonatos extends javax.swing.JFrame {
     }
     
     public void carregarTabelaCampeonatos(){
-        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Nome", "Início", "Término", "Sexo", "Ctegoria", "Vencedor"}, 0) {
+        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Nome", "Início", "Término", "Sexo", "Caegoria", "Vencedor"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -152,16 +151,22 @@ public class Campeonatos extends javax.swing.JFrame {
         cbVencedor.setEnabled(false);
 
         spnDiaInicio.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+        spnDiaInicio.setEnabled(false);
 
         spnMesInicio.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+        spnMesInicio.setEnabled(false);
 
         spnAnoInicio.setModel(new javax.swing.SpinnerNumberModel(2023, null, null, 1));
+        spnAnoInicio.setEnabled(false);
 
         spnDiaFinal.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
+        spnDiaFinal.setEnabled(false);
 
         spnMesFinal.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
+        spnMesFinal.setEnabled(false);
 
         spnAnoFinal.setModel(new javax.swing.SpinnerNumberModel(2023, null, null, 1));
+        spnAnoFinal.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -425,8 +430,10 @@ public class Campeonatos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnVisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarActionPerformed
-        this.indiceCampeonato = tblCampeonatos.getSelectedRow();
-        new DadosCampeonato().setVisible(true);
+        String nome = campeonatos.get(tblCampeonatos.getSelectedRow()).getNomeCampeonato();
+        DadosCampeonato dadosCampeonato = new DadosCampeonato();
+        dadosCampeonato.nomeCampeonato = nome;
+        dadosCampeonato.setVisible(true);
     }//GEN-LAST:event_btnVisualizarActionPerformed
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
@@ -463,7 +470,7 @@ public class Campeonatos extends javax.swing.JFrame {
             String diaInicio = String.valueOf(spnDiaInicio.getValue());
             String mesInicio = String.valueOf(spnMesInicio.getValue());
             String anoInicio = String.valueOf(spnAnoInicio.getValue());
-            String diaFinal = String.valueOf(spnAnoFinal.getValue());
+            String diaFinal = String.valueOf(spnDiaFinal.getValue());
             String mesFinal = String.valueOf(spnMesFinal.getValue());
             String anoFinal = String.valueOf(spnAnoFinal.getValue());
             String sexo = String.valueOf(cbSexo.getSelectedItem());
@@ -511,6 +518,40 @@ public class Campeonatos extends javax.swing.JFrame {
             else if(botao.equals("editar")){
                 int index = tblCampeonatos.getSelectedRow();
                  
+                File arquivo = new File("src/Dados/dadosCampeonatos.txt");
+            
+            try { 
+                ArrayList<String> temp = new ArrayList<>();
+                
+                FileReader fr = new FileReader(arquivo);
+                BufferedReader br = new BufferedReader(fr);
+                
+                for(int j = 0; br.ready(); j++) {
+                    if(j != index) {
+                        String linha = br.readLine();
+                        temp.add(linha);
+                    } else {
+                        br.readLine();
+                        temp.add(nome + ";" + endereco + ";" + vencedor + ";" + sexo +
+                            ";" + dataInicio + ";" + dataFinal + ";" + categoria);
+                    }
+                }
+                br.close();
+                
+                FileWriter fw = new FileWriter(arquivo);
+                BufferedWriter bw = new BufferedWriter(fw);
+                
+                for(String linha : temp) {
+                    bw.write(linha);
+                    bw.newLine();
+                }
+                
+                bw.close();
+                
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Não foi posssível abrir o arquivo.", "Erro", 0);
+                return;
+            }
                 campeonatos.get(index).setNomeCampeonato(nome);
                 campeonatos.get(index).setEndereco(endereco);
                 campeonatos.get(index).setCategoria(categoria);
@@ -574,6 +615,18 @@ public class Campeonatos extends javax.swing.JFrame {
         cbCategoria.setSelectedIndex(0);
         cbVencedor.setSelectedIndex(0);
         
+        txtNome.setEnabled(false);
+        txtEndereco.setEnabled(false);
+        spnDiaInicio.setEnabled(false);
+        spnMesInicio.setEnabled(false);
+        spnAnoInicio.setEnabled(false);
+        spnDiaFinal.setEnabled(false);
+        spnMesFinal.setEnabled(false);
+        spnAnoFinal.setEnabled(false);
+        cbSexo.setEnabled(false);
+        cbCategoria.setEnabled(false);
+        cbVencedor.setEnabled(false);
+        
         btnNovo.setEnabled(true);
         btnSalvar.setEnabled(false);
         btnCancelar.setEnabled(false);
@@ -615,7 +668,7 @@ public class Campeonatos extends javax.swing.JFrame {
         spnMesInicio.setValue(Integer.parseInt(dataInicio[1]));
         spnAnoInicio.setValue(Integer.parseInt(dataInicio[2]));
         spnDiaFinal.setValue(Integer.parseInt(dataFinal[0]));
-        spnAnoFinal.setValue(Integer.parseInt(dataFinal[1]));
+        spnMesFinal.setValue(Integer.parseInt(dataFinal[1]));
         spnAnoFinal.setValue(Integer.parseInt(dataFinal[2]));
         cbSexo.setSelectedItem(campeonato.getSexo());
         cbCategoria.setSelectedItem(campeonato.getCategoria());
@@ -624,7 +677,7 @@ public class Campeonatos extends javax.swing.JFrame {
         btnNovo.setEnabled(false);
         btnSalvar.setEnabled(true);
         btnCancelar.setEnabled(true);
-        btnEditar.setEnabled(false);
+        btnEditar.setEnabled(true);
         btnVisualizar.setEnabled(true);
     }//GEN-LAST:event_tblCampeonatosMouseClicked
 
