@@ -117,6 +117,7 @@ public class Campeonatos extends javax.swing.JFrame {
         tblCampeonatos = new javax.swing.JTable();
         btnSair = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Campeonatos");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Images/Campeonato.png")).getImage());
 

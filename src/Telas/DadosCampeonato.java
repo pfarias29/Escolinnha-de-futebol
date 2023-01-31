@@ -82,7 +82,7 @@ public class DadosCampeonato extends javax.swing.JFrame {
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Equipe");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Images/jogadores.png")).getImage());
 

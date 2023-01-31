@@ -5,7 +5,7 @@
 package Telas;
 
 import Classes.Equipe;
-import static Telas.Tecnicos.listaTecnicos;
+import java.awt.Cursor;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,16 +16,32 @@ import java.io.*;
  * @author felip
  */
 public class Equipes extends javax.swing.JFrame {
-    
-    static ArrayList<Equipe> listaEquipes;
-    String botão;
+    static ArrayList<Equipe> listaEquipes = new ArrayList<>();
+    private String botão;
 
     /**
      * Creates new form Equipes
      */
     public Equipes() {
         initComponents();
-        listaEquipes = new ArrayList();
+
+        File arquivo = new File("src/Dados/dadosEquipes.txt");
+        
+        try {
+            FileReader fr = new FileReader(arquivo);
+            BufferedReader br = new BufferedReader(fr);
+            
+            while(br.ready()) {
+                String[] linha = br.readLine().split(";");
+                Equipe equipe = new Equipe(linha[0], linha[1], linha[2]);
+                listaEquipes.add(equipe);
+            }
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }       
+        
+        carregarTabelaEquipes();
         
         setLocationRelativeTo(null);
         
@@ -46,7 +62,12 @@ public class Equipes extends javax.swing.JFrame {
     }
     
     public void carregarTabelaEquipes(){
-        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Nome","Categoria","Sexo"},0);
+        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Nome","Categoria","Sexo"},0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }            
+        };
         
         for(int i=0;i<listaEquipes.size();i++){
             Object linha[] = new Object[] {listaEquipes.get(i).getNomeEquipe(),
@@ -163,6 +184,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnNovoEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/adicionar.png"))); // NOI18N
         btnNovoEquipe.setText("Novo");
+        btnNovoEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnNovoEquipeMouseEntered(evt);
+            }
+        });
         btnNovoEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnNovoEquipeActionPerformed(evt);
@@ -171,6 +197,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnSalvarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/salvar1.png"))); // NOI18N
         btnSalvarEquipe.setText("Salvar");
+        btnSalvarEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalvarEquipeMouseEntered(evt);
+            }
+        });
         btnSalvarEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarEquipeActionPerformed(evt);
@@ -179,6 +210,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnCancelarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cancelar.png"))); // NOI18N
         btnCancelarEquipe.setText("Cancelar");
+        btnCancelarEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCancelarEquipeMouseEntered(evt);
+            }
+        });
         btnCancelarEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarEquipeActionPerformed(evt);
@@ -187,6 +223,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnEditarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Editar.png"))); // NOI18N
         btnEditarEquipe.setText("Editar");
+        btnEditarEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditarEquipeMouseEntered(evt);
+            }
+        });
         btnEditarEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarEquipeActionPerformed(evt);
@@ -195,6 +236,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnExcluirEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/deletar.png"))); // NOI18N
         btnExcluirEquipe.setText("Excluir");
+        btnExcluirEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnExcluirEquipeMouseEntered(evt);
+            }
+        });
         btnExcluirEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirEquipeActionPerformed(evt);
@@ -203,6 +249,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnPesquisarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Pesquisar.png"))); // NOI18N
         btnPesquisarEquipe.setText("Pesquisar");
+        btnPesquisarEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnPesquisarEquipeMouseEntered(evt);
+            }
+        });
         btnPesquisarEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPesquisarEquipeActionPerformed(evt);
@@ -241,6 +292,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnSairEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sair.png"))); // NOI18N
         btnSairEquipe.setText("Sair");
+        btnSairEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSairEquipeMouseEntered(evt);
+            }
+        });
         btnSairEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairEquipeActionPerformed(evt);
@@ -249,6 +305,11 @@ public class Equipes extends javax.swing.JFrame {
 
         btnVisualizarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/squad.png"))); // NOI18N
         btnVisualizarEquipe.setText("Visualizar Equipe");
+        btnVisualizarEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnVisualizarEquipeMouseEntered(evt);
+            }
+        });
         btnVisualizarEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVisualizarEquipeActionPerformed(evt);
@@ -332,11 +393,47 @@ public class Equipes extends javax.swing.JFrame {
              if(botão.equals("novo")){
                  Equipe equipe = new Equipe(nome,categoria,sexo);
                  listaEquipes.add(equipe);
+                 File arquivo = new File("src/Dados/dadosEquipes.txt");
+                 try {
+                     FileWriter fw = new FileWriter(arquivo, true);
+                     BufferedWriter bw = new BufferedWriter(fw);
+                     bw.write(nome + ";" + categoria + ";" + sexo);
+                     bw.newLine();
+                     bw.close();
+                 } catch (IOException ex) {
+                     JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+                     return;
+                 }
                  JOptionPane.showMessageDialog(null, "Equipe cadastrada com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
              }
              else if(botão.equals("editar")){
-                 int index = tblEquipes.getSelectedRow();
-                 
+                int index = tblEquipes.getSelectedRow();
+                File arquivo = new File("src/Dados/dadosEquipes.txt");
+                try { 
+                ArrayList<String> temp = new ArrayList<>();
+                FileReader fr = new FileReader(arquivo);
+                BufferedReader br = new BufferedReader(fr);
+                for(int j = 0; br.ready(); j++) {
+                    if(j != index) {
+                        String linha = br.readLine();
+                        temp.add(linha);
+                    } else {
+                        br.readLine();
+                        temp.add(nome + ";" + categoria + ";" + sexo);
+                    }
+                }
+                br.close();
+                FileWriter fw = new FileWriter(arquivo);
+                BufferedWriter bw = new BufferedWriter(fw);
+                for(String linha : temp) {
+                    bw.write(linha);
+                    bw.newLine();
+                }
+                bw.close();
+             } catch (IOException ex) {
+                 JOptionPane.showMessageDialog(null, "Não foi posssível abrir o arquivo.", "Erro", 0);
+                 return;
+             }
                  listaEquipes.get(index).setNomeEquipe(nome);
                  listaEquipes.get(index).setCategoria(categoria);
                  listaEquipes.get(index).setSexo(sexo);
@@ -423,8 +520,8 @@ public class Equipes extends javax.swing.JFrame {
         if(i>=0 && i<listaEquipes.size()){
             Equipe equipe = listaEquipes.get(i);
             txtNomeEquipe.setText(String.valueOf(equipe.getNomeEquipe()));
-            cbSexoEquipe.setSelectedItem(String.valueOf(equipe.getSexo()));
             cbCategoriaEquipe.setSelectedItem(String.valueOf(equipe.getCategoria()));
+            cbSexoEquipe.setSelectedItem(String.valueOf(equipe.getSexo()));
         }
         
         //Habilitar ou desabiltiar botões
@@ -466,33 +563,76 @@ public class Equipes extends javax.swing.JFrame {
 
     private void btnExcluirEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirEquipeActionPerformed
         int index = tblEquipes.getSelectedRow();
-        
-        if(index>=0 && index<listaEquipes.size()){
-            listaEquipes.remove(index);
-        }
-        
-        carregarTabelaEquipes();
-        
-        //Limpar os campos
-        txtNomeEquipe.setText("");
-        cbCategoriaEquipe.setSelectedIndex(0);
-        cbSexoEquipe.setSelectedIndex(0);
-        
 
-        //Habilitar ou desabiltiar botões
-        btnNovoEquipe.setEnabled(true);
-        btnSalvarEquipe.setEnabled(false);
-        btnCancelarEquipe.setEnabled(false);
-        btnEditarEquipe.setEnabled(false);
-        btnExcluirEquipe.setEnabled(false);
-        btnPesquisarEquipe.setEnabled(true);
-        btnOKEquipe.setEnabled(false);
-        btnVisualizarEquipe.setEnabled(false);
-        
-        //Habilitar ou desabilitar campos de texto
-        txtNomeEquipe.setEnabled(false);
-        cbSexoEquipe.setEnabled(false);
-        cbCategoriaEquipe.setEnabled(false);
+        int j = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir essa equipe?", "Atenção!", JOptionPane.WARNING_MESSAGE);
+        if(j==0){
+
+            String equipe = listaEquipes.get(index).getNomeEquipe() + ";" + listaEquipes.get(index).getCategoria() + listaEquipes.get(index).getSexo();
+            
+            File arquivo = new File("src/Dados/dadosEquipes.txt");
+
+            try{
+                FileReader fr = new FileReader(arquivo);
+                BufferedReader br = new BufferedReader(fr);
+
+                String linha = br.readLine();
+                ArrayList<String> salvar = new ArrayList();
+
+                while(linha!= null){
+                    if(linha.equals(equipe) == false  ){
+                        salvar.add(linha);
+                    }
+                    linha = br.readLine();
+                }
+
+
+                br.close();
+                fr.close();
+                FileWriter fw2 = new FileWriter(arquivo,true);
+                fw2.close();
+
+                FileWriter fw = new FileWriter(arquivo);
+                BufferedWriter bw = new BufferedWriter(fw);
+
+                for(int i=0;i<salvar.size();i++){
+                    bw.write(salvar.get(i));
+                    bw.newLine();
+                }
+                fw.close();
+                bw.close();
+
+            }catch(IOException  ex){
+                JOptionPane.showMessageDialog(null, "Não foi posssível abrir o arquivo.", "Erro", 0);
+                return;
+            }           
+            
+            if(index>=0 && index<listaEquipes.size()){
+                listaEquipes.remove(index);
+            }
+
+            carregarTabelaEquipes();
+
+            //Limpar os campos
+            txtNomeEquipe.setText("");
+            cbCategoriaEquipe.setSelectedIndex(0);
+            cbSexoEquipe.setSelectedIndex(0);
+
+
+            //Habilitar ou desabiltiar botões
+            btnNovoEquipe.setEnabled(true);
+            btnSalvarEquipe.setEnabled(false);
+            btnCancelarEquipe.setEnabled(false);
+            btnEditarEquipe.setEnabled(false);
+            btnExcluirEquipe.setEnabled(false);
+            btnPesquisarEquipe.setEnabled(true);
+            btnOKEquipe.setEnabled(false);
+            btnVisualizarEquipe.setEnabled(false);
+
+            //Habilitar ou desabilitar campos de texto
+            txtNomeEquipe.setEnabled(false);
+            cbSexoEquipe.setEnabled(false);
+            cbCategoriaEquipe.setEnabled(false);
+        }
     }//GEN-LAST:event_btnExcluirEquipeActionPerformed
 
     private void btnPesquisarEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarEquipeActionPerformed
@@ -563,6 +703,38 @@ public class Equipes extends javax.swing.JFrame {
     private void btnVisualizarEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarEquipeActionPerformed
         new DadosEquipe().setVisible(true);
     }//GEN-LAST:event_btnVisualizarEquipeActionPerformed
+
+    private void btnNovoEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoEquipeMouseEntered
+        btnNovoEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnNovoEquipeMouseEntered
+
+    private void btnSalvarEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarEquipeMouseEntered
+        btnSalvarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnSalvarEquipeMouseEntered
+
+    private void btnCancelarEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarEquipeMouseEntered
+        btnCancelarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnCancelarEquipeMouseEntered
+
+    private void btnEditarEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarEquipeMouseEntered
+        btnEditarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnEditarEquipeMouseEntered
+
+    private void btnExcluirEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExcluirEquipeMouseEntered
+        btnExcluirEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnExcluirEquipeMouseEntered
+
+    private void btnPesquisarEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPesquisarEquipeMouseEntered
+        btnPesquisarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnPesquisarEquipeMouseEntered
+
+    private void btnVisualizarEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVisualizarEquipeMouseEntered
+        btnVisualizarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnVisualizarEquipeMouseEntered
+
+    private void btnSairEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairEquipeMouseEntered
+        btnSairEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnSairEquipeMouseEntered
 
     /**
      * @param args the command line arguments
