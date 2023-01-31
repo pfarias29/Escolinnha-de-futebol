@@ -129,7 +129,7 @@ public class Tecnicos extends javax.swing.JFrame {
         tblTecnicos = new javax.swing.JTable();
         btnSairTecnico = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Técnicos");
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/images/manager.png")).getImage());
 
