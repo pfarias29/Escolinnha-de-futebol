@@ -130,7 +130,7 @@ public class Arbitros extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Árbitros");
         setBackground(new java.awt.Color(0, 153, 102));
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Images/Árbitro.png")).getImage());

@@ -51,6 +51,7 @@ public class CriandoJogador extends javax.swing.JFrame {
         tblJogadores = new javax.swing.JTable();
         btnSair = new javax.swing.JButton();
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Jogadores");
         setBackground(new java.awt.Color(0, 153, 102));
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Images/jogador.png")).getImage());
