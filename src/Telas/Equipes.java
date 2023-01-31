@@ -564,7 +564,7 @@ public class Equipes extends javax.swing.JFrame {
         int j = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir essa equipe?", "Atenção!", JOptionPane.WARNING_MESSAGE);
         if(j==0){
 
-            String equipe = listaEquipes.get(index).getNomeEquipe() + ";" + listaEquipes.get(index).getCategoria() + listaEquipes.get(index).getSexo();
+            String equipe = listaEquipes.get(index).getNomeEquipe() + ";" + listaEquipes.get(index).getCategoria() + ";" + listaEquipes.get(index).getSexo();
             
             File arquivo = new File("src/Dados/dadosEquipes.txt");
 
@@ -576,7 +576,7 @@ public class Equipes extends javax.swing.JFrame {
                 ArrayList<String> salvar = new ArrayList();
 
                 while(linha!= null){
-                    if(linha.equals(equipe) == false  ){
+                    if(linha.equals(equipe) == false ){
                         salvar.add(linha);
                     }
                     linha = br.readLine();
@@ -585,8 +585,6 @@ public class Equipes extends javax.swing.JFrame {
 
                 br.close();
                 fr.close();
-                FileWriter fw2 = new FileWriter(arquivo,true);
-                fw2.close();
 
                 FileWriter fw = new FileWriter(arquivo);
                 BufferedWriter bw = new BufferedWriter(fw);
@@ -597,15 +595,17 @@ public class Equipes extends javax.swing.JFrame {
                 }
                 fw.close();
                 bw.close();
+                
+                if(index>=0 && index<listaEquipes.size()){
+                    listaEquipes.remove(index);
+                }
 
-            }catch(IOException  ex){
+            }catch(IOException ex){
                 JOptionPane.showMessageDialog(null, "Não foi posssível abrir o arquivo.", "Erro", 0);
                 return;
             }           
             
-            if(index>=0 && index<listaEquipes.size()){
-                listaEquipes.remove(index);
-            }
+            
 
             carregarTabelaEquipes();
 
