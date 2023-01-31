@@ -69,6 +69,8 @@ public class DadosCampeonato extends javax.swing.JFrame {
             br.close();
             carregarTabelaEquipesCampeonato();
             
+            setLocationRelativeTo(null);
+            
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;

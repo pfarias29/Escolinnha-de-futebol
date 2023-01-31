@@ -752,9 +752,9 @@ public class Equipes extends javax.swing.JFrame {
             if(!arquivo.exists()){
                 arquivo.createNewFile();
             }
-            FileWriter fw = new FileWriter(arquivo2);
+            FileWriter fw = new FileWriter(arquivo2,false);
             BufferedWriter bw = new BufferedWriter(fw);
-            bw.write(nome+categoria+sexo);
+            bw.write(nome+"_"+categoria+"_"+sexo);
             bw.close();
         }catch (IOException ex){
             JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);

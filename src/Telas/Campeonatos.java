@@ -50,6 +50,8 @@ public class Campeonatos extends javax.swing.JFrame {
         }       
         
         carregarTabelaCampeonatos();
+
+        setLocationRelativeTo(null);
     }
     
     public void carregarTabelaCampeonatos(){
