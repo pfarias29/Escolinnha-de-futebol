@@ -19,6 +19,7 @@ import java.io.*;
  */
 public class Equipes extends javax.swing.JFrame {
     static ArrayList<Equipe> listaEquipes = new ArrayList<>();
+    static ArrayList<Equipe> listaVisualizarEquipe = new ArrayList<>();
     private String botão;
 
     /**
@@ -731,6 +732,35 @@ public class Equipes extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSairEquipeMouseEntered
 
     private void btnVisualizarEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarEquipeActionPerformed
+        int index = tblEquipes.getSelectedRow();
+        
+        String nome = "";
+        String categoria = "";
+        String sexo = "";
+        
+        
+        if(index>=0 && index<listaEquipes.size()){
+            nome = listaEquipes.get(index).getNomeEquipe();
+            categoria = listaEquipes.get(index).getCategoria();
+            sexo = listaEquipes.get(index).getSexo();
+        }
+        
+        File arquivo = new File("src/Dados/"+nome+"_"+categoria+"_"+sexo+".txt");
+        File arquivo2 = new File("src/Dados/nomeEquipe.txt");
+                
+        try{
+            if(!arquivo.exists()){
+                arquivo.createNewFile();
+            }
+            FileWriter fw = new FileWriter(arquivo2);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(nome+categoria+sexo);
+            bw.close();
+        }catch (IOException ex){
+            JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+            
         new DadosEquipe().setVisible(true);
     }//GEN-LAST:event_btnVisualizarEquipeActionPerformed
 

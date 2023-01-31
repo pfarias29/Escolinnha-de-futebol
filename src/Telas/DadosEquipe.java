@@ -4,17 +4,69 @@
  */
 package Telas;
 
+import Classes.Jogador;
+import Classes.Tecnico;
+import java.util.ArrayList;
+import java.io.*;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author felip
  */
 public class DadosEquipe extends javax.swing.JFrame {
+    static ArrayList<Jogador> listaJogadoresEquipe = new ArrayList<>();
+    static ArrayList<String> listaJogadoresFiltrada = new ArrayList<>();
+    private String botão;
 
     /**
      * Creates new form DadosEquipe
      */
     public DadosEquipe() {
         initComponents();
+        
+        File arquivo = new File("src/Dados/nomeEquipe.txt");
+        
+        try{
+            FileReader fr = new FileReader(arquivo);
+            BufferedReader br = new BufferedReader(fr);
+            String nomeArquivo = br.readLine();
+            String nomeArquivo2 = nomeArquivo+".txt";
+            File arquivo2 = new File("src/Dados/dadosJogadores.txt");
+            fr = new FileReader(arquivo2);
+            br = new BufferedReader(fr);
+            while(br.ready()){
+                String linha = br.readLine();
+                if(linha.split(";")[1].equals(nomeArquivo.split("_")[1]) && linha.split(";")[2].equals(nomeArquivo.split("_")[2])){
+                    listaJogadoresFiltrada.add(linha);
+                }
+            }
+            File a = new File("src/Dados/"+nomeArquivo2);
+            FileWriter fw = new FileWriter(a);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for(String jogador : listaJogadoresFiltrada){
+                bw.write(jogador);
+                bw.newLine();
+            }
+            bw.close();
+        }catch (IOException ex){
+            JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        //Habilitar ou desabilitar funções
+        btnAdicionarJogador.setEnabled(false);
+        btnRemoverJogador.setEnabled(false);
+        
+        //Habilitar ou desabilitar campos de textos
+        txtNomeJogador.setEnabled(false);
+        txtSobrenomeJogador.setEnabled(false);
+        txtPosicaoJogador.setEnabled(false);
+        txtIdadeJogador.setEnabled(false);
+        txtNacionalidadeJogador.setEnabled(false);
+        txtSexoJogador.setEnabled(false);
+        txtDataNascimentoJogador.setEnabled(false);
+        txtCPFJogador.setEnabled(true);
     }
 
     /**
@@ -24,25 +76,37 @@ public class DadosEquipe extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblNacionalidadeJogador2 = new javax.swing.JLabel();
+        txtNacionalidadeJogador1 = new javax.swing.JTextField();
+        txtNacionalidadeJogador3 = new javax.swing.JTextField();
+        txtNacionalidadeJogador5 = new javax.swing.JTextField();
+        txtNacionalidadeJogador6 = new javax.swing.JTextField();
         pnlJogadoresNaEquipe = new javax.swing.JPanel();
+        lblCPFJogador = new javax.swing.JLabel();
         lblNomeJogador = new javax.swing.JLabel();
         lblSobrenomeJogador = new javax.swing.JLabel();
+        lblPosicaoJogador = new javax.swing.JLabel();
+        txtCPFJogador = new javax.swing.JTextField();
+        txtNomeJogador = new javax.swing.JTextField();
+        txtSobrenomeJogador = new javax.swing.JTextField();
+        txtPosicaoJogador = new javax.swing.JTextField();
+        btnPesquisarJogador = new javax.swing.JButton();
         lblNacionalidadeJogador = new javax.swing.JLabel();
-        pnlPosicaoJogador = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        txtPesquisarNome = new javax.swing.JButton();
-        txtPesquisarSobrenome = new javax.swing.JButton();
-        txtPesquisarNacionalidade = new javax.swing.JButton();
-        lblPesquisarPosicao = new javax.swing.JButton();
+        txtIdadeJogador = new javax.swing.JTextField();
+        lblIdadeJogador = new javax.swing.JLabel();
+        lblDataNascimentoJogador = new javax.swing.JLabel();
+        txtNacionalidadeJogador = new javax.swing.JTextField();
+        txtSexoJogador = new javax.swing.JTextField();
+        lblSexoJogador = new javax.swing.JLabel();
+        txtDataNascimentoJogador = new javax.swing.JTextField();
         btnAdicionarJogador = new javax.swing.JButton();
         btnRemoverJogador = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblJogadoresEquipe = new javax.swing.JTable();
         btnCancelarEquipe = new javax.swing.JButton();
         btnSalvarEquipe = new javax.swing.JButton();
+
+        lblNacionalidadeJogador2.setText("Idade:");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Jogadores na Equipe");
@@ -51,21 +115,28 @@ public class DadosEquipe extends javax.swing.JFrame {
         pnlJogadoresNaEquipe.setBackground(new java.awt.Color(0, 153, 102));
         pnlJogadoresNaEquipe.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Jogadores na Equipe", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12), new java.awt.Color(0, 0, 0))); // NOI18N
 
+        lblCPFJogador.setText("CPF:");
+
         lblNomeJogador.setText("Nome:");
 
-        lblSobrenomeJogador.setText("Sobrenome:");
+        lblSobrenomeJogador.setText("Sobrenome");
+
+        lblPosicaoJogador.setText("Posição:");
+
+        btnPesquisarJogador.setText("Pesquisar");
+        btnPesquisarJogador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarJogadorActionPerformed(evt);
+            }
+        });
 
         lblNacionalidadeJogador.setText("Nacionalidade:");
 
-        pnlPosicaoJogador.setText("Posição:");
+        lblIdadeJogador.setText("Idade:");
 
-        txtPesquisarNome.setText("Pesquisar");
+        lblDataNascimentoJogador.setText("Data Nascimento:");
 
-        txtPesquisarSobrenome.setText("Pesquisar");
-
-        txtPesquisarNacionalidade.setText("Pesquisar");
-
-        lblPesquisarPosicao.setText("Pesquisar");
+        lblSexoJogador.setText("Sexo:");
 
         javax.swing.GroupLayout pnlJogadoresNaEquipeLayout = new javax.swing.GroupLayout(pnlJogadoresNaEquipe);
         pnlJogadoresNaEquipe.setLayout(pnlJogadoresNaEquipeLayout);
@@ -73,55 +144,85 @@ public class DadosEquipe extends javax.swing.JFrame {
             pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlJogadoresNaEquipeLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(pnlJogadoresNaEquipeLayout.createSequentialGroup()
-                        .addComponent(lblNomeJogador)
-                        .addGap(56, 56, 56)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlJogadoresNaEquipeLayout.createSequentialGroup()
-                        .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblNacionalidadeJogador)
-                            .addComponent(pnlPosicaoJogador))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField3)
-                            .addComponent(jTextField4)))
-                    .addGroup(pnlJogadoresNaEquipeLayout.createSequentialGroup()
-                        .addComponent(lblSobrenomeJogador)
-                        .addGap(28, 28, 28)
-                        .addComponent(jTextField2)))
-                .addGap(18, 18, 18)
                 .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtPesquisarNome)
-                    .addComponent(txtPesquisarSobrenome)
-                    .addComponent(txtPesquisarNacionalidade)
-                    .addComponent(lblPesquisarPosicao))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlJogadoresNaEquipeLayout.createSequentialGroup()
+                        .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblSobrenomeJogador)
+                            .addComponent(lblPosicaoJogador))
+                        .addGap(39, 39, 39)
+                        .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlJogadoresNaEquipeLayout.createSequentialGroup()
+                                .addComponent(txtSobrenomeJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 1, Short.MAX_VALUE))
+                            .addComponent(txtPosicaoJogador)))
+                    .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlJogadoresNaEquipeLayout.createSequentialGroup()
+                            .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblCPFJogador)
+                                .addComponent(lblNomeJogador))
+                            .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(pnlJogadoresNaEquipeLayout.createSequentialGroup()
+                                    .addGap(64, 64, 64)
+                                    .addComponent(txtNomeJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlJogadoresNaEquipeLayout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                                    .addComponent(txtCPFJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlJogadoresNaEquipeLayout.createSequentialGroup()
+                            .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(lblNacionalidadeJogador)
+                                .addComponent(lblIdadeJogador)
+                                .addComponent(lblDataNascimentoJogador)
+                                .addComponent(lblSexoJogador))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(txtNacionalidadeJogador)
+                                .addGroup(pnlJogadoresNaEquipeLayout.createSequentialGroup()
+                                    .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(txtSexoJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtIdadeJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtDataNascimentoJogador, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGap(0, 0, Short.MAX_VALUE))))))
+                .addGap(18, 18, 18)
+                .addComponent(btnPesquisarJogador)
+                .addGap(367, 367, 367))
         );
         pnlJogadoresNaEquipeLayout.setVerticalGroup(
             pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlJogadoresNaEquipeLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCPFJogador)
+                    .addComponent(txtCPFJogador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisarJogador))
+                .addGap(18, 18, 18)
+                .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNomeJogador)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPesquisarNome))
+                    .addComponent(txtNomeJogador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSobrenomeJogador)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPesquisarSobrenome))
+                    .addComponent(txtSobrenomeJogador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPosicaoJogador)
+                    .addComponent(txtPosicaoJogador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNacionalidadeJogador)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtPesquisarNacionalidade))
+                    .addComponent(txtNacionalidadeJogador, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(pnlPosicaoJogador)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPesquisarPosicao))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblIdadeJogador)
+                    .addComponent(txtIdadeJogador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblDataNascimentoJogador)
+                    .addComponent(txtDataNascimentoJogador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlJogadoresNaEquipeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSexoJogador)
+                    .addComponent(txtSexoJogador, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         btnAdicionarJogador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/adicionarCliente.png"))); // NOI18N
@@ -135,14 +236,14 @@ public class DadosEquipe extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Nome", "Sobrenome", "Nacionalidade", "Posicao"
+                "CPF", "Nome", "Sobrenome", "Posicao", "Nacionalidade", "Idade", "Data Nascimento", "Sexo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, true
+                false, false, true, true, true, true, true, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -167,45 +268,95 @@ public class DadosEquipe extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnAdicionarJogador)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRemoverJogador)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(pnlJogadoresNaEquipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 670, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSalvarEquipe)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCancelarEquipe)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(pnlJogadoresNaEquipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(147, 147, 147)
+                .addComponent(btnSalvarEquipe)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelarEquipe)
+                .addGap(136, 136, 136))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(109, 109, 109)
+                .addComponent(btnAdicionarJogador)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnRemoverJogador)
+                .addGap(64, 64, 64))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnlJogadoresNaEquipe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlJogadoresNaEquipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAdicionarJogador)
                     .addComponent(btnRemoverJogador))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelarEquipe)
-                    .addComponent(btnSalvarEquipe))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnSalvarEquipe)
+                    .addComponent(btnCancelarEquipe))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnPesquisarJogadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarJogadorActionPerformed
+        if(txtCPFJogador.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "O cpf deve ser informado", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+        }
+        else{
+            String jogador;
+            String nome = "",sobrenome="",posicao="",nacionalidade="",sexo="",data="";
+            int idade=0;
+            String cpfJogador = txtCPFJogador.getText();
+            for(int i=0;i<listaJogadoresFiltrada.size();i++){
+                jogador = listaJogadoresFiltrada.get(i);
+                if(cpfJogador.equals(jogador.split(";")[3])){
+                    nome = jogador.split(";")[0];
+                    sobrenome = jogador.split(";")[1];
+                    nacionalidade = jogador.split(";")[2];
+                    cpfJogador = jogador.split(";")[3];
+                    sexo = jogador.split(";")[4];
+                    idade = Integer.parseInt(jogador.split(";")[5]);
+                    data = jogador.split(";")[6];
+                    posicao = jogador.split(";")[7];
+                }
+            }
+            if(cpfJogador.equals("")){
+                JOptionPane.showMessageDialog(null, "Este jogador não existe", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+                //Limpar os campos
+                txtNomeJogador.setText("");
+                txtSobrenomeJogador.setText("");
+                txtNacionalidadeJogador.setText("");
+                txtCPFJogador.setText("");
+                txtSexoJogador.setText("");
+                txtIdadeJogador.setText("");
+                txtDataNascimentoJogador.setText("");
+                txtPosicaoJogador.setText("");
+            }
+            else{
+                txtNomeJogador.setText(nome);
+                txtSobrenomeJogador.setText(sobrenome);
+                txtNacionalidadeJogador.setText(nacionalidade);
+                txtCPFJogador.setText(cpfJogador);
+                txtSexoJogador.setText(sexo);
+                txtIdadeJogador.setText(String.valueOf(idade));
+                txtDataNascimentoJogador.setText(data);
+                txtPosicaoJogador.setText(posicao);
+            }
+            
+            txtCPFJogador.selectAll();
+            txtCPFJogador.requestFocus();
+        }
+    }//GEN-LAST:event_btnPesquisarJogadorActionPerformed
 
     /**
      * @param args the command line arguments
@@ -245,22 +396,32 @@ public class DadosEquipe extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionarJogador;
     private javax.swing.JButton btnCancelarEquipe;
+    private javax.swing.JButton btnPesquisarJogador;
     private javax.swing.JButton btnRemoverJogador;
     private javax.swing.JButton btnSalvarEquipe;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel lblCPFJogador;
+    private javax.swing.JLabel lblDataNascimentoJogador;
+    private javax.swing.JLabel lblIdadeJogador;
     private javax.swing.JLabel lblNacionalidadeJogador;
+    private javax.swing.JLabel lblNacionalidadeJogador2;
     private javax.swing.JLabel lblNomeJogador;
-    private javax.swing.JButton lblPesquisarPosicao;
+    private javax.swing.JLabel lblPosicaoJogador;
+    private javax.swing.JLabel lblSexoJogador;
     private javax.swing.JLabel lblSobrenomeJogador;
     private javax.swing.JPanel pnlJogadoresNaEquipe;
-    private javax.swing.JLabel pnlPosicaoJogador;
     private javax.swing.JTable tblJogadoresEquipe;
-    private javax.swing.JButton txtPesquisarNacionalidade;
-    private javax.swing.JButton txtPesquisarNome;
-    private javax.swing.JButton txtPesquisarSobrenome;
+    private javax.swing.JTextField txtCPFJogador;
+    private javax.swing.JTextField txtDataNascimentoJogador;
+    private javax.swing.JTextField txtIdadeJogador;
+    private javax.swing.JTextField txtNacionalidadeJogador;
+    private javax.swing.JTextField txtNacionalidadeJogador1;
+    private javax.swing.JTextField txtNacionalidadeJogador3;
+    private javax.swing.JTextField txtNacionalidadeJogador5;
+    private javax.swing.JTextField txtNacionalidadeJogador6;
+    private javax.swing.JTextField txtNomeJogador;
+    private javax.swing.JTextField txtPosicaoJogador;
+    private javax.swing.JTextField txtSexoJogador;
+    private javax.swing.JTextField txtSobrenomeJogador;
     // End of variables declaration//GEN-END:variables
 }
