@@ -28,6 +28,47 @@ public class DadosCampeonato extends javax.swing.JFrame {
      */
     public DadosCampeonato() {
         initComponents();
+        
+        File nomeArquivo = new File("src/Dados/nomeEquipe.txt");
+        String nome = "";
+        
+        try {
+            FileReader fr = new FileReader(nomeArquivo);
+            BufferedReader br = new BufferedReader(fr);
+            
+            nome = br.readLine();
+            
+        } catch(IOException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+        nome = nome + ".txt";
+        File arquivo = new File("src/Dados/Campeonatos/" + nome);
+        
+        try{
+            FileReader fr = new FileReader(arquivo);
+            BufferedReader br = new BufferedReader(fr);
+        
+            while(br.ready()) {
+                String[] linha = br.readLine().split(";");
+                ArrayList<String> listLinha = new ArrayList<>();
+                listLinha.add(linha[0]);
+                listLinha.add(linha[1]);
+                listLinha.add(linha[2]);
+                listLinha.add(linha[3]);
+                
+                equipesCampeonato.add(listLinha);            
+            } 
+            
+            br.close();
+            carregarTabelaEquipesCampeonato();
+            
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+            this.setVisible(false);
+            return;
+        }
+        
     }
     public void carregarTabelaEquipesCampeonato(){
         DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Nome", "Sexo", "Categoria", "Técnico"}, 0) {
@@ -108,6 +149,11 @@ public class DadosCampeonato extends javax.swing.JFrame {
         btnPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnPesquisarMouseEntered(evt);
+            }
+        });
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
             }
         });
 
@@ -313,7 +359,7 @@ public class DadosCampeonato extends javax.swing.JFrame {
     private void btnAdicionarEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarEquipeActionPerformed
         btnSalvar.setEnabled(true);
         btnCancelar.setEnabled(true);
-        btnPesquisar.setEnabled(false);
+        btnPesquisar.setEnabled(true);
         btnAdicionarEquipe.setEnabled(false);
         
         txtSexo.setEnabled(true);
@@ -478,6 +524,35 @@ public class DadosCampeonato extends javax.swing.JFrame {
     private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
         btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_btnCancelarMouseEntered
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        String nome = txtNome.getText();
+        boolean achou = false;
+        int i = 0;
+        
+        for(ArrayList<String> equipe : equipesCampeonato) {
+            if(equipe.get(0).equals(nome)) {
+                txtSexo.setText(equipe.get(1));
+                txtCategoria.setText(equipe.get(2));
+                txtTecnico.setText(equipe.get(3));
+                
+                achou = true;
+                i = equipesCampeonato.indexOf(equipe);
+            }
+        }
+        
+        if (achou) {
+            btnAdicionarEquipe.setEnabled(false);
+            btnSalvar.setEnabled(false);
+            btnRemoverEquipe.setEnabled(true);
+            btnCancelar.setEnabled(true);
+            btnPesquisar.setEnabled(false);
+            
+            tblEquipesCampeonato.setRowSelectionInterval(i, i);
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível encontrar a equipe '" + nome + "'.", "Erro", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     /**
      * @param args the command line arguments
