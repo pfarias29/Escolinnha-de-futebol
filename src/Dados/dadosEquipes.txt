@@ -2,3 +2,4 @@ Bahia;Júnior;Masculino
 Flamengo;Júnior;Masculino
 Vasco;Mirim;Masculino
 Brasil;Júnior;Masculino
+CJR;Júnior;Feminino
