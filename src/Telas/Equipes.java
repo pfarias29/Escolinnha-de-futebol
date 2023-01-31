@@ -5,10 +5,8 @@
 package Telas;
 
 import Classes.Equipe;
-<<<<<<< HEAD
-=======
+
 import static Telas.Tecnicos.listaTecnicos;
->>>>>>> 96d0483f874961ce42c50dfcc0cea66084028f73
 import java.awt.Cursor;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -309,11 +307,6 @@ public class Equipes extends javax.swing.JFrame {
 
         btnVisualizarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/squad.png"))); // NOI18N
         btnVisualizarEquipe.setText("Visualizar Equipe");
-        btnVisualizarEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnVisualizarEquipeMouseEntered(evt);
-            }
-        });
         btnVisualizarEquipe.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVisualizarEquipeActionPerformed(evt);
@@ -704,10 +697,6 @@ public class Equipes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnOKEquipeActionPerformed
 
-    private void btnVisualizarEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarEquipeActionPerformed
-        new DadosEquipe().setVisible(true);
-    }//GEN-LAST:event_btnVisualizarEquipeActionPerformed
-
     private void btnNovoEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoEquipeMouseEntered
         btnNovoEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_btnNovoEquipeMouseEntered
@@ -732,27 +721,19 @@ public class Equipes extends javax.swing.JFrame {
         btnPesquisarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_btnPesquisarEquipeMouseEntered
 
-<<<<<<< HEAD
-    private void btnVisualizarEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVisualizarEquipeMouseEntered
-        btnVisualizarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_btnVisualizarEquipeMouseEntered
 
-=======
->>>>>>> 96d0483f874961ce42c50dfcc0cea66084028f73
+    private void btnVisualizarEquipeMouseEntered(java.awt.event.MouseEvent evt) {                                                 
+        btnVisualizarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }                                                
+
     private void btnSairEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairEquipeMouseEntered
         btnSairEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_btnSairEquipeMouseEntered
 
-<<<<<<< HEAD
-=======
-    private void btnVisualizarEquipeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVisualizarEquipeMouseEntered
-        btnVisualizarEquipe.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_btnVisualizarEquipeMouseEntered
+    private void btnVisualizarEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizarEquipeActionPerformed
+        new DadosEquipe().setVisible(true);
+    }//GEN-LAST:event_btnVisualizarEquipeActionPerformed
 
->>>>>>> 96d0483f874961ce42c50dfcc0cea66084028f73
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

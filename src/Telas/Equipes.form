@@ -357,7 +357,6 @@
         <Property name="text" type="java.lang.String" value="Visualizar Equipe"/>
       </Properties>
       <Events>
-        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnVisualizarEquipeMouseEntered"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVisualizarEquipeActionPerformed"/>
       </Events>
     </Component>
