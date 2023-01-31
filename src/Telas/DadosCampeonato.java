@@ -37,18 +37,24 @@ public class DadosCampeonato extends javax.swing.JFrame {
             BufferedReader br = new BufferedReader(fr);
             
             nome = br.readLine();
+            br.close();
             
         } catch(IOException e) {
             JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
         }
         
         nome = nome + ".txt";
         File arquivo = new File("src/Dados/Campeonatos/" + nome);
         
         try{
+            if(!arquivo.exists()) {
+                arquivo.createNewFile();
+            }
+            
             FileReader fr = new FileReader(arquivo);
             BufferedReader br = new BufferedReader(fr);
-        
+
             while(br.ready()) {
                 String[] linha = br.readLine().split(";");
                 ArrayList<String> listLinha = new ArrayList<>();
@@ -65,7 +71,6 @@ public class DadosCampeonato extends javax.swing.JFrame {
             
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
-            this.setVisible(false);
             return;
         }
         
@@ -390,9 +395,6 @@ public class DadosCampeonato extends javax.swing.JFrame {
             File arquivo = new File("src/Dados/Campeonatos/" + nomeArquivo);
             
             try {
-                if(!arquivo.exists()) {
-                    arquivo.createNewFile();
-                }
                 
                 FileWriter fw = new FileWriter(arquivo, true);
                 BufferedWriter bw = new BufferedWriter(fw);
