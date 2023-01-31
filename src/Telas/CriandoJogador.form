@@ -222,9 +222,6 @@
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCpfActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblNacionalidade">
           <Properties>
@@ -237,9 +234,6 @@
               <Color blue="cc" green="cc" red="cc" type="rgb"/>
             </Property>
           </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtNacionalidadeActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblIdade">
           <Properties>
@@ -327,6 +321,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Novo Jogador"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnNovoMouseEntered"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnSalvar">
       <Properties>
@@ -336,6 +333,7 @@
         <Property name="text" type="java.lang.String" value="Salvar"/>
       </Properties>
       <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSalvarMouseEntered"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSalvarActionPerformed"/>
       </Events>
     </Component>
@@ -347,6 +345,7 @@
         <Property name="text" type="java.lang.String" value="Cancelar"/>
       </Properties>
       <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCancelarMouseEntered"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCancelarActionPerformed"/>
       </Events>
     </Component>
@@ -357,6 +356,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Editar"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEditarMouseEntered"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnExcluir">
       <Properties>
@@ -366,6 +368,7 @@
         <Property name="text" type="java.lang.String" value="Excluir"/>
       </Properties>
       <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnExcluirMouseEntered"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnExcluirActionPerformed"/>
       </Events>
     </Component>
@@ -376,6 +379,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Pesquisar"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnPesquisarMouseEntered"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
 
@@ -442,6 +448,7 @@
         <Property name="text" type="java.lang.String" value="Sair"/>
       </Properties>
       <Events>
+        <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSairMouseEntered"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSairActionPerformed"/>
       </Events>
     </Component>

@@ -3,6 +3,7 @@ package Telas;
 import Classes.Pessoa;
 import Classes.Jogador;
 import Classes.JogadorTableModel;
+import java.awt.Cursor;
 import java.util.ArrayList;
 
 public class CriandoJogador extends javax.swing.JFrame {
@@ -71,20 +72,10 @@ public class CriandoJogador extends javax.swing.JFrame {
         lblCpf.setText("CPF:");
 
         txtCpf.setBackground(new java.awt.Color(204, 204, 204));
-        txtCpf.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCpfActionPerformed(evt);
-            }
-        });
 
         lblNacionalidade.setText("Nacionalidade:");
 
         txtNacionalidade.setBackground(new java.awt.Color(204, 204, 204));
-        txtNacionalidade.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNacionalidadeActionPerformed(evt);
-            }
-        });
 
         lblIdade.setText("Idade");
 
@@ -191,9 +182,19 @@ public class CriandoJogador extends javax.swing.JFrame {
 
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/jogador.png"))); // NOI18N
         btnNovo.setText("Novo Jogador");
+        btnNovo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnNovoMouseEntered(evt);
+            }
+        });
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/salvar1.png"))); // NOI18N
         btnSalvar.setText("Salvar");
+        btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSalvarMouseEntered(evt);
+            }
+        });
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -202,6 +203,11 @@ public class CriandoJogador extends javax.swing.JFrame {
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cancelar.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseEntered(evt);
+            }
+        });
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -210,9 +216,19 @@ public class CriandoJogador extends javax.swing.JFrame {
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/editar1.png"))); // NOI18N
         btnEditar.setText("Editar");
+        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnEditarMouseEntered(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/excluirJogador.png"))); // NOI18N
         btnExcluir.setText("Excluir");
+        btnExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnExcluirMouseEntered(evt);
+            }
+        });
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -221,6 +237,11 @@ public class CriandoJogador extends javax.swing.JFrame {
 
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/pesquisar1.png"))); // NOI18N
         btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnPesquisarMouseEntered(evt);
+            }
+        });
 
         tblJogadores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -252,6 +273,11 @@ public class CriandoJogador extends javax.swing.JFrame {
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Sair.png"))); // NOI18N
         btnSair.setText("Sair");
+        btnSair.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSairMouseEntered(evt);
+            }
+        });
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
@@ -346,10 +372,6 @@ public class CriandoJogador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rdbFemininoActionPerformed
 
-    private void txtNacionalidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNacionalidadeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNacionalidadeActionPerformed
-
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
         // Verificar qual linha foi selecionada
         int index = tblJogadores.getSelectedRow();
@@ -361,13 +383,38 @@ public class CriandoJogador extends javax.swing.JFrame {
         modeloTabela.removeJogador(index);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
-    private void txtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCpfActionPerformed
-
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
         this.setVisible(false);
+        //this.dispose();
     }//GEN-LAST:event_btnSairActionPerformed
+
+    private void btnSairMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairMouseEntered
+        btnSair.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnSairMouseEntered
+
+    private void btnNovoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoMouseEntered
+        btnNovo.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnNovoMouseEntered
+
+    private void btnSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseEntered
+        btnSalvar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnSalvarMouseEntered
+
+    private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
+        btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnCancelarMouseEntered
+
+    private void btnEditarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseEntered
+        btnEditar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnEditarMouseEntered
+
+    private void btnExcluirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExcluirMouseEntered
+        btnExcluir.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnExcluirMouseEntered
+
+    private void btnPesquisarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPesquisarMouseEntered
+        btnPesquisar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+    }//GEN-LAST:event_btnPesquisarMouseEntered
 
     /**
      * @param args the command line arguments
