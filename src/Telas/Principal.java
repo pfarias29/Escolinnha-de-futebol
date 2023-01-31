@@ -36,7 +36,6 @@ public class Principal extends javax.swing.JFrame {
         btnFecharPrincipal = new javax.swing.JButton();
         lblTituloPrincipal = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Escolinha de Futebol Tok de Bola");
         setAutoRequestFocus(false);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -258,7 +257,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnFecharPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharPrincipalActionPerformed
         this.setVisible(false);
-        System.exit(0);
+        //System.exit(0);
     }//GEN-LAST:event_btnFecharPrincipalActionPerformed
 
     private void btnJogadoresPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJogadoresPrincipalActionPerformed
