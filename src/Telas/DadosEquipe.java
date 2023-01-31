@@ -9,14 +9,15 @@ import Classes.Tecnico;
 import java.util.ArrayList;
 import java.io.*;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author felip
  */
 public class DadosEquipe extends javax.swing.JFrame {
-    static ArrayList<Jogador> listaJogadoresEquipe = new ArrayList<>();
-    static ArrayList<String> listaJogadoresFiltrada = new ArrayList<>();
+    private ArrayList<Jogador> listaJogadoresEquipe = new ArrayList<>();
+    private ArrayList<String> listaJogadoresFiltrada = new ArrayList<>();
     private String botão;
 
     /**
@@ -35,10 +36,28 @@ public class DadosEquipe extends javax.swing.JFrame {
             File arquivo2 = new File("src/Dados/dadosJogadores.txt");
             fr = new FileReader(arquivo2);
             br = new BufferedReader(fr);
+                    
+            String categoria;   
+            int idade;
+                    
             while(br.ready()){
                 String linha = br.readLine();
-                if(linha.split(";")[1].equals(nomeArquivo.split("_")[1]) && linha.split(";")[2].equals(nomeArquivo.split("_")[2])){
-                    listaJogadoresFiltrada.add(linha);
+                if(linha.split(";")[4].equals(nomeArquivo.split("_")[2])){
+                    idade = Integer.parseInt(linha.split(";")[5]);
+                    if(idade < 12) {
+                        categoria = "Mirim";
+                    } else if (idade < 14) {
+                        categoria = "Infantil";
+                    } else if (idade < 16) {
+                        categoria = "Infanto Juvenil";
+                    } else if (idade < 18) {
+                        categoria = "Juvenil";
+                    } else {
+                        categoria = "Júnior";
+                    }
+                    if(categoria.equals(nomeArquivo.split("_")[1])){
+                        listaJogadoresFiltrada.add(linha);
+                    }
                 }
             }
             File a = new File("src/Dados/"+nomeArquivo2);
@@ -54,6 +73,10 @@ public class DadosEquipe extends javax.swing.JFrame {
             return;
         }
         
+        carregarTabelaJogadoresEquipe();
+        
+        setLocationRelativeTo(null);
+        
         //Habilitar ou desabilitar funções
         btnAdicionarJogador.setEnabled(false);
         btnRemoverJogador.setEnabled(false);
@@ -67,6 +90,38 @@ public class DadosEquipe extends javax.swing.JFrame {
         txtSexoJogador.setEnabled(false);
         txtDataNascimentoJogador.setEnabled(false);
         txtCPFJogador.setEnabled(true);
+    }
+    
+    public void carregarTabelaJogadoresEquipe(){
+        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Nome", "Sobrenome", "Nacionalidade", "CPF", "Sexo", "Idade", "Data Nascimento","Posicao"}, 0){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        for(int i=0;i<listaJogadoresFiltrada.size();i++){
+            Object linha[] = new Object[] { listaJogadoresFiltrada.get(i).split(";")[0],
+                                            listaJogadoresFiltrada.get(i).split(";")[1],
+                                            listaJogadoresFiltrada.get(i).split(";")[2],
+                                            listaJogadoresFiltrada.get(i).split(";")[3],
+                                            listaJogadoresFiltrada.get(i).split(";")[4],
+                                            listaJogadoresFiltrada.get(i).split(";")[5],
+                                            listaJogadoresFiltrada.get(i).split(";")[6],
+                                            listaJogadoresFiltrada.get(i).split(";")[7]};
+            modelo.addRow(linha);
+        }
+        
+        tblJogadoresEquipe.setModel(modelo);
+        
+        tblJogadoresEquipe.getColumnModel().getColumn(0).setPreferredWidth(100);
+        tblJogadoresEquipe.getColumnModel().getColumn(1).setPreferredWidth(100);
+        tblJogadoresEquipe.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tblJogadoresEquipe.getColumnModel().getColumn(3).setPreferredWidth(100);
+        tblJogadoresEquipe.getColumnModel().getColumn(4).setPreferredWidth(100);
+        tblJogadoresEquipe.getColumnModel().getColumn(5).setPreferredWidth(100);
+        tblJogadoresEquipe.getColumnModel().getColumn(6).setPreferredWidth(100);
+        tblJogadoresEquipe.getColumnModel().getColumn(7).setPreferredWidth(100);
     }
 
     /**

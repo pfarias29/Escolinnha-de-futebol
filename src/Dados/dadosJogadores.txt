@@ -1,3 +1,0 @@
-Felipe;Costa;Brasileiro;0637999550;Masculino;19;17/05/2003;Atacante
-Raquel;Sousa;Brasileira;0637999551;Feminino;20;17/01/2003;Goleiro
-Pedro;Farias;Brasileiro;1111111111;Masculino;19;02/12/2002;Lateral

@@ -14,6 +14,8 @@ public class CriandoJogador extends javax.swing.JFrame {
         
         modeloTabela = new JogadorTableModel();
         tblJogadores.setModel(modeloTabela);
+        
+        setLocationRelativeTo(null);
     }
 
     /**

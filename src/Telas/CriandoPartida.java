@@ -4,6 +4,8 @@ public class CriandoPartida extends javax.swing.JFrame {
 
     public CriandoPartida() {
         initComponents();
+        
+        setLocationRelativeTo(null);
     }
 
     /**
