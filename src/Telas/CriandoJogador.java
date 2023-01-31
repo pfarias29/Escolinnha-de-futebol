@@ -52,7 +52,7 @@ public class CriandoJogador extends javax.swing.JFrame {
         tblJogadores = new javax.swing.JTable();
         btnSair = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Jogadores");
         setBackground(new java.awt.Color(0, 153, 102));
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Images/jogador.png")).getImage());
@@ -384,7 +384,9 @@ public class CriandoJogador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
+        System.out.println("teste1");
         this.setVisible(false);
+        System.out.println("teste-2");
     }//GEN-LAST:event_btnSairActionPerformed
 
     private void btnSairMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairMouseEntered
