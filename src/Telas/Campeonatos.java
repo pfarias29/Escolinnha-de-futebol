@@ -129,14 +129,14 @@ public class Campeonatos extends javax.swing.JFrame {
 
         lblSexo.setText("Sexo:");
 
-        cbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha o sexo", "Feminino", "Masculino" }));
+        cbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione o sexo", "Feminino", "Masculino" }));
         cbSexo.setEnabled(false);
 
         lblCategoria.setText("Categoria:");
 
         lblNome.setText("Nome:");
 
-        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Escolha a categoria", "Mirim", "Infantil", "Infanto Juvenil", "Juvenil", "Júnior" }));
+        cbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione a categoria", "Mirim", "Infantil", "Infanto Juvenil", "Juvenil", "Júnior" }));
         cbCategoria.setEnabled(false);
 
         txtNome.setEnabled(false);
@@ -151,8 +151,13 @@ public class Campeonatos extends javax.swing.JFrame {
 
         lblDataTermino.setText("Data do término:");
 
-        cbVencedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbVencedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione o vencedor" }));
         cbVencedor.setEnabled(false);
+        cbVencedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cbVencedorMouseClicked(evt);
+            }
+        });
 
         spnDiaInicio.setModel(new javax.swing.SpinnerNumberModel(1, 1, 31, 1));
         spnDiaInicio.setEnabled(false);
@@ -478,7 +483,7 @@ public class Campeonatos extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        if(txtNome.getText().equals("") || txtEndereco.getText().equals("") || cbSexo.getSelectedIndex() == 0 || cbCategoria.getSelectedIndex() == 0 || cbVencedor.getSelectedIndex() == 0){
+        if(txtNome.getText().equals("") || txtEndereco.getText().equals("") || cbSexo.getSelectedIndex() == 0 || cbCategoria.getSelectedIndex() == 0){
             JOptionPane.showMessageDialog(null, "Todos os campos devem ser inseridos", "Mensagem", JOptionPane.PLAIN_MESSAGE);
         }
         else{
@@ -492,7 +497,12 @@ public class Campeonatos extends javax.swing.JFrame {
             String anoFinal = String.valueOf(spnAnoFinal.getValue());
             String sexo = String.valueOf(cbSexo.getSelectedItem());
             String categoria = String.valueOf(cbCategoria.getSelectedItem());
-            String vencedor = String.valueOf(cbVencedor.getSelectedItem());
+            String vencedor = "";
+            
+            if(cbVencedor.getSelectedIndex() != 0) {
+                vencedor = String.valueOf(cbVencedor.getSelectedItem());
+            }
+            
              
             if(Integer.parseInt(diaInicio) < 10){
                 diaInicio = "0" + diaInicio;
@@ -697,6 +707,39 @@ public class Campeonatos extends javax.swing.JFrame {
         btnEditar.setEnabled(true);
         btnVisualizar.setEnabled(true);
     }//GEN-LAST:event_tblCampeonatosMouseClicked
+
+    private void cbVencedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbVencedorMouseClicked
+        String nomeCampeonato = "";
+        
+        if(txtNome.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Preencha o nome do campeonato primeiro.", "Atenção!", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        nomeCampeonato = txtNome.getText() + ".txt";
+        
+        File arquivo = new File("src/Dados/Campeonatos/" + nomeCampeonato);
+        
+        try {
+            if(!arquivo.exists()) {
+                arquivo.createNewFile();
+            }
+            FileReader fr = new FileReader(arquivo);
+            BufferedReader br = new BufferedReader(fr);
+            
+            cbVencedor.removeAllItems();
+            cbVencedor.addItem("Selecione o vencedor");
+            while(br.ready()) {
+                String equipe = br.readLine().split(";")[0];
+                
+                cbVencedor.addItem(equipe);
+            }
+            
+        } catch(IOException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }//GEN-LAST:event_cbVencedorMouseClicked
 
     /**
      * @param args the command line arguments
