@@ -23,32 +23,18 @@ public class Partida {
     
     
     public Partida() {
-        //this.arbitro = new ArrayList();
-        //this.equipe = new ArrayList();
+        this.arbitro = new ArrayList();
+        this.equipe = new ArrayList();
     }
 
-    public Partida(String data, float horario, String local, String resultado) {
+    public Partida(String data, float horario, String local, ArrayList<Arbitro> arbitro, ArrayList<Equipe> equipeA, ArrayList<Equipe> equipeB, String resultado) {
         this.data = data;
         this.horario = horario;
         this.local = local;
         this.resultado = resultado;
-    }
-    
-    // Métodos
-    // Cadastrar, excluir, alterar, pesquisar
-    //public void adicionarEquipe(){
-    //}
-    
-    public void cadastrarPartida(){
-    }
-    
-    public void alterar(){
-    }
-    
-    public void excluir(){
-    }
-    
-    public void pesquisar(){
+        this.equipe = equipeA;
+        this.equipe = equipeB;
+        this.arbitro = arbitro;
     }
     
     // Métodos especiais
@@ -99,6 +85,10 @@ public class Partida {
 
     public void addArbitro(Arbitro arbitro) {
         this.arbitro.add(arbitro);
+    }
+
+    public void add(Partida partida) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
     

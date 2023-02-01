@@ -1,22 +1,98 @@
 package Telas;
 
+import Classes.Arbitro;
 import Classes.Pessoa;
 import Classes.Jogador;
-import Classes.JogadorTableModel;
-import java.awt.Cursor;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+//import Classes.JogadorTableModel;
 import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class CriandoJogador extends javax.swing.JFrame {
-    JogadorTableModel modeloTabela;
-    static ArrayList<Jogador> listaJogadores;
+    private ArrayList<Jogador> jogador = new ArrayList<>();
+    private String botao;
     
-    public CriandoJogador() {
+    // dados dos arquivos
+    public CriandoJogador(){
         initComponents();
         
-        modeloTabela = new JogadorTableModel();
-        tblJogadores.setModel(modeloTabela);
+        File arquivo = new File("src/Dados/dadosJogadores.txt");
         
-        setLocationRelativeTo(null);
+        try {
+            FileReader fr = new FileReader(arquivo);
+            BufferedReader br = new BufferedReader(fr);
+            
+            while (br.ready()){
+                String [] linha = br.readLine().split(";");
+                Jogador jogador = new Jogador(linha[0], linha[1], linha[2], linha[3], linha[4], Integer.parseInt(linha[5]), linha[6], linha[7]);
+                jogador.add(jogador);
+            }
+                
+        }catch(IOException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        carregarTabelaJogadores();
+    }
+
+    public void carregarTabelaJogadores(){
+        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Nome", "Sobrenome", "Nacionalidade", "CPF", "Sexo", "Idade", "Data Nascimento", "Posição"},0){;
+        @Override
+        public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        for(int i=0; i < jogador.size(); i++){
+            Object linha[] = new Object[] {jogador.get(i).getNome(),
+                                           jogador.get(i).getSobrenome(),
+                                           jogador.get(i).getNacionalidade(),
+                                           jogador.get(i).getCpf(),
+                                           jogador.get(i).getSexo(),
+                                           jogador.get(i).getIdade(),
+                                           jogador.get(i).getDataNascimento(),
+                                           jogador.get(i).getPosicao()};
+            modelo.addRow(linha);
+        }
+        
+        // Atualizando Tabela
+        tblJogadores.setModel(modelo);
+        
+        // Alterando o tamanho da tabela
+        tblJogadores.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tblJogadores.getColumnModel().getColumn(1).setPreferredWidth(10);
+        tblJogadores.getColumnModel().getColumn(2).setPreferredWidth(20);
+        tblJogadores.getColumnModel().getColumn(3).setPreferredWidth(100);
+        tblJogadores.getColumnModel().getColumn(4).setPreferredWidth(5);
+        tblJogadores.getColumnModel().getColumn(5).setPreferredWidth(5);
+        tblJogadores.getColumnModel().getColumn(6).setPreferredWidth(20);
+        tblJogadores.getColumnModel().getColumn(7).setPreferredWidth(20);
+                
+    }
+    
+    public void carregarPosicao(){
+        // Remove os itens da ComboBox
+        cmbPosicao.removeAllItems();
+        
+        // Selecionando o primeiro item
+        cmbPosicao.addItem("Selecione uma posição");
+        
+        for (int i=0; i < jogador.size();i++){
+            cmbPosicao.addItem(jogador.get(i).getPosicao());
+        }
+        
+        
     }
 
     /**
@@ -29,11 +105,14 @@ public class CriandoJogador extends javax.swing.JFrame {
     private void initComponents() {
 
         btnSexo = new javax.swing.ButtonGroup();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         lblNome = new javax.swing.JLabel();
         txtNome = new javax.swing.JTextField();
         lblCpf = new javax.swing.JLabel();
         txtCpf = new javax.swing.JTextField();
+        btnOkPesquisar = new javax.swing.JButton();
         lblNacionalidade = new javax.swing.JLabel();
         txtNacionalidade = new javax.swing.JTextField();
         lblIdade = new javax.swing.JLabel();
@@ -44,6 +123,12 @@ public class CriandoJogador extends javax.swing.JFrame {
         lblPosicao = new javax.swing.JLabel();
         cmbPosicao = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        lblSobrenome = new javax.swing.JLabel();
+        txtSobrenome = new javax.swing.JTextField();
+        lblDataNascimento = new javax.swing.JLabel();
+        spnDia = new javax.swing.JSpinner();
+        spnMes = new javax.swing.JSpinner();
+        spnAno = new javax.swing.JSpinner();
         btnNovo = new javax.swing.JButton();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -54,7 +139,10 @@ public class CriandoJogador extends javax.swing.JFrame {
         tblJogadores = new javax.swing.JTable();
         btnSair = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        jButton2.setText("jButton2");
+
+        jButton3.setText("jButton3");
+
         setTitle("Cadastro de Jogadores");
         setBackground(new java.awt.Color(0, 153, 102));
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Images/jogador.png")).getImage());
@@ -62,7 +150,7 @@ public class CriandoJogador extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 153, 102));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cadastro de Jogadores"));
 
-        lblNome.setText("Nome Completo:");
+        lblNome.setText("Nome:");
 
         txtNome.setBackground(new java.awt.Color(204, 204, 204));
         txtNome.addActionListener(new java.awt.event.ActionListener() {
@@ -74,12 +162,29 @@ public class CriandoJogador extends javax.swing.JFrame {
         lblCpf.setText("CPF:");
 
         txtCpf.setBackground(new java.awt.Color(204, 204, 204));
+        txtCpf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCpfActionPerformed(evt);
+            }
+        });
+
+        btnOkPesquisar.setText("Pesquisar");
+        btnOkPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOkPesquisarActionPerformed(evt);
+            }
+        });
 
         lblNacionalidade.setText("Nacionalidade:");
 
         txtNacionalidade.setBackground(new java.awt.Color(204, 204, 204));
+        txtNacionalidade.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNacionalidadeActionPerformed(evt);
+            }
+        });
 
-        lblIdade.setText("Idade");
+        lblIdade.setText("Idade:");
 
         txtIdade.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -107,12 +212,23 @@ public class CriandoJogador extends javax.swing.JFrame {
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/jogadorMaior.png"))); // NOI18N
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        lblSobrenome.setText("Sobrenome:");
+
+        txtSobrenome.setBackground(new java.awt.Color(204, 204, 204));
+        txtSobrenome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSobrenomeActionPerformed(evt);
+            }
+        });
+
+        lblDataNascimento.setText("Data de nascimento:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel1)
@@ -123,27 +239,47 @@ public class CriandoJogador extends javax.swing.JFrame {
                             .addComponent(lblCpf))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtNacionalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(64, 64, 64)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblIdade)
-                            .addComponent(lblSexo))
-                        .addGap(31, 31, 31)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(rdbFeminino)
-                                .addGap(30, 30, 30)
-                                .addComponent(rdbMasculino))
-                            .addComponent(txtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(51, 51, 51)
+                                .addComponent(btnOkPesquisar))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblSobrenome))
+                                    .addComponent(txtNacionalidade, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(spnDia, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(spnAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(62, 62, 62)
-                        .addComponent(lblPosicao)
-                        .addGap(18, 18, 18)
-                        .addComponent(cmbPosicao, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(3, 3, 3)
+                                        .addComponent(lblSexo)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(rdbFeminino)
+                                        .addGap(30, 30, 30)
+                                        .addComponent(rdbMasculino))
+                                    .addComponent(lblDataNascimento))
+                                .addGap(155, 155, 155)
+                                .addComponent(lblIdade)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblPosicao)
+                                .addGap(18, 18, 18)
+                                .addComponent(cmbPosicao, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,7 +289,9 @@ public class CriandoJogador extends javax.swing.JFrame {
                         .addGap(65, 65, 65)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNome)
-                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSobrenome)
+                            .addComponent(txtSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblNacionalidade)
@@ -161,6 +299,7 @@ public class CriandoJogador extends javax.swing.JFrame {
                         .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblCpf)
+                            .addComponent(btnOkPesquisar)
                             .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(54, 54, 54)
@@ -172,9 +311,15 @@ public class CriandoJogador extends javax.swing.JFrame {
                         .addComponent(rdbFeminino)
                         .addComponent(lblSexo)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblIdade)
-                    .addComponent(txtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblIdade)
+                        .addComponent(txtIdade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblDataNascimento)
+                        .addComponent(spnDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(spnAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPosicao)
@@ -184,19 +329,14 @@ public class CriandoJogador extends javax.swing.JFrame {
 
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/jogador.png"))); // NOI18N
         btnNovo.setText("Novo Jogador");
-        btnNovo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnNovoMouseEntered(evt);
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
             }
         });
 
         btnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/salvar1.png"))); // NOI18N
         btnSalvar.setText("Salvar");
-        btnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnSalvarMouseEntered(evt);
-            }
-        });
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarActionPerformed(evt);
@@ -205,11 +345,6 @@ public class CriandoJogador extends javax.swing.JFrame {
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cancelar.png"))); // NOI18N
         btnCancelar.setText("Cancelar");
-        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseEntered(evt);
-            }
-        });
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCancelarActionPerformed(evt);
@@ -218,19 +353,14 @@ public class CriandoJogador extends javax.swing.JFrame {
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/editar1.png"))); // NOI18N
         btnEditar.setText("Editar");
-        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnEditarMouseEntered(evt);
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
             }
         });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/excluirJogador.png"))); // NOI18N
         btnExcluir.setText("Excluir");
-        btnExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnExcluirMouseEntered(evt);
-            }
-        });
         btnExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExcluirActionPerformed(evt);
@@ -239,28 +369,28 @@ public class CriandoJogador extends javax.swing.JFrame {
 
         btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/pesquisar1.png"))); // NOI18N
         btnPesquisar.setText("Pesquisar");
-        btnPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnPesquisarMouseEntered(evt);
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
             }
         });
 
         tblJogadores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Nome", "Nacionalidade", "CPF", "Sexo", "Data de Nascimento", "Posição"
+                "Nome", "Sobrenome", "Nacionalidade", "CPF", "Sexo", "Data de Nascimento", "Idade", "Posição"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -275,11 +405,6 @@ public class CriandoJogador extends javax.swing.JFrame {
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Sair.png"))); // NOI18N
         btnSair.setText("Sair");
-        btnSair.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnSairMouseEntered(evt);
-            }
-        });
         btnSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSairActionPerformed(evt);
@@ -292,33 +417,36 @@ public class CriandoJogador extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnSair)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
                         .addComponent(btnNovo)
                         .addGap(18, 18, 18)
                         .addComponent(btnSalvar)
                         .addGap(18, 18, 18)
                         .addComponent(btnCancelar)
-                        .addGap(18, 18, 18)
+                        .addGap(28, 28, 28)
                         .addComponent(btnEditar)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnExcluir)
                         .addGap(18, 18, 18)
-                        .addComponent(btnPesquisar)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSair)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnPesquisar)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(12, 12, 12)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovo)
                     .addComponent(btnSalvar)
@@ -341,83 +469,427 @@ public class CriandoJogador extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        tblJogadores.clearSelection();
+        
+        txtNome.setText("");
+        txtSobrenome.setText("");
+        txtNacionalidade.setText("");
+        txtCpf.setText("");
+        //btnSexo.isSelected();
+        txtIdade.setText("");
+        spnDia.setValue(1);
+        spnMes.setValue(1);
+        spnAno.setValue(2023);
+        
+        // Habilitar / Desabilitar campos de texto
+        txtNome.setEnabled(false);
+        txtSobrenome.setEnabled(false);
+        txtCpf.setEnabled(false);
+        //btnSexo.isSelected();
+        spnDia.setEnabled(false);
+        spnMes.setEnabled(false);
+        spnAno.setEnabled(false);
+        
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnPesquisar.setEnabled(true);
+        btnOkPesquisar.setEnabled(false);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-        //nome
-        String nome = txtNome.getText();
-        //nacionalidade
-        String nacionalidade = txtNacionalidade.getText();
-        // CPF
-        String cpf = txtCpf.getText();
-        // sexo
-        String sexo = "";
-        if (rdbFeminino.isSelected()){
-            sexo = "Feminino";
+       
+        // verificando se os campos estão vazios
+        if(txtNome.getText().equals("") || txtSobrenome.getText().equals("") || txtNacionalidade.getText().equals("") || txtCpf.getText().equals("") || btnSexo.getSelection().equals("") || txtIdade.getText().equals("") || cmbPosicao.getAutoscrolls()){
+            JOptionPane.showMessageDialog(null, "Todos os campos devem ser inseridos", "Mensagem", JOptionPane.PLAIN_MESSAGE);
         }else{
-            sexo = "Masculino";
-        };
-        //idade
-        String dataNascimento = txtIdade.getText();
-        
-        //POSIÇÃO
-        String posicao = cmbPosicao.getToolTipText();
-        
-        
-        //Jogador cadastroJogador = new Jogador(nome, nacionalidade, cpf, sexo, idade, posicao);
-        
-        //modeloTabela.addJogador(cadastroJogador);
+            // cursor no campo código
+            txtNome.requestFocus();
+            
+            //nome
+            String nome = txtNome.getText();
+            // sobrenome 
+            String sobrenome = txtSobrenome.getText();
+            //nacionalidade
+            String nacionalidade = txtNacionalidade.getText();
+            // CPF
+            String cpf = txtCpf.getText();
+            // sexo
+            String sexo = "";
+            if (rdbFeminino.isSelected()){
+                sexo = "Feminino";
+            }else{
+                sexo = "Masculino";
+            };
+            //idade
+            //String dataNascimento = txtIdade.getText();
+            // Data de nascimento
+            String diaJogador = String.valueOf(spnDia.getValue());
+            String mesJogador = String.valueOf(spnMes.getValue());
+            String anoJogador = String.valueOf(spnAno.getValue());
+            if(Integer.parseInt(diaJogador)<=10){
+                diaJogador = "0"+diaJogador;
+            }
+            if(Integer.parseInt(mesJogador)<12){
+                mesJogador = "0"+mesJogador;
+            }
+            String dataNascimento = diaJogador+"/"+mesJogador+"/"+anoJogador;
+
+            DateTimeFormatter date = DateTimeFormatter.ofPattern("DD/MM/YYYY");
+            LocalDate dataNascimentoJogador = LocalDate.parse(dataNascimento,date);
+            LocalDate dataAtual = LocalDate.now();
+            Period periodo = Period.between(dataNascimentoJogador,dataAtual);
+            
+            int idade = periodo.getYears();
+
+            //Posição
+            String posicao = cmbPosicao.getToolTipText();
+            
+            File arquivo = new File("src/Dados/dadosJogadores.txt");
+            if(botao.equals("novo")){
+               Jogador jogador = new Jogador(nome, sobrenome, nacionalidade, cpf, sexo, idade, dataNascimento, posicao);
+               jogador.add(jogador);
+                              
+               try {
+                   FileWriter fw = new FileWriter(arquivo);
+                   BufferedWriter bw = new BufferedWriter(fw);
+                   
+                   bw.write(nome + ";" + sobrenome + ";" + nacionalidade + ";" + cpf + ";" + 
+                            sexo + ";"+ idade + ";"  + ";" + dataNascimento + ";" + posicao);
+                   bw.newLine();
+                   
+                   bw.close();               
+               } catch(IOException e) {
+                   JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+                   return;
+               }
+            }
+            else if(botao.equals("editar")){
+                int index = tblJogadores.getSelectedRow();
+                
+                try {
+                    FileReader fr = new FileReader(arquivo);
+                    BufferedReader br = new BufferedReader(fr);
+                    
+                    ArrayList<String> temp = new ArrayList<>();
+                    
+                    for(int j = 0; br.ready(); j++) {
+                        if (j != index) {
+                            String linha = br.readLine();
+                            temp.add(linha);
+                        } else {
+                            temp.add(nome + ";" + sobrenome + ";" + nacionalidade + ";" + cpf + ";" + 
+                            sexo + ";"+ idade + ";"  + ";" + dataNascimento + ";" + posicao);
+                        }
+                    }
+                    br.close();
+                    
+                    FileWriter fw = new FileWriter(arquivo);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                                        
+                    for(int j = 0; j < temp.size(); j++) {
+                        bw.write(temp.get(j));
+                    }
+                    
+                    bw.close();
+                
+                } catch(IOException e) {
+                    JOptionPane.showMessageDialog(null, "Não foi pssível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                
+                jogador.get(index).setNome(nome);
+                jogador.get(index).setSobrenome(sobrenome);
+                jogador.get(index).setNacionalidade(nacionalidade);
+                jogador.get(index).setCpf(cpf);
+                jogador.get(index).setSexo(sexo);
+                jogador.get(index).setDataNascimento(dataNascimento);
+                jogador.get(index).setIdade(idade);
+                jogador.get(index).setPosicao(posicao);
+            
+            }
+
+            // Atualizando a tabela com os dados inseridos 
+            carregarTabelaJogadores();
+            JOptionPane.showMessageDialog(null, "Jogador cadastrado com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+             
+            //Limpar os campos
+            txtNome.setText("");
+            txtSobrenome.setText("");
+            txtCpf.setText("");
+            //btnSexo.isSelected();
+            spnDia.setValue(1);
+            spnMes.setValue(1);
+            spnAno.setValue(2023);
+
+
+            //Habilitar ou desabilitar botões
+            btnNovo.setEnabled(true);
+            btnSalvar.setEnabled(false);
+            btnCancelar.setEnabled(false);
+            btnEditar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+            btnPesquisar.setEnabled(true);
+            btnOkPesquisar.setEnabled(false);
+
+            //Habilitar ou desabilitar campos de texto
+            txtNome.setEnabled(false);
+            txtSobrenome.setEnabled(false);
+            txtCpf.setEnabled(false);
+            //btnSexo.setEnabled(false);
+            spnDia.setEnabled(false);
+            spnMes.setEnabled(false);
+            spnAno.setEnabled(false);
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     private void rdbFemininoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbFemininoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rdbFemininoActionPerformed
 
+    private void txtNacionalidadeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNacionalidadeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNacionalidadeActionPerformed
+
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-        // Verificar qual linha foi selecionada
+        // Verifica qual linha foi selecionada 
         int index = tblJogadores.getSelectedRow();
         
-        //verificando se a linha é correta
-        if (index >=0 && index < listaJogadores.size()){
-            listaJogadores.remove(index);
+        //Verifica se a linha é correta
+        if (index >=0 && index < jogador.size()){
+            jogador.remove(index);
         }
-        modeloTabela.removeJogador(index);
+        
+        carregarTabelaJogadores();
+        
+        // Limpando os campos
+        txtNome.setText("");
+        txtSobrenome.setText("");
+        txtNacionalidade.setText("");
+        txtCpf.setText("");
+        spnDia.removeAll();
+        spnMes.removeAll();
+        spnAno.removeAll();
+        txtIdade.setText("");
+        cmbPosicao.removeAllItems();
+        cmbPosicao.addItem("Selecione um gerente!");
+        
+        // botões
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnPesquisar.setEnabled(false);
+        btnOkPesquisar.setEnabled(false);
+        
+        // Habilitar / Desabilitar campos de texto
+        txtNome.setEnabled(false);
+        txtSobrenome.setEnabled(false);
+        txtCpf.setEnabled(false);
+        //btnSexo.isSelected();
+        spnDia.setEnabled(false);
+        spnMes.setEnabled(false);
+        spnAno.setEnabled(false);
     }//GEN-LAST:event_btnExcluirActionPerformed
 
+    private void txtCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCpfActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCpfActionPerformed
+    
     private void btnSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairActionPerformed
-        System.out.println("teste1");
+        System.exit(0);
         this.setVisible(false);
-        System.out.println("teste-2");
     }//GEN-LAST:event_btnSairActionPerformed
 
-    private void btnSairMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairMouseEntered
-        btnSair.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_btnSairMouseEntered
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        // Variavel global do botão para identificar se é para editar, salvar...
+        botao = "novo";
+        
+        // Limpando os campos
+        txtNome.setText("");
+        txtSobrenome.setText("");
+        txtNacionalidade.setText("");
+        txtCpf.setText("");
+        //spnDia.setValue();
+        //spnMes.removeAll();
+        //spnAno.removeAll();
+        txtIdade.setText("");
+        cmbPosicao.removeAllItems();
+        cmbPosicao.addItem("Selecione um Jogador!");
+        
+        // Habilitar / Desabilitar botões
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnPesquisar.setEnabled(false);
+        btnOkPesquisar.setEnabled(false);
+        
+        // Habilitar / Desabilitar campos de texto
+        txtNome.setEnabled(true);
+        txtSobrenome.setEnabled(true);
+        txtNacionalidade.setEnabled(true);
+        txtCpf.setEnabled(true);
+        //btnSexo.setSelected(true);
+        spnDia.setEnabled(true);
+        spnMes.setEnabled(true);
+        spnAno.setEnabled(true);
+        txtIdade.setEnabled(true);
+        
+        // cursor no campo código
+        txtNome.requestFocus();
+        
+        carregarTabelaJogadores();
+        
+    }//GEN-LAST:event_btnNovoActionPerformed
 
-    private void btnNovoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnNovoMouseEntered
-        btnNovo.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_btnNovoMouseEntered
+    private void btnOkPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkPesquisarActionPerformed
+        tblJogadores.clearSelection();        
+        // verificar se o Jogador está cadastrado
+        if (txtCpf.getText().equals("")){        // se não informar o codigo
+            JOptionPane.showMessageDialog(null, "O código deve ser informado!", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+        }else {
+            Jogador joga;
+            String nome = "", sobrenome = "", nacionalidade = "", cpf = "", sexo = "", dataNascimento = "", idade = "", posicao = "";
+            
+            String name = (txtNome.getText());
+            for (int i = 0; i < jogador.size();i++){
+                joga = jogador.get(i);
+                
+                if (name == joga.getCpf()){
+                    nome = String.valueOf(joga.getNome());
+                    sobrenome = String.valueOf(joga.getSobrenome());
+                    nacionalidade = String.valueOf(joga.getNacionalidade());
+                    cpf = String.valueOf(joga.getCpf());
+                    sexo = String.valueOf(joga.getSexo());
+                    //dataNascimento = String.valueOf(joga.getDataNascimento());
+                    String[] data = joga.getDataNascimento().split("/");
+                    idade = String.valueOf(joga.getDataNascimento());
+                    posicao = String.valueOf(joga.getPosicao());
+                }
+            }
+            // Verifica se o cpf == 0
+            if (cpf.equals("")){
+                JOptionPane.showMessageDialog(null, "Este código não existe!", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+            
+                // Limpando os campos
+                txtNome.setText("");
+                txtSobrenome.setText("");
+                txtNacionalidade.setText("");
+                //spnDia.setValue();
+                //spnMes.removeAll();
+                //spnAno.removeAll();
+                txtIdade.setText("");
+                cmbPosicao.removeAllItems();
+                cmbPosicao.addItem("Selecione um Jogador!");
+            }else{
+                txtNome.setText(nome);
+                txtSobrenome.setText(sobrenome);
+                txtNacionalidade.setText(nacionalidade);
+                txtCpf.setText(cpf);
+                String[] data = null;
+                spnDia.setValue(Integer.parseInt(data[0]));
+                spnMes.setValue(Integer.parseInt(data[1]));
+                spnAno.setValue(Integer.parseInt(data[0]));
+                txtIdade.setText(idade);
+                //cmbPosicao.setText(posicao);
+                //cmbPosicao.addItem("Selecione um Jogador!");        
+            }
+            txtCpf.selectAll();      // deixa todas as informações realçadas
+            txtCpf.requestFocus();   // cursor no campo código
+        }
+    }//GEN-LAST:event_btnOkPesquisarActionPerformed
 
-    private void btnSalvarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalvarMouseEntered
-        btnSalvar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_btnSalvarMouseEntered
+    private void txtSobrenomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSobrenomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSobrenomeActionPerformed
 
-    private void btnCancelarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseEntered
-        btnCancelar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_btnCancelarMouseEntered
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // Variavel global do botão para identificar se é para editar, salvar...
+        botao = "editar";
+        
+        // Limpando os campos
+        txtNome.setText("");
+        txtSobrenome.setText("");
+        txtNacionalidade.setText("");
+        txtCpf.setText("");
+        //spnDia.setEnabled();
+        //spnMes.removeAll();
+        //spnAno.removeAll();
+        txtIdade.setText("");
+        cmbPosicao.removeAllItems();
+        cmbPosicao.addItem("Selecione um Jogador!");
+        
+        // Habilitar / Desabilitar botões
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnPesquisar.setEnabled(false);
+        btnOkPesquisar.setEnabled(false);
+        
+        // Habilitar / Desabilitar campos de texto
+        txtNome.setEnabled(true);
+        txtSobrenome.setEnabled(true);
+        txtNacionalidade.setEnabled(true);
+        txtCpf.setEnabled(true);
+        //btnSexo.setSelected(true);
+        spnDia.setEnabled(true);
+        spnMes.setEnabled(true);
+        spnAno.setEnabled(true);
+        txtIdade.setEnabled(true);
+        
+        // cursor no campo código
+        txtNome.requestFocus();
+        
+        carregarTabelaJogadores();
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void btnEditarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseEntered
-        btnEditar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_btnEditarMouseEntered
-
-    private void btnExcluirMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnExcluirMouseEntered
-        btnExcluir.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_btnExcluirMouseEntered
-
-    private void btnPesquisarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnPesquisarMouseEntered
-        btnPesquisar.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_btnPesquisarMouseEntered
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        // verificar se o Jogador está cadastrado
+        if (jogador.isEmpty()){ //se estiver vazia
+            JOptionPane.showMessageDialog(null, "A lista está vazia!", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+        }else {
+            // Limpando os campos
+            txtNome.setText("");
+            txtSobrenome.setText("");
+            txtNacionalidade.setText("");
+            txtCpf.setText("");
+            //spnDia.setEnabled();
+            //spnMes.removeAll();
+            //spnAno.removeAll();
+            txtIdade.setText("");
+            cmbPosicao.removeAllItems();
+            cmbPosicao.addItem("Selecione um Jogador!");
+            
+               // Habilitar / Desabilitar botões
+            btnNovo.setEnabled(false);
+            btnSalvar.setEnabled(true);
+            btnCancelar.setEnabled(true);
+            btnEditar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+            btnPesquisar.setEnabled(false);
+            btnOkPesquisar.setEnabled(false);
+            
+            // Habilitar / Desabilitar campos de texto
+            txtNome.setEnabled(false);
+            txtSobrenome.setEnabled(false);
+            txtCpf.setEnabled(true);
+            //btnSexo.isSelected();
+            spnDia.setEnabled(false);
+            spnMes.setEnabled(false);
+            spnAno.setEnabled(false);
+            
+            // cursor no campo código
+            txtNome.requestFocus();
+        }
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -459,26 +931,35 @@ public class CriandoJogador extends javax.swing.JFrame {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JButton btnNovo;
+    private javax.swing.JButton btnOkPesquisar;
     private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton btnSair;
     private javax.swing.JButton btnSalvar;
     private javax.swing.ButtonGroup btnSexo;
     private javax.swing.JComboBox<String> cmbPosicao;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCpf;
+    private javax.swing.JLabel lblDataNascimento;
     private javax.swing.JLabel lblIdade;
     private javax.swing.JLabel lblNacionalidade;
     private javax.swing.JLabel lblNome;
     private javax.swing.JLabel lblPosicao;
     private javax.swing.JLabel lblSexo;
+    private javax.swing.JLabel lblSobrenome;
     private javax.swing.JRadioButton rdbFeminino;
     private javax.swing.JRadioButton rdbMasculino;
+    private javax.swing.JSpinner spnAno;
+    private javax.swing.JSpinner spnDia;
+    private javax.swing.JSpinner spnMes;
     private javax.swing.JTable tblJogadores;
     private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtIdade;
     private javax.swing.JTextField txtNacionalidade;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtSobrenome;
     // End of variables declaration//GEN-END:variables
 }
