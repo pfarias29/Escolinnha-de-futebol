@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-
+import javax.swing.*;
 /**
  *
  * @author Pedro
@@ -51,6 +51,8 @@ public class Arbitros extends javax.swing.JFrame {
         }
         
         carregarTabelaArbitros();
+        
+        setLocationRelativeTo(null);
     }
     
     public void carregarTabelaArbitros(){
