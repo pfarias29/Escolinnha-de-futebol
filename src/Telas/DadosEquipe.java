@@ -6,6 +6,7 @@ package Telas;
 
 import Classes.Jogador;
 import Classes.Tecnico;
+import static Telas.Tecnicos.listaTecnicos;
 import java.util.ArrayList;
 import java.io.*;
 import javax.swing.JOptionPane;
@@ -79,7 +80,6 @@ public class DadosEquipe extends javax.swing.JFrame {
         
         //Habilitar ou desabilitar funções
         btnAdicionarJogador.setEnabled(false);
-        btnRemoverJogador.setEnabled(false);
         
         //Habilitar ou desabilitar campos de textos
         txtNomeJogador.setEnabled(false);
@@ -155,11 +155,9 @@ public class DadosEquipe extends javax.swing.JFrame {
         lblSexoJogador = new javax.swing.JLabel();
         txtDataNascimentoJogador = new javax.swing.JTextField();
         btnAdicionarJogador = new javax.swing.JButton();
-        btnRemoverJogador = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblJogadoresEquipe = new javax.swing.JTable();
-        btnCancelarEquipe = new javax.swing.JButton();
-        btnSalvarEquipe = new javax.swing.JButton();
+        btnSairDadosEquipe = new javax.swing.JButton();
 
         lblNacionalidadeJogador2.setText("Idade:");
 
@@ -282,9 +280,11 @@ public class DadosEquipe extends javax.swing.JFrame {
 
         btnAdicionarJogador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/adicionarCliente.png"))); // NOI18N
         btnAdicionarJogador.setText("Adicionar Jogador");
-
-        btnRemoverJogador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/excluirCliente.png"))); // NOI18N
-        btnRemoverJogador.setText("Remover Jogador");
+        btnAdicionarJogador.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdicionarJogadorActionPerformed(evt);
+            }
+        });
 
         tblJogadoresEquipe.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -309,37 +309,41 @@ public class DadosEquipe extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblJogadoresEquipe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblJogadoresEquipeMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblJogadoresEquipe);
 
-        btnCancelarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Cancelar.png"))); // NOI18N
-        btnCancelarEquipe.setText("Cancelar");
-
-        btnSalvarEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/salvar1.png"))); // NOI18N
-        btnSalvarEquipe.setText("Salvar");
+        btnSairDadosEquipe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Sair.png"))); // NOI18N
+        btnSairDadosEquipe.setText("Sair");
+        btnSairDadosEquipe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSairDadosEquipeActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlJogadoresNaEquipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(323, 323, 323)
+                .addComponent(btnSairDadosEquipe)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addGap(147, 147, 147)
-                .addComponent(btnSalvarEquipe)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCancelarEquipe)
-                .addGap(136, 136, 136))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(109, 109, 109)
+                .addGap(291, 291, 291)
                 .addComponent(btnAdicionarJogador)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnRemoverJogador)
-                .addGap(64, 64, 64))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnlJogadoresNaEquipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -348,16 +352,12 @@ public class DadosEquipe extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(pnlJogadoresNaEquipe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAdicionarJogador)
-                    .addComponent(btnRemoverJogador))
+                .addComponent(btnAdicionarJogador)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSalvarEquipe)
-                    .addComponent(btnCancelarEquipe))
-                .addContainerGap())
+                .addComponent(btnSairDadosEquipe)
+                .addGap(22, 22, 22))
         );
 
         pack();
@@ -413,6 +413,55 @@ public class DadosEquipe extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnPesquisarJogadorActionPerformed
 
+    private void btnAdicionarJogadorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdicionarJogadorActionPerformed
+        File arquivo = new File("src/Dados/nomeEquipe.txt");
+        try{
+            FileReader fr = new FileReader(arquivo);
+            BufferedReader br = new BufferedReader(fr);
+            String nomeArquivo = br.readLine();
+            String nomeArquivo2 = nomeArquivo+".txt";
+            File a = new File("src/Dados/"+nomeArquivo2);
+            FileWriter fw = new FileWriter(a);
+            BufferedWriter bw = new BufferedWriter(fw);
+            for(String jogador : listaJogadoresFiltrada){
+                bw.write(jogador);
+                bw.newLine();
+            }
+            bw.close();
+        }catch(IOException ex){
+            JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }//GEN-LAST:event_btnAdicionarJogadorActionPerformed
+
+    private void btnSairDadosEquipeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairDadosEquipeActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnSairDadosEquipeActionPerformed
+
+    private void tblJogadoresEquipeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblJogadoresEquipeMouseClicked
+        int i = tblJogadoresEquipe.getSelectedRow();
+        if(i>=0 && i<listaJogadoresFiltrada.size()){
+            String jogador = listaJogadoresFiltrada.get(i);
+            String nome = jogador.split(";")[0];
+            String sobrenome = jogador.split(";")[1];
+            String nacionalidade = jogador.split(";")[2];
+            String cpfJogador = jogador.split(";")[3];
+            String sexo = jogador.split(";")[4];
+            int idade = Integer.parseInt(jogador.split(";")[5]);
+            String data = jogador.split(";")[6];
+            String posicao = jogador.split(";")[7];
+            txtNomeJogador.setText(String.valueOf(nome));
+            txtSobrenomeJogador.setText(String.valueOf(sobrenome));
+            txtNacionalidadeJogador.setText(String.valueOf(nacionalidade));
+            txtCPFJogador.setText(String.valueOf(cpfJogador));
+            txtSexoJogador.setText(String.valueOf(sexo));
+            txtDataNascimentoJogador.setText(String.valueOf(data));
+            txtIdadeJogador.setText(String.valueOf(idade));
+            txtPosicaoJogador.setText(String.valueOf(posicao));
+        }
+        btnAdicionarJogador.setEnabled(true);
+    }//GEN-LAST:event_tblJogadoresEquipeMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -450,10 +499,8 @@ public class DadosEquipe extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAdicionarJogador;
-    private javax.swing.JButton btnCancelarEquipe;
     private javax.swing.JButton btnPesquisarJogador;
-    private javax.swing.JButton btnRemoverJogador;
-    private javax.swing.JButton btnSalvarEquipe;
+    private javax.swing.JButton btnSairDadosEquipe;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCPFJogador;
     private javax.swing.JLabel lblDataNascimentoJogador;

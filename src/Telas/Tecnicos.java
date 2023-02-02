@@ -127,7 +127,7 @@ public class Tecnicos extends javax.swing.JFrame {
         btnPesquisarTecnico = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblTecnicos = new javax.swing.JTable();
-        btnSairTecnico = new javax.swing.JButton();
+        btnSairTecnicos = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Técnicos");
@@ -333,17 +333,11 @@ public class Tecnicos extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblTecnicos);
 
-        btnSairTecnico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sair.png"))); // NOI18N
-        btnSairTecnico.setText("Sair");
-        btnSairTecnico.setToolTipText("Sair da tela de Técnicos");
-        btnSairTecnico.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                btnSairTecnicoMouseEntered(evt);
-            }
-        });
-        btnSairTecnico.addActionListener(new java.awt.event.ActionListener() {
+        btnSairTecnicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Sair.png"))); // NOI18N
+        btnSairTecnicos.setText("Sair");
+        btnSairTecnicos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSairTecnicoActionPerformed(evt);
+                btnSairTecnicosActionPerformed(evt);
             }
         });
 
@@ -371,9 +365,9 @@ public class Tecnicos extends javax.swing.JFrame {
                     .addComponent(pnlTecnicos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSairTecnico)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(301, 301, 301)
+                .addComponent(btnSairTecnicos)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -390,8 +384,8 @@ public class Tecnicos extends javax.swing.JFrame {
                     .addComponent(btnPesquisarTecnico))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSairTecnico)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnSairTecnicos)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -510,9 +504,6 @@ public class Tecnicos extends javax.swing.JFrame {
              spnAnoTecnicos.setEnabled(false);
         }
     }//GEN-LAST:event_btnSalvarTecnicoActionPerformed
-    private void btnSairTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairTecnicoActionPerformed
-        this.setVisible(false);
-    }//GEN-LAST:event_btnSairTecnicoActionPerformed
        
     private void btnNovoTecnicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoTecnicoActionPerformed
         botão = "novo";
@@ -828,9 +819,9 @@ public class Tecnicos extends javax.swing.JFrame {
         btnPesquisarTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_btnPesquisarTecnicoMouseEntered
 
-    private void btnSairTecnicoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSairTecnicoMouseEntered
-        btnSairTecnico.setCursor(new Cursor(Cursor.HAND_CURSOR));
-    }//GEN-LAST:event_btnSairTecnicoMouseEntered
+    private void btnSairTecnicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSairTecnicosActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_btnSairTecnicosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -874,7 +865,7 @@ public class Tecnicos extends javax.swing.JFrame {
     private javax.swing.JButton btnNovoTecnico;
     private javax.swing.JButton btnOKTecnico;
     private javax.swing.JButton btnPesquisarTecnico;
-    private javax.swing.JButton btnSairTecnico;
+    private javax.swing.JButton btnSairTecnicos;
     private javax.swing.JButton btnSalvarTecnico;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCPFTecnicos;
