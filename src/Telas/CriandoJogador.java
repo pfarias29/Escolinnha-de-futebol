@@ -83,7 +83,7 @@ public class CriandoJogador extends javax.swing.JFrame {
     
     public void carregarPosicao(){
         // Remove os itens da ComboBox
-        cmbPosicao.removeAllItems();
+        //cmbPosicao.removeAllItems();
         
         // Selecionando o primeiro item
         cmbPosicao.addItem("Selecione uma posição");
@@ -207,6 +207,11 @@ public class CriandoJogador extends javax.swing.JFrame {
 
         cmbPosicao.setBackground(new java.awt.Color(204, 204, 204));
         cmbPosicao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione uma posição", "Goleiro", "Volante", "Atacante", "Zagueiro" }));
+        cmbPosicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPosicaoActionPerformed(evt);
+            }
+        });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/jogadorMaior.png"))); // NOI18N
@@ -257,7 +262,7 @@ public class CriandoJogador extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(spnAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(spnAno, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(62, 62, 62)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -475,17 +480,20 @@ public class CriandoJogador extends javax.swing.JFrame {
         txtSobrenome.setText("");
         txtNacionalidade.setText("");
         txtCpf.setText("");
-        //btnSexo.isSelected();
+        rdbFeminino.setSelected(true);
+        rdbMasculino.setSelected(false);
         txtIdade.setText("");
         spnDia.setValue(1);
         spnMes.setValue(1);
         spnAno.setValue(2023);
+        cmbPosicao.setSelectedIndex(0);
         
         // Habilitar / Desabilitar campos de texto
         txtNome.setEnabled(false);
         txtSobrenome.setEnabled(false);
         txtCpf.setEnabled(false);
-        //btnSexo.isSelected();
+        rdbFeminino.setSelected(true);
+        rdbMasculino.setSelected(false);
         spnDia.setEnabled(false);
         spnMes.setEnabled(false);
         spnAno.setEnabled(false);
@@ -500,7 +508,8 @@ public class CriandoJogador extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-       
+        botao = "salvar";
+        
         // verificando se os campos estão vazios
         if(txtNome.getText().equals("") || txtSobrenome.getText().equals("") || txtNacionalidade.getText().equals("") || txtCpf.getText().equals("") || btnSexo.getSelection().equals("") || txtIdade.getText().equals("") || cmbPosicao.getAutoscrolls()){
             JOptionPane.showMessageDialog(null, "Todos os campos devem ser inseridos", "Mensagem", JOptionPane.PLAIN_MESSAGE);
@@ -537,13 +546,13 @@ public class CriandoJogador extends javax.swing.JFrame {
             }
             String dataNascimento = diaJogador+"/"+mesJogador+"/"+anoJogador;
 
-            DateTimeFormatter date = DateTimeFormatter.ofPattern("DD/MM/YYYY");
+            DateTimeFormatter date = DateTimeFormatter.ofPattern("dd/MM/yyyy");
             LocalDate dataNascimentoJogador = LocalDate.parse(dataNascimento,date);
             LocalDate dataAtual = LocalDate.now();
             Period periodo = Period.between(dataNascimentoJogador,dataAtual);
             
             int idade = periodo.getYears();
-
+            
             //Posição
             String posicao = cmbPosicao.getToolTipText();
             
@@ -619,15 +628,17 @@ public class CriandoJogador extends javax.swing.JFrame {
             txtNome.setText("");
             txtSobrenome.setText("");
             txtCpf.setText("");
-            //btnSexo.isSelected();
+            rdbFeminino.setSelected(true);
+            rdbMasculino.setSelected(false);
             spnDia.setValue(1);
             spnMes.setValue(1);
             spnAno.setValue(2023);
+            cmbPosicao.setSelectedIndex(0);
 
 
             //Habilitar ou desabilitar botões
-            btnNovo.setEnabled(true);
-            btnSalvar.setEnabled(false);
+            btnNovo.setEnabled(false);
+            btnSalvar.setEnabled(true);
             btnCancelar.setEnabled(false);
             btnEditar.setEnabled(false);
             btnExcluir.setEnabled(false);
@@ -638,7 +649,8 @@ public class CriandoJogador extends javax.swing.JFrame {
             txtNome.setEnabled(false);
             txtSobrenome.setEnabled(false);
             txtCpf.setEnabled(false);
-            //btnSexo.setEnabled(false);
+            rdbFeminino.setSelected(true);
+            rdbMasculino.setSelected(false);
             spnDia.setEnabled(false);
             spnMes.setEnabled(false);
             spnAno.setEnabled(false);
@@ -673,8 +685,7 @@ public class CriandoJogador extends javax.swing.JFrame {
         spnMes.removeAll();
         spnAno.removeAll();
         txtIdade.setText("");
-        cmbPosicao.removeAllItems();
-        cmbPosicao.addItem("Selecione um gerente!");
+        cmbPosicao.setSelectedIndex(0);
         
         // botões
         btnNovo.setEnabled(true);
@@ -689,7 +700,8 @@ public class CriandoJogador extends javax.swing.JFrame {
         txtNome.setEnabled(false);
         txtSobrenome.setEnabled(false);
         txtCpf.setEnabled(false);
-        //btnSexo.isSelected();
+        rdbFeminino.setSelected(true);
+        rdbMasculino.setSelected(false);
         spnDia.setEnabled(false);
         spnMes.setEnabled(false);
         spnAno.setEnabled(false);
@@ -713,12 +725,12 @@ public class CriandoJogador extends javax.swing.JFrame {
         txtSobrenome.setText("");
         txtNacionalidade.setText("");
         txtCpf.setText("");
-        //spnDia.setValue();
-        //spnMes.removeAll();
-        //spnAno.removeAll();
+        spnDia.setValue(1);
+        spnMes.setValue(1);
+        spnAno.setValue(2023);
         txtIdade.setText("");
-        cmbPosicao.removeAllItems();
-        cmbPosicao.addItem("Selecione um Jogador!");
+        cmbPosicao.setSelectedIndex(0);
+
         
         // Habilitar / Desabilitar botões
         btnNovo.setEnabled(false);
@@ -734,7 +746,8 @@ public class CriandoJogador extends javax.swing.JFrame {
         txtSobrenome.setEnabled(true);
         txtNacionalidade.setEnabled(true);
         txtCpf.setEnabled(true);
-        //btnSexo.setSelected(true);
+        rdbFeminino.setSelected(true);
+        rdbMasculino.setSelected(false);
         spnDia.setEnabled(true);
         spnMes.setEnabled(true);
         spnAno.setEnabled(true);
@@ -780,9 +793,9 @@ public class CriandoJogador extends javax.swing.JFrame {
                 txtNome.setText("");
                 txtSobrenome.setText("");
                 txtNacionalidade.setText("");
-                //spnDia.setValue();
-                //spnMes.removeAll();
-                //spnAno.removeAll();
+                spnDia.setValue(1);
+                spnMes.setValue(1);
+                spnAno.setValue(2023);
                 txtIdade.setText("");
                 cmbPosicao.removeAllItems();
                 cmbPosicao.addItem("Selecione um Jogador!");
@@ -796,8 +809,7 @@ public class CriandoJogador extends javax.swing.JFrame {
                 spnMes.setValue(Integer.parseInt(data[1]));
                 spnAno.setValue(Integer.parseInt(data[0]));
                 txtIdade.setText(idade);
-                //cmbPosicao.setText(posicao);
-                //cmbPosicao.addItem("Selecione um Jogador!");        
+                cmbPosicao.setSelectedIndex(0);        
             }
             txtCpf.selectAll();      // deixa todas as informações realçadas
             txtCpf.requestFocus();   // cursor no campo código
@@ -817,12 +829,11 @@ public class CriandoJogador extends javax.swing.JFrame {
         txtSobrenome.setText("");
         txtNacionalidade.setText("");
         txtCpf.setText("");
-        //spnDia.setEnabled();
-        //spnMes.removeAll();
-        //spnAno.removeAll();
+        spnDia.setValue(1);
+        spnMes.setValue(1);
+        spnAno.setValue(2023);
         txtIdade.setText("");
-        cmbPosicao.removeAllItems();
-        cmbPosicao.addItem("Selecione um Jogador!");
+        cmbPosicao.setSelectedIndex(0);
         
         // Habilitar / Desabilitar botões
         btnNovo.setEnabled(false);
@@ -838,7 +849,8 @@ public class CriandoJogador extends javax.swing.JFrame {
         txtSobrenome.setEnabled(true);
         txtNacionalidade.setEnabled(true);
         txtCpf.setEnabled(true);
-        //btnSexo.setSelected(true);
+        rdbFeminino.setSelected(true);
+        rdbMasculino.setSelected(false);
         spnDia.setEnabled(true);
         spnMes.setEnabled(true);
         spnAno.setEnabled(true);
@@ -861,12 +873,11 @@ public class CriandoJogador extends javax.swing.JFrame {
             txtSobrenome.setText("");
             txtNacionalidade.setText("");
             txtCpf.setText("");
-            //spnDia.setEnabled();
-            //spnMes.removeAll();
-            //spnAno.removeAll();
+            spnDia.setValue(1);
+            spnMes.setValue(1);
+            spnAno.setValue(2023);
             txtIdade.setText("");
-            cmbPosicao.removeAllItems();
-            cmbPosicao.addItem("Selecione um Jogador!");
+            cmbPosicao.setSelectedIndex(0);
             
                // Habilitar / Desabilitar botões
             btnNovo.setEnabled(false);
@@ -881,7 +892,8 @@ public class CriandoJogador extends javax.swing.JFrame {
             txtNome.setEnabled(false);
             txtSobrenome.setEnabled(false);
             txtCpf.setEnabled(true);
-            //btnSexo.isSelected();
+            rdbFeminino.setSelected(true);
+            rdbMasculino.setSelected(false);
             spnDia.setEnabled(false);
             spnMes.setEnabled(false);
             spnAno.setEnabled(false);
@@ -890,6 +902,10 @@ public class CriandoJogador extends javax.swing.JFrame {
             txtNome.requestFocus();
         }
     }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void cmbPosicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPosicaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbPosicaoActionPerformed
 
     /**
      * @param args the command line arguments

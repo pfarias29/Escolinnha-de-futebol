@@ -24,6 +24,8 @@ public class CriandoPartida extends javax.swing.JFrame {
         
         // abre o arquivo
         File arquivo = new File ("src/Dados/dadosPartida.txt");
+        File arquivo1 = new File ("src/Dados/nomeEquipe.txt");
+        File arquivo2 = new File ("src/Dados/dadosArbitros");
         
         // lê o arquivo
         try {
@@ -33,7 +35,8 @@ public class CriandoPartida extends javax.swing.JFrame {
             while (br.ready()){
                 String [] linha = br.readLine().split(";");
                 // String data, float horario, String local, (arbitro), String resultado
-                Partida partida = new Partida(linha[0], float.parseFloat(linha[1]), linha[2], linha[3], linha[4], linha[5], linha[6]);
+                //Partida partida = new Partida(linha[0], Float.parseFloat(linha[1]), linha[2], linha[3], linha[4], linha[5], linha[6]);
+                
                 partida.add(partida);
             }
             
