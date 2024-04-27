@@ -4,19 +4,84 @@
  */
 package Telas;
 
+import Classes.Arbitro;
 import java.awt.Cursor;
-
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.*;
 /**
  *
  * @author Pedro
  */
 public class Arbitros extends javax.swing.JFrame {
 
+    private ArrayList<Arbitro> arbitros = new ArrayList<>();
+    private String botao;
     /**
      * Creates new form Arbitros
      */
     public Arbitros() {
         initComponents();
+        
+        File arquivo = new File("src/Dados/dadosArbitros.txt");
+        
+        try {
+            FileReader fr = new FileReader(arquivo);
+            BufferedReader br = new BufferedReader(fr);
+            
+            while(br.ready()) {
+                String[] linha = br.readLine().split(";");
+                Arbitro arbitro = new Arbitro(linha[0], linha[1], linha[2], linha[3], Integer.parseInt(linha[4]), linha[5]); 
+                arbitros.add(arbitro);
+            }            
+            
+        } catch(IOException e) {
+            JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        carregarTabelaArbitros();
+        
+        setLocationRelativeTo(null);
+    }
+    
+    public void carregarTabelaArbitros(){
+        DefaultTableModel modelo = new DefaultTableModel(new Object[] {"Nome", "Sobrenome", "CPF", "Idade", "Sexo","Data Nascimento"}, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+        
+        for(int i=0; i < arbitros.size(); i++){
+            Object linha[] = new Object[] {arbitros.get(i).getNome(),
+                                           arbitros.get(i).getSobrenome(),
+                                           arbitros.get(i).getCpf(),
+                                           arbitros.get(i).getIdade(),
+                                           arbitros.get(i).getSexo(),
+                                           arbitros.get(i).getDataNascimento()};
+            modelo.addRow(linha);
+        }
+        
+        //Tabela recebe modelo
+        tblArbitros.setModel(modelo);
+        
+        tblArbitros.getColumnModel().getColumn(0).setPreferredWidth(5);
+        tblArbitros.getColumnModel().getColumn(1).setPreferredWidth(20);
+        tblArbitros.getColumnModel().getColumn(2).setPreferredWidth(100);
+        tblArbitros.getColumnModel().getColumn(3).setPreferredWidth(50);
+        tblArbitros.getColumnModel().getColumn(4).setPreferredWidth(50);
+        tblArbitros.getColumnModel().getColumn(5).setPreferredWidth(50);
     }
 
     /**
@@ -46,10 +111,12 @@ public class Arbitros extends javax.swing.JFrame {
         lblData = new javax.swing.JLabel();
         spnDia = new javax.swing.JSpinner();
         spnMes = new javax.swing.JSpinner();
+        lblSexo = new javax.swing.JLabel();
+        txtSexo = new javax.swing.JTextField();
         btnEditar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblArbitros = new javax.swing.JTable();
         btnSair = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -65,7 +132,7 @@ public class Arbitros extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Árbitros");
         setBackground(new java.awt.Color(0, 153, 102));
         setIconImage(new javax.swing.ImageIcon(getClass().getResource("/Images/Árbitro.png")).getImage());
@@ -79,6 +146,11 @@ public class Arbitros extends javax.swing.JFrame {
                 btnSalvarMouseEntered(evt);
             }
         });
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Excluir.png"))); // NOI18N
         btnExcluir.setText("Excluir");
@@ -86,6 +158,11 @@ public class Arbitros extends javax.swing.JFrame {
         btnExcluir.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnExcluirMouseEntered(evt);
+            }
+        });
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
             }
         });
 
@@ -96,12 +173,22 @@ public class Arbitros extends javax.swing.JFrame {
                 btnPesquisarMouseEntered(evt);
             }
         });
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         btnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Novo.png"))); // NOI18N
         btnNovo.setText("Novo");
         btnNovo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnNovoMouseEntered(evt);
+            }
+        });
+        btnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNovoActionPerformed(evt);
             }
         });
 
@@ -116,6 +203,11 @@ public class Arbitros extends javax.swing.JFrame {
         btnOkPesquisar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnOkPesquisarMouseEntered(evt);
+            }
+        });
+        btnOkPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOkPesquisarActionPerformed(evt);
             }
         });
 
@@ -138,6 +230,10 @@ public class Arbitros extends javax.swing.JFrame {
 
         spnMes.setModel(new javax.swing.SpinnerNumberModel(1, 1, 12, 1));
         spnMes.setEnabled(false);
+
+        lblSexo.setText("Sexo:");
+
+        txtSexo.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -167,13 +263,17 @@ public class Arbitros extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(spnAno)))
+                        .addComponent(spnAno))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNome)
                     .addComponent(txtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -192,7 +292,10 @@ public class Arbitros extends javax.swing.JFrame {
                     .addComponent(spnDia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spnMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(spnAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSexo)
+                    .addComponent(txtSexo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Editar.png"))); // NOI18N
@@ -201,6 +304,11 @@ public class Arbitros extends javax.swing.JFrame {
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnEditarMouseEntered(evt);
+            }
+        });
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
             }
         });
 
@@ -212,20 +320,25 @@ public class Arbitros extends javax.swing.JFrame {
                 btnCancelarMouseEntered(evt);
             }
         });
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblArbitros.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Nome", "Sobrenome", "CPF", "Data de nascimento"
+                "Nome", "Sobrenome", "CPF", "Idade", "Sexo", "Data de nascimento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -236,7 +349,12 @@ public class Arbitros extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(jTable2);
+        tblArbitros.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblArbitrosMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblArbitros);
 
         btnSair.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Sair.png"))); // NOI18N
         btnSair.setText("Sair");
@@ -284,7 +402,7 @@ public class Arbitros extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnNovo)
@@ -338,6 +456,344 @@ public class Arbitros extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_btnSairActionPerformed
 
+    private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnPesquisar.setEnabled(false);
+        btnOkPesquisar.setEnabled(false);
+        
+        txtNome.setEnabled(true);
+        txtSobrenome.setEnabled(true);
+        txtCpf.setEnabled(true);
+        txtSexo.setEnabled(true);
+        spnDia.setEnabled(true);
+        spnMes.setEnabled(true);
+        spnAno.setEnabled(true);
+        
+        txtNome.requestFocus();
+        
+        this.botao = "novo";
+    }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        if(txtNome.getText().equals("") || txtSobrenome.getText().equals("") || txtCpf.getText().equals("") || txtSexo.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Todos os campos devem ser inseridos", "Mensagem", JOptionPane.PLAIN_MESSAGE);
+        }
+        else{
+            String nome = txtNome.getText();
+            String sobrenome = txtSobrenome.getText();
+            String cpf = txtCpf.getText();
+            String sexo = txtSexo.getText();
+            String diaTecnico = String.valueOf(spnDia.getValue());
+            String mesTecnico = String.valueOf(spnMes.getValue());
+            String anoTecnico = String.valueOf(spnAno.getValue());
+            if(Integer.parseInt(diaTecnico)<10){
+                diaTecnico="0"+diaTecnico;
+            }
+            if(Integer.parseInt(mesTecnico)<10){
+                mesTecnico="0"+mesTecnico;
+            }
+            String dataNascimento = diaTecnico+"/"+mesTecnico+"/"+anoTecnico;
+             
+            DateTimeFormatter date =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+            LocalDate dataNascimentoTecnico = LocalDate.parse(dataNascimento,date);
+            LocalDate dataAtual = LocalDate.now();
+            Period periodo = Period.between(dataNascimentoTecnico,dataAtual);
+            int idade = periodo.getYears();
+            
+            File arquivo = new File("src/Dados/dadosArbitros.txt");             
+
+            if(botao.equals("novo")){
+               Arbitro arbitro = new Arbitro(nome, sobrenome, cpf, sexo, idade, dataNascimento);
+               arbitros.add(arbitro);
+                              
+               try {
+                   FileWriter fw = new FileWriter(arquivo);
+                   BufferedWriter bw = new BufferedWriter(fw);
+                   
+                   bw.write(nome + ";" + sobrenome + ";" + cpf + ";" + 
+                           sexo + ";" + idade + ";" + dataNascimento);
+                   bw.newLine();
+                   
+                   bw.close();               
+               } catch(IOException e) {
+                   JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+                   return;
+               }
+            }
+            else if(botao.equals("editar")){
+                int index = tblArbitros.getSelectedRow();
+                
+                try {
+                    FileReader fr = new FileReader(arquivo);
+                    BufferedReader br = new BufferedReader(fr);
+                    
+                    ArrayList<String> temp = new ArrayList<>();
+                    
+                    for(int j = 0; br.ready(); j++) {
+                        if (j != index) {
+                            String linha = br.readLine();
+                            temp.add(linha);
+                        } else {
+                            temp.add(nome + ";" + sobrenome + ";" + cpf + ";" + 
+                                    sexo + ";" + idade + ";" + dataNascimento);
+                        }
+                    }
+                    br.close();
+                    
+                    FileWriter fw = new FileWriter(arquivo);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                                        
+                    for(int j = 0; j < temp.size(); j++) {
+                        bw.write(temp.get(j));
+                    }
+                    
+                    bw.close();
+                
+                } catch(IOException e) {
+                    JOptionPane.showMessageDialog(null, "Não foi pssível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                 
+                arbitros.get(index).setNome(nome);
+                arbitros.get(index).setSobrenome(sobrenome);
+                arbitros.get(index).setCpf(cpf);
+                arbitros.get(index).setSexo(sexo);
+                arbitros.get(index).setIdade(idade);
+                arbitros.get(index).setDataNascimento(dataNascimento);
+             }
+
+            //Carregar os dados do gerente na tabela
+            carregarTabelaArbitros();
+            JOptionPane.showMessageDialog(null, "Árbitro cadastrado com sucesso", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+             
+            //Limpar os campos
+            txtNome.setText("");
+            txtSobrenome.setText("");
+            txtCpf.setText("");
+            txtSexo.setText("");
+            spnDia.setValue(1);
+            spnMes.setValue(1);
+            spnAno.setValue(2023);
+
+
+            //Habilitar ou desabiltiar botões
+            btnNovo.setEnabled(true);
+            btnSalvar.setEnabled(false);
+            btnCancelar.setEnabled(false);
+            btnEditar.setEnabled(false);
+            btnExcluir.setEnabled(false);
+            btnPesquisar.setEnabled(true);
+            btnOkPesquisar.setEnabled(false);
+
+            //Habilitar ou desabilitar campos de texto
+            txtNome.setEnabled(false);
+            txtSobrenome.setEnabled(false);
+            txtCpf.setEnabled(false);
+            txtSexo.setEnabled(false);
+            spnDia.setEnabled(false);
+            spnMes.setEnabled(false);
+            spnAno.setEnabled(false);
+        }
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        tblArbitros.clearSelection();
+        
+        txtNome.setText("");
+        txtSobrenome.setText("");
+        txtCpf.setText("");
+        txtSexo.setText("");
+        spnDia.setValue(1);
+        spnMes.setValue(1);
+        spnAno.setValue(2023);
+        
+        txtNome.setEnabled(false);
+        txtSobrenome.setEnabled(false);
+        txtCpf.setEnabled(false);
+        txtSexo.setEnabled(false);
+        spnDia.setEnabled(false);
+        spnMes.setEnabled(false);
+        spnAno.setEnabled(false);
+        
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnPesquisar.setEnabled(true);
+        btnOkPesquisar.setEnabled(false);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void tblArbitrosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblArbitrosMouseClicked
+        int i = tblArbitros.getSelectedRow();
+        Arbitro arbitro = arbitros.get(i);
+        String[] data = arbitro.getDataNascimento().split("/");
+        
+        txtNome.setText(arbitro.getNome());
+        txtSobrenome.setText(arbitro.getSobrenome());
+        txtCpf.setText(arbitro.getCpf());
+        txtSexo.setText(arbitro.getSexo());
+        spnDia.setValue(Integer.parseInt(data[0]));
+        spnMes.setValue(Integer.parseInt(data[1]));
+        spnAno.setValue(Integer.parseInt(data[2]));
+        
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(false);
+        btnCancelar.setEnabled(true);
+        btnEditar.setEnabled(true);
+        btnExcluir.setEnabled(true);
+        btnPesquisar.setEnabled(false);
+        btnOkPesquisar.setEnabled(false);
+    }//GEN-LAST:event_tblArbitrosMouseClicked
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        botao = "editar";
+        
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(true);
+        btnCancelar.setEnabled(true);
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnPesquisar.setEnabled(false);
+        btnOkPesquisar.setEnabled(false);
+        
+        txtNome.setEnabled(true);
+        txtSobrenome.setEnabled(true);
+        txtCpf.setEnabled(true);
+        txtSexo.setEnabled(true);
+        spnDia.setEnabled(true);
+        spnMes.setEnabled(true);
+        spnAno.setEnabled(true);
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int i = JOptionPane.showConfirmDialog(null, "Tem certeza que deseja excluir esse árbitro?", "Atenção!", JOptionPane.WARNING_MESSAGE);
+        
+        if (i == 0) {
+            i = tblArbitros.getSelectedRow();
+            
+            File arquivo = new File("src/Dados/dadosArbitros.txt");
+            ArrayList<String> temp = new ArrayList<>();
+            
+            try {
+               FileReader fr = new FileReader(arquivo);
+               BufferedReader br = new BufferedReader(fr);
+               
+               for (int j = 0; br.ready(); j++) {
+                   if (j != i) {
+                       String linha = br.readLine();
+                       temp.add(linha);
+                   } else {
+                       br.readLine();
+                   }
+               }
+               
+               br.close();
+               
+               FileWriter fw = new FileWriter(arquivo);
+               BufferedWriter bw = new BufferedWriter(fw);
+               
+               for (int j = 0; j < temp.size(); j++) {
+                   bw.write(temp.get(j));
+                   bw.newLine();
+               }
+               
+               bw.close();   
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(null, "Não foi possível abrir o arquivo.", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            txtNome.setText("");
+            txtSobrenome.setText("");
+            txtCpf.setText("");
+            txtSexo.setText("");
+            spnDia.setValue(1);
+            spnMes.setValue(1);
+            spnAno.setValue(2023);
+            
+            arbitros.remove(i);
+            carregarTabelaArbitros();
+        }
+        
+        tblArbitros.clearSelection();
+        
+        btnNovo.setEnabled(true);
+        btnSalvar.setEnabled(false);
+        btnCancelar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnEditar.setEnabled(false);
+        btnPesquisar.setEnabled(true);
+        btnOkPesquisar.setEnabled(false);
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        btnNovo.setEnabled(false);
+        btnSalvar.setEnabled(false);
+        btnCancelar.setEnabled(true);
+        btnEditar.setEnabled(false);
+        btnExcluir.setEnabled(false);
+        btnPesquisar.setEnabled(false);
+        btnOkPesquisar.setEnabled(true);
+        
+        txtCpf.setEnabled(true);       
+        txtCpf.requestFocus();
+    }//GEN-LAST:event_btnPesquisarActionPerformed
+
+    private void btnOkPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkPesquisarActionPerformed
+        tblArbitros.clearSelection();
+        
+        if (txtCpf.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "É necessário inserir o CPF do árbitro.", "Informações insuficientes", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            boolean achou = false;
+            String cpf = txtCpf.getText();
+            
+            for (int i = 0; i < arbitros.size(); i++) {
+                Arbitro arbitro = arbitros.get(i);
+                
+                if (arbitro.getCpf().equals(cpf)) {
+                    achou = true;
+                    String[] data = arbitro.getDataNascimento().split("/");
+                    
+                    txtNome.setEnabled(true);
+                    txtSobrenome.setEnabled(true);
+                    txtCpf.setEnabled(true);
+                    txtSexo.setEnabled(true);
+                    spnDia.setEnabled(true);
+                    spnMes.setEnabled(true);
+                    spnAno.setEnabled(true);    
+                    
+                    txtNome.setText(arbitro.getNome());
+                    txtSobrenome.setText(arbitro.getSobrenome());
+                    txtCpf.setText(arbitro.getCpf());
+                    txtSexo.setText(arbitro.getSexo());
+                    spnDia.setValue(Integer.parseInt(data[0]));
+                    spnMes.setValue(Integer.parseInt(data[1]));
+                    spnAno.setValue(Integer.parseInt(data[2]));
+                    
+                    btnNovo.setEnabled(false);
+                    btnSalvar.setEnabled(false);
+                    btnCancelar.setEnabled(true);
+                    btnEditar.setEnabled(true);
+                    btnExcluir.setEnabled(true);
+                    btnPesquisar.setEnabled(false);
+                    btnOkPesquisar.setEnabled(false);
+                    
+                    tblArbitros.changeSelection(i, ICONIFIED, false, false);
+                }
+            }
+            
+            if (!achou) {
+                JOptionPane.showMessageDialog(null, "Árbitro não encontrado.", "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnOkPesquisarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -355,14 +811,15 @@ public class Arbitros extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Arbitros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Arbitro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Arbitros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Arbitro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Arbitros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Arbitro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Arbitros.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Arbitro.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
@@ -386,16 +843,18 @@ public class Arbitros extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
     private javax.swing.JLabel lblCpf;
     private javax.swing.JLabel lblData;
     private javax.swing.JLabel lblNome;
+    private javax.swing.JLabel lblSexo;
     private javax.swing.JLabel lblSobrenome;
     private javax.swing.JSpinner spnAno;
     private javax.swing.JSpinner spnDia;
     private javax.swing.JSpinner spnMes;
+    private javax.swing.JTable tblArbitros;
     private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtNome;
+    private javax.swing.JTextField txtSexo;
     private javax.swing.JTextField txtSobrenome;
     // End of variables declaration//GEN-END:variables
 }

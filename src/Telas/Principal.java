@@ -17,6 +17,7 @@ public class Principal extends javax.swing.JFrame {
      */
     public Principal() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -36,7 +37,6 @@ public class Principal extends javax.swing.JFrame {
         btnFecharPrincipal = new javax.swing.JButton();
         lblTituloPrincipal = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Escolinha de Futebol Tok de Bola");
         setAutoRequestFocus(false);
         setBackground(new java.awt.Color(0, 0, 0));
@@ -212,10 +212,6 @@ public class Principal extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnJogadoresPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJogadoresPrincipalActionPerformed
-        new CriandoJogador().setVisible(true);
-    }//GEN-LAST:event_btnJogadoresPrincipalActionPerformed
-
     private void btnJogadoresPrincipalMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnJogadoresPrincipalMouseEntered
         btnJogadoresPrincipal.setCursor(new Cursor(Cursor.HAND_CURSOR));
     }//GEN-LAST:event_btnJogadoresPrincipalMouseEntered
@@ -248,10 +244,6 @@ public class Principal extends javax.swing.JFrame {
         new Tecnicos().setVisible(true);
     }//GEN-LAST:event_btnTécnicosPrincipalActionPerformed
 
-    private void btnArbitrosPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbitrosPrincipalActionPerformed
-        new Arbitros().setVisible(true);
-    }//GEN-LAST:event_btnArbitrosPrincipalActionPerformed
-
     private void btnEquipesPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEquipesPrincipalActionPerformed
         new Equipes().setVisible(true);
     }//GEN-LAST:event_btnEquipesPrincipalActionPerformed
@@ -266,8 +258,16 @@ public class Principal extends javax.swing.JFrame {
 
     private void btnFecharPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFecharPrincipalActionPerformed
         this.setVisible(false);
-        System.exit(0);
+        //System.exit(0);
     }//GEN-LAST:event_btnFecharPrincipalActionPerformed
+
+    private void btnJogadoresPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJogadoresPrincipalActionPerformed
+        new CriandoJogador().setVisible(true);
+    }//GEN-LAST:event_btnJogadoresPrincipalActionPerformed
+
+    private void btnArbitrosPrincipalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnArbitrosPrincipalActionPerformed
+        new Arbitros().setVisible(true);
+    }//GEN-LAST:event_btnArbitrosPrincipalActionPerformed
 
     /**
      * @param args the command line arguments
